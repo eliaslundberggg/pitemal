@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Lär dig pitemål (pitebondska) med korta lektioner, ordbok och musik från Piteå.">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Snåttren</title>
+<title>Pitemål</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,6 +32,9 @@
   --u8:#8A5A35; --u8d:#5F3C21;
   --u9:#2F7FA0; --u9d:#1F5A73;
   --u10:#B5446E; --u10d:#82304F;
+  --u11:#55722F; --u11d:#3A5120;
+  --u12:#A0522D; --u12d:#6F381E;
+  --u13:#55608F; --u13d:#3B4366;
   --display:"Fredoka","Nunito",ui-rounded,system-ui,sans-serif;
   --body:"Nunito",ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;
   --r:16px;
@@ -155,6 +158,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .drow em{grid-column:1/-1;font-style:normal;font-size:13px;color:var(--muted);margin-top:-6px}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--forest);margin-left:6px;vertical-align:middle}
 .empty{padding:24px 16px;color:var(--muted);text-align:center}
+.dhead{padding:6px 16px;background:var(--surface-2);font-family:var(--display);font-weight:700;font-size:18px;color:var(--forest);border-top:1px solid var(--line);scroll-margin-top:calc(70px + env(safe-area-inset-top,0px))}
+.dhead:first-child{border-top:0}
+.letters{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.letters:empty{display:none}
+.letters button{min-width:32px;height:32px;border:2px solid var(--line);background:var(--surface);border-radius:8px;font-weight:800;font-size:14px;color:var(--forest)}
+.letters button:hover{background:var(--surface-2)}
+.rank{font-size:13px;font-weight:700;color:var(--hjorton-d);white-space:nowrap}
 
 /* music */
 .artist{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start}
@@ -237,7 +247,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <body>
 <header class="top">
   <div class="top-in">
-    <div class="brand" aria-label="Snåttren"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-hj"/></svg>Snåttren</div>
+    <div class="brand"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-hj"/></svg>Pitemål</div>
     <button class="stat streak" id="s-streak" title="Dagar i rad"><svg class="ic" viewBox="0 0 24 24"><use href="#i-flame"/></svg><span>0</span></button>
     <button class="stat hj" id="s-hj" title="Hjortron"><svg class="ic" viewBox="0 0 24 24"><use href="#i-hj"/></svg><span>0</span></button>
     <button class="stat li" id="s-li" title="Lingon (liv)"><svg class="ic" viewBox="0 0 24 24"><use href="#i-lingon"/></svg><span>5</span></button>
@@ -300,6 +310,20 @@ const UNITS = [
     ["boijn","byn","Används också om Älvsbyn"],["i hejt","jag heter"],
     ["Vöre jär'e vä dä?","Hur är det med dig?"],["Vöre jär'e vä jä?","Hur är det med er?"],
     ["I jär bådda boin","Jag är från Älvsbyn"],["Hä jär klaart","Det är färdigt"],["I behöv it","Jag behöver inte"]]},
+  {id:"u11", title:"Hajna, hojna, häjna", sub:"Han, hon och det här", c:"u11", deco:"d-moose",
+   tips:[
+    "<b>Hajna</b> = han eller den här (om han-ord), <b>hojna</b> = hon eller den här (om hon-ord), <b>häjna</b> = det här.",
+    "A:et kan falla bort: <b>hajn</b> och <b>hojn</b>. Man kan säga både <b>Hojna</b> och <b>Hojn</b> beroende på hur det låter bäst.",
+    "Saker är han eller hon på pitemål. Stolen är en han (<b>ståóln</b>), stugan är en hon (<b>stö`gon</b>) och bordet är hä (<b>båoLe</b>).",
+    "<b>Hänna</b> = det där, <b>dömjen</b> = de här, <b>döm`dena</b> = de där."],
+   words:[
+    ["hajna","han","Betyder också den här, om ett han-ord"],["hajn","han","Kortform av hajna"],
+    ["hojna","hon","Betyder också den här, om ett hon-ord"],["hojn","hon","Kortform av hojna"],["häjna","det här"],
+    ["Hojna jär åll åll","Hon är trött"],["Hajn hejt Kalle","Han heter Kalle"],
+    ["hänna","det där"],["dömjen","de här"],["döm`dena","de där"],
+    ["påtjen","pojken"],["fLècka","flickan"],["ståóln","stolen"],["stö`gon","stugan"],["båoLe","bordet"],["loj`se","lyset"],
+    ["I veit itt","Jag vet inte"],["I be it höv","Jag behöver inte"],["bråorn men","min bror"],["I vorte rädd","Jag blev rädd"],
+    ["Voda jär dö då?","Varifrån kommer du?"],["Wo heijt pappa dijn då?","Vad heter din pappa?"],["Bö dö et hö:v hänn?","Behöver du inte det där?"]]},
   {id:"u2", title:"Hejma", sub:"Stugan, köket och pitepalten", c:"u2", deco:"d-lingon",
    tips:[
     "Feminina ord får ofta <b>-a</b> i bestämd form: <b>båoka</b> = boken, <b>skåoLa</b> = skolan.",
@@ -402,7 +426,31 @@ const UNITS = [
     ["schlåssali","slarvig"],["lagrann","noggrann"],["vhaller","svammel"],["jeshwingt","snabbt och bra"],
     ["sowle","det godaste"],["snepp","snabbvisit"],["gammälschmöcko","gammeldags"],["ebräjdd vä åsit","obetydligt"],
     ["töckejen","sån här"],["töckenden","sån där"],["skovvalottom","hur som helst"],
-    ["Han jär nalta spanagge","Han är lite hetsig"],["Hä vart så göudat","Det blev så galet"],["Var et så beshwäshfåtti","Var inte så lat"]]}
+    ["Han jär nalta spanagge","Han är lite hetsig"],["Hä vart så göudat","Det blev så galet"],["Var et så beshwäshfåtti","Var inte så lat"]]},
+  {id:"u12", title:"Hemma hos", sub:"Sy, städa och äta gott", c:"u12", deco:"d-lingon",
+   tips:[
+    "Tjocka L och N skrivs ofta stora: <b>kLeut</b> (blöja), <b>daNs</b> (dansa). De kan aldrig stå först i ett ord.",
+    "Stj uttalas som s-t-j, tre ljud: <b>stjùt</b> (skjuta), <b>stjöLja</b> (tvättkorg).",
+    "Possessivet kommer efter: <b>bråorn men</b> = brodern min, alltså min bror."],
+   words:[
+    ["kLeut","blöja"],["stjöLja","tvättkorg"],["stjällkåo","skällko"],["rä`Nsk","gnägga"],["daNs","dansa"],
+    ["kangråotne:t","spindelnät"],["sööm","sy"],["tråck","tråckla"],["kaark","sy grovt och slarvigt"],["neest","sy nätt"],
+    ["gåod","god"],["mågahove","måttlighet med mat"],["slokkamon","mellanrum"],["waller","svamla"],
+    ["Åj, vå vä kalasä:re e gå:r!","Oj, vad vi åt gott i går!"],["Brö:de jen jär verklit gåodsmukot","Det här brödet smakar verkligen gott"],
+    ["Hä låg kle:da nagesht woshtánsh","Det låg kläder här och var"],["Hä jär som ine-n volpstjöle","Det är som i en valpkorg","Det vill säga stökigt"]]},
+  {id:"u13", title:"Väder & krämpor", sub:"Drivsnö, oväder och lite krumo", c:"u13", deco:"d-snow",
+   tips:[
+    "Det finns många ord för att må dåligt: <b>krumo</b>, <b>shukli</b>, <b>kläjn</b>, <b>krakla</b> och <b>skröppli</b>.",
+    "<b>Gåraijl</b> är riktigt, riktigt dåligt väder. Ordet lyftes fram av Pitemålsakademin.",
+    "Diftongen <b>eu</b> hörs i <b>èut</b> (ute) och <b>sLeùt</b> (sluta)."],
+   words:[
+    ["gåraijl","riktigt dåligt väder"],["drevánn","drivsnö"],["krumo","sjuk, krasslig"],["shukli","sjuklig"],["kläjn","klen"],
+    ["krakla","skral"],["kröko","liten och svag"],["skröppli","skröplig"],["bo`rN","bulna, bli inflammerad"],["swi`d","svida"],
+    ["bLåi`ta","blöta"],["èut","ute"],["sLeùt","sluta"],["sLeùk","sluka"],["stjùt","skjuta"],["heuali´gen","ojdå!"],
+    ["twärdjära","göra något snabbt"],["pitjmåLe","pitemålet"],
+    ["I tjänn mä nalta krumo e da:g","Jag känner mig lite sjuk i dag"],["Sko vä fåra a-mörnom?","Ska vi fara i morgonbitti?"],
+    ["Hon jär gåode fämfläjte","Hon är ganska fyndig"],["Hänna tåo opa kwekka","Det där tog på en öm punkt"],
+    ["Vä ha jösh å:t","Vi har hjälpts åt"],["Hä jär som dråga katta åtaba:k","Det är som att dra katten baklänges","Sägs om något som går tungt"]]}
 ];
 const PRAISE = [["Äkshlänt!","duktigt"],["Jeshwingt!","snabbt och bra"],["Slecke sleukt besleut!","vilket bra beslut"],["Hä jär klaart!","det är färdigt"]];
 const NODE_NAMES = ["Nya ord","Fler ord","Meningar","Repetition"];
@@ -434,9 +482,13 @@ function mascot(mood="happy"){
 
 /* ---------- Lagring ---------- */
 const KEY = "snattren-v1";
-const DEF = {xp:0, hj:20, lingon:5, lingonAt:Date.now(), streak:0, lastDay:null, done:{}, seen:{}, miss:{}, day:{d:null, xp:0}, sound:true};
+const DEF = {xp:0, hj:20, lingon:5, lingonAt:Date.now(), streak:0, lastDay:null, done:{}, seen:{}, miss:{}, count:{}, day:{d:null, xp:0}, sound:true};
 let S = Object.assign({}, DEF);
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign({}, DEF, JSON.parse(raw)); } catch(e) {}
+// Äldre versioner sparade lektioner som "delindex-lektion"; flytta dem till del-id.
+const OLD_IDS = ["u1","u2","u3","u4","u5","u6","u7","u8","u9","u10"];
+for (const k of Object.keys(S.done)){ const m = k.match(/^(\d+)-(\d)$/); if (m){ if (OLD_IDS[m[1]]) S.done[OLD_IDS[m[1]]+"-"+m[2]] = true; delete S.done[k]; } }
+if (!S.count) S.count = {};
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
 const MAXL = 5, REGEN = 30*60*1000, GOAL = 30;
 function today(off=0){ const d = new Date(Date.now()+off*864e5); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
@@ -484,7 +536,8 @@ function lessonPools(ui){
   ];
 }
 const ORDER = UNITS.flatMap((u,ui) => [0,1,2,3].map(li => ui+"-"+li));
-function currentId(){ return ORDER.find(id => !S.done[id]) || null; }
+const dk = id => { const [ui, li] = id.split("-"); return UNITS[ui].id+"-"+li; };
+function currentId(){ return ORDER.find(id => !S.done[dk(id)]) || null; }
 function unlocked(id){ const c = currentId(); return c===null || ORDER.indexOf(id) <= ORDER.indexOf(c); }
 
 /* ---------- Övningsgenerering ---------- */
@@ -528,7 +581,7 @@ function buildLesson(pool, len=11){
 }
 
 /* ---------- Vyer ---------- */
-let tab = "learn", openPop = null, dictFilter = -1, dictQ = "";
+let tab = "learn", openPop = null, dictFilter = -1, dictQ = "", dictSort = "az";
 function renderStats(){
   regen();
   $("#s-streak span").textContent = streakAlive() ? S.streak : 0;
@@ -563,7 +616,7 @@ function viewLearn(){
       <div class="unit-head" style="background:var(--${u.c})"><div class="t"><small>Del ${ui+1}</small><h2>${esc(u.title)}</h2><p>${esc(u.sub)}</p></div>
       <button class="guide-btn" data-guide="${ui}">${ic("i-book")}Guide</button></div><div class="path">`;
     [0,1,2,3].forEach(li => {
-      const id = ui+"-"+li, done = !!S.done[id], isCur = id===cur, lock = !unlocked(id);
+      const id = ui+"-"+li, done = !!S.done[dk(id)], isCur = id===cur, lock = !unlocked(id);
       const icon = lock ? "i-lock" : done ? "i-check" : li===3 ? "i-trophy" : "i-star";
       html += `<div class="node-wrap" style="transform:translateX(${offs[li]}px);z-index:${openPop===id?5:1}">
         ${isCur && openPop!==id ? `<div class="bubble">BÖRJA</div>` : ""}
@@ -584,19 +637,44 @@ function popHtml(u, ui, li, done, lock){
 }
 
 function viewDict(){
-  return `<div class="page-h"><h1>Ordbok</h1><p>${ALL.length} ord och fraser från kursen. En prick betyder att du har lärt dig ordet.</p></div>
-  <label for="q" class="sr" hidden>Sök</label>
+  const modes = [["az","A–Ö"],["top","Mest övade"],["hard","Svårast"],["del","Efter del"]];
+  return `<div class="page-h"><h1>Ordbok</h1><p>${ALL.length} ord och fraser. En prick betyder att du har lärt dig ordet.</p></div>
+  <label for="q" hidden>Sök</label>
   <input id="q" class="search" type="search" placeholder="Sök på pitemål eller svenska" value="${esc(dictQ)}" autocomplete="off">
+  <div class="filters" role="group" aria-label="Sortera">
+    ${modes.map(([k,l])=>`<button data-sort="${k}" aria-pressed="${dictSort===k}">${l}</button>`).join("")}
+  </div>
   <div class="filters" role="group" aria-label="Filtrera på del">
-    <button data-f="-1" aria-pressed="${dictFilter===-1}">Alla</button>
+    <button data-f="-1" aria-pressed="${dictFilter===-1}">Alla delar</button>
     ${UNITS.map((u,i)=>`<button data-f="${i}" aria-pressed="${dictFilter===i}">${esc(u.title)}</button>`).join("")}
-  </div><div class="dict" id="dict"></div>`;
+  </div><div class="letters" id="letters"></div><div class="dict" id="dict"></div>`;
+}
+const sortKey = w => w.p.replace(/^[^A-Za-zÅÄÖåäöÉéÈèÙùÒòÀàÁá]+/, "").normalize("NFC");
+const firstLetter = w => { const c = sortKey(w).charAt(0).toLocaleUpperCase("sv"); return ({"É":"E","È":"E","Ù":"U","Ò":"O","À":"A","Á":"A"})[c] || c; };
+function drow(w, extra=""){
+  return `<div class="drow"><b>${esc(w.p)}${S.seen[w.p]?'<span class="dot" title="Inlärt"></span>':""}</b><span>${esc(w.s)}${extra}</span>${w.note?`<em>${esc(w.note)}</em>`:""}</div>`;
 }
 function fillDict(){
   const q = norm(dictQ);
-  const rows = ALL.filter(w => (dictFilter<0 || w.u===dictFilter) && (!q || norm(w.p).includes(q) || norm(w.s).includes(q)));
-  $("#dict").innerHTML = rows.length ? rows.map(w => `<div class="drow"><b>${esc(w.p)}${S.seen[w.p]?'<span class="dot" title="Inlärt"></span>':""}</b><span>${esc(w.s)}</span>${w.note?`<em>${esc(w.note)}</em>`:""}</div>`).join("")
-    : `<div class="empty">Inga träffar på "${esc(dictQ)}". Prova ett kortare ord.</div>`;
+  let rows = ALL.filter(w => (dictFilter<0 || w.u===dictFilter) && (!q || norm(w.p).includes(q) || norm(w.s).includes(q)));
+  const box = $("#dict"), lb = $("#letters");
+  lb.innerHTML = "";
+  if (!rows.length){ box.innerHTML = `<div class="empty">Inga träffar på "${esc(dictQ)}". Prova ett kortare ord.</div>`; return; }
+  if (dictSort==="az"){
+    rows = rows.slice().sort((a,b)=>sortKey(a).localeCompare(sortKey(b),"sv",{sensitivity:"base"}));
+    let html = "", cur = "";
+    const letters = [];
+    rows.forEach(w => { const L = firstLetter(w); if (L!==cur){ cur=L; letters.push(L); html += `<div class="dhead" data-letter="${esc(L)}">${esc(L)}</div>`; } html += drow(w); });
+    box.innerHTML = html;
+    lb.innerHTML = letters.map(L=>`<button data-jump="${esc(L)}">${esc(L)}</button>`).join("");
+  } else if (dictSort==="top" || dictSort==="hard"){
+    const src = dictSort==="top" ? S.count : S.miss;
+    const ranked = rows.filter(w => src[w.p]>0).sort((a,b)=>src[b.p]-src[a.p]).slice(0,50);
+    box.innerHTML = ranked.length ? ranked.map((w,i)=>drow(w, ` <span class="rank">${i+1}. · ${src[w.p]} ${dictSort==="top"?"gånger":"fel"}</span>`)).join("")
+      : `<div class="empty">${dictSort==="top" ? "Topplistan fylls på när du gör lektioner. Den visar orden du har övat mest på." : "Här hamnar orden du svarar fel på oftast. Inga än, snyggt!"}</div>`;
+  } else {
+    box.innerHTML = rows.map(w=>drow(w)).join("");
+  }
 }
 function bindDict(){
   fillDict();
@@ -640,9 +718,9 @@ function viewAbout(){
       <p>Det finns ingen rätt stavning. Uttalet skiljer sig mellan byar, så samma ord kan skrivas på flera sätt, till exempel <span class="ex">mötje</span>, <span class="ex">mytje</span> och <span class="ex">möche</span> (mycket). I kursen används en stavning per ord.</p></section>
     <section class="card prose"><h2>Källor</h2>
       <p>Orden och fraserna i kursen kommer från de här sidorna. Där finns mycket mer att läsa.</p>
-      <div class="src">${L("https://pitemal.wikidot.com/page","Pitemål wiki")}${L("https://pitemal.wikidot.com/glossary","Ordlista")}${L("https://www.alterhedens.se/pitemal-pitebondska.html","AlterHedens")}${L("https://www.alterhedens.se/korsord-pitemal-pitebondska.html","Korsord")}${L("https://www.alterhedens.se/quiz-vaxter-pitemal.html","Växtquiz")}${L("https://sv.wikipedia.org/wiki/Pitem%C3%A5l","Wikipedia")}</div></section>
+      <div class="src">${L("https://pitemal.wikidot.com/page","Pitemål wiki")}${L("https://pitemal.wikidot.com/glossary","Ordlista")}${L("https://www.alterhedens.se/pitemal-pitebondska.html","AlterHedens")}${L("https://www.alterhedens.se/korsord-pitemal-pitebondska.html","Korsord")}${L("https://www.alterhedens.se/quiz-vaxter-pitemal.html","Växtquiz")}${L("https://sv.wikipedia.org/wiki/Pitem%C3%A5l","Wikipedia")}${L("https://www.diva-portal.org/smash/get/diva2:1327765/FULLTEXT01.pdf","Uppsats, Uppsala universitet")}${L("https://fraufurtenbach.wordpress.com/category/veckans-ord-pa-pitemal/","Veckans ord på pitemål")}${L("https://sprakkonsultjosefin.wordpress.com/tag/pitemal/","Språkkonsult Josefin")}${L("https://detskullevararoligt.wordpress.com/2012/11/18/hojna-hajna-hejna-2/","Hojna, hajna, hejna")}</div></section>
     <section class="card prose" id="reset-box"><h2>Dina framsteg</h2>
-      <p>${S.xp} XP totalt · ${Object.keys(S.seen).length} ord inlärda · ${Object.keys(S.done).length} av ${ORDER.length} lektioner klara.</p>
+      <p>${S.xp} XP totalt · ${Object.keys(S.seen).length} ord inlärda · ${ORDER.filter(id=>S.done[dk(id)]).length} av ${ORDER.length} lektioner klara.</p>
       <div class="src"><button class="linkbtn" data-act="reset">Börja om från början</button></div></section>
   </div>`;
 }
@@ -774,14 +852,14 @@ function resolve(ok, correct, it){
   const words = it.t==="match" ? it.pairs : [it.w];
   if (ok){
     L.right++; if (!it.redo) L.firstTry++;
-    words.forEach(w => { S.seen[w.p]=1; if (L.practice && S.miss[w.p]) S.miss[w.p]--; });
+    words.forEach(w => { S.seen[w.p]=1; S.count[w.p]=(S.count[w.p]||0)+1; if (L.practice && S.miss[w.p]) S.miss[w.p]--; });
     const pr = PRAISE[Math.floor(Math.random()*PRAISE.length)];
     f.className = "l-foot ok";
     $("#fbx").innerHTML = `<h3>${esc(pr[0])}</h3><p>Pitemål för ${esc(pr[1])}.${it.w && it.w.note ? " "+esc(it.w.note)+"." : ""}</p>`;
     b.className = "big"; tone([660, 990]);
   } else {
     L.wrong++;
-    S.miss[it.w.p] = (S.miss[it.w.p]||0)+1;
+    S.miss[it.w.p] = (S.miss[it.w.p]||0)+1; S.count[it.w.p] = (S.count[it.w.p]||0)+1;
     const again = Object.assign({}, it, {redo:true});
     if (again.opts) again.opts = shuffle(again.opts);
     if (again.tiles) again.tiles = shuffle(again.tiles.map(x=>x.t)).map((t,i)=>({t,i}));
@@ -802,7 +880,7 @@ function next(){
 }
 function finish(){
   const acc = Math.round(L.firstTry / L.total * 100);
-  const base = L.practice ? 5 : S.done[L.id] ? 5 : (L.li===3 ? 15 : 10);
+  const base = L.practice ? 5 : S.done[dk(L.id)] ? 5 : (L.li===3 ? 15 : 10);
   const xp = base + (L.wrong===0 ? 5 : 0);
   const hj = L.practice ? 2 : (L.wrong===0 ? 10 : 5);
   S.xp += xp; S.hj += hj;
@@ -810,7 +888,7 @@ function finish(){
   S.day.xp += xp;
   if (S.lastDay !== today()){ S.streak = S.lastDay===today(-1) ? S.streak+1 : 1; S.lastDay = today(); }
   if (L.practice) S.lingon = Math.min(MAXL, S.lingon+1);
-  else S.done[L.id] = true;
+  else S.done[dk(L.id)] = true;
   save(); tone([523,659,784,1047], .1);
   $("#lb").innerHTML = `<div class="done">${mascot("wow")}<h1>${L.wrong===0 ? "Felfritt!" : "Lektionen är klar!"}</h1>
     <p>${L.practice ? "Bra övat. Du fick ett lingon tillbaka." : L.wrong===0 ? "Inte ett enda fel. Slecke sleukt besleut!" : "Hä jär klaart. Fortsätt så."}</p>
@@ -859,6 +937,8 @@ document.addEventListener("click", e => {
   if (a==="buy"){ S.hj -= 30; S.lingon = MAXL; S.lingonAt = Date.now(); save(); t.closest(".modal").remove(); if (L) $("#l-li").textContent = S.lingon; renderStats(); toast("Lingonen är påfyllda"); return; }
   if (a==="endlesson"){ t.closest(".modal").remove(); if (L) closeLesson(); return; }
   if (a==="quit"){ closeLesson(); return; }
+  if (t.dataset.sort){ dictSort = t.dataset.sort; document.querySelectorAll("[data-sort]").forEach(b=>b.setAttribute("aria-pressed", b===t)); fillDict(); return; }
+  if (t.dataset.jump){ const h = document.querySelector(`.dhead[data-letter="${CSS.escape(t.dataset.jump)}"]`); if (h) h.scrollIntoView({behavior:"smooth", block:"start"}); return; }
   if (t.dataset.f !== undefined){ dictFilter = +t.dataset.f; document.querySelectorAll("[data-f]").forEach(b=>b.setAttribute("aria-pressed", b===t)); fillDict(); return; }
   if (!L) return;
   if (t.id==="check"){ if (L.finished) return closeLesson(); check(); return; }
