@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Lär dig pitemål (pitebondska) med korta lektioner, ordbok och musik från Piteå.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Snåttren</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: one narrow app column; a lesson path that winds like a forest trail, a norrsken header band, a bottom tab bar */
+:root{
+  --bg:#F3F7F5; --surface:#FFFFFF; --surface-2:#E7EEEA; --line:#D3DED8;
+  --ink:#16251F; --muted:#5A6C64;
+  --forest:#2E6B4E; --forest-d:#1E4C36;
+  --lingon:#C42B3F; --lingon-d:#8E1B2B;
+  --hjorton:#EE9B2F; --hjorton-d:#B56A10;
+  --night:#0F1E2C; --night-2:#18324A; --on-night:#EAF6F1; --on-color:#FFFFFF;
+  --ok-bg:#DCF2E5; --ok:#1C7548; --bad-bg:#FBE0E3; --bad:#B0223A;
+  --locked:#CAD5D0; --locked-d:#A6B3AD; --locked-ink:#7E8C86;
+  --sel:#DCEBFA; --sel-line:#5B8DCF;
+  --u1:#2E6B4E; --u1d:#1E4C36;
+  --u2:#C42B3F; --u2d:#8E1B2B;
+  --u3:#23756B; --u3d:#16514A;
+  --u4:#3D63A8; --u4d:#28467C;
+  --u5:#DA8418; --u5d:#9E5C0B;
+  --u6:#8A4FA0; --u6d:#623673;
+  --u7:#1F9172; --u7d:#14654F;
+  --u8:#8A5A35; --u8d:#5F3C21;
+  --u9:#2F7FA0; --u9d:#1F5A73;
+  --u10:#B5446E; --u10d:#82304F;
+  --display:"Fredoka","Nunito",ui-rounded,system-ui,sans-serif;
+  --body:"Nunito",ui-rounded,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1A20; --surface:#14252D; --surface-2:#1B2F38; --line:#2A404A;
+  --ink:#E6EFEB; --muted:#9BB0A7;
+  --forest:#4FA57A; --forest-d:#2C7451;
+  --lingon:#E04E5E; --lingon-d:#9C2A38;
+  --hjorton:#F2AC4A; --hjorton-d:#B47719;
+  --ok-bg:#163828; --ok:#71D9A1; --bad-bg:#3B1B21; --bad:#FF8E9B;
+  --locked:#2B3D45; --locked-d:#1C2B31; --locked-ink:#7D918A;
+  --sel:#1C3550; --sel-line:#6E9FE0;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0D1A20; --surface:#14252D; --surface-2:#1B2F38; --line:#2A404A;
+  --ink:#E6EFEB; --muted:#9BB0A7;
+  --forest:#4FA57A; --forest-d:#2C7451;
+  --lingon:#E04E5E; --lingon-d:#9C2A38;
+  --hjorton:#F2AC4A; --hjorton-d:#B47719;
+  --ok-bg:#163828; --ok:#71D9A1; --bad-bg:#3B1B21; --bad:#FF8E9B;
+  --locked:#2B3D45; --locked-d:#1C2B31; --locked-ink:#7D918A;
+  --sel:#1C3550; --sel-line:#6E9FE0;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--sel-line);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+a{color:var(--forest)}
+.wrap{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 120px}
+.ic{width:24px;height:24px;flex:none}
+
+/* top stats */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:2px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.top-in{max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;display:flex;align-items:center;gap:8px}
+.brand{font-family:var(--display);font-weight:700;font-size:22px;color:var(--hjorton-d);display:flex;align-items:center;gap:6px;margin-right:auto}
+:root[data-theme="dark"] .brand{color:var(--hjorton)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand{color:var(--hjorton)}}
+.stat{display:flex;align-items:center;gap:4px;font-weight:800;font-variant-numeric:tabular-nums;padding:4px 8px;border-radius:10px;background:none;border:0}
+.stat:hover{background:var(--surface-2)}
+.stat.streak{color:var(--hjorton-d)} .stat.hj{color:var(--hjorton-d)} .stat.li{color:var(--lingon)}
+.stat.off{color:var(--locked-ink)}
+
+/* norrsken hero */
+.hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(180deg,var(--night) 0%,var(--night-2) 100%);color:var(--on-night);margin-top:16px;padding:20px 20px 18px;display:flex;gap:14px;align-items:center;min-height:150px}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero > *:not(canvas){position:relative}
+.hero .mascot{width:96px;flex:none}
+.hero h1{font-size:24px;font-weight:600}
+.hero p{margin:4px 0 10px;opacity:.85;font-size:15px}
+.goal{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}
+.goal .bar{flex:1;height:12px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden}
+.goal .bar i{display:block;height:100%;background:var(--hjorton);border-radius:99px;transition:width .5s}
+.hero-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.chip{border:0;border-radius:12px;padding:7px 12px;font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;background:rgba(255,255,255,.14);color:var(--on-night)}
+.chip:hover{background:rgba(255,255,255,.24)}
+
+/* unit + path */
+.unit{margin-top:28px}
+.unit-head{border-radius:var(--r);padding:16px 18px;color:var(--on-color);display:flex;align-items:center;gap:12px;box-shadow:0 4px 0 var(--ud)}
+.unit-head .t{flex:1;min-width:0}
+.unit-head small{display:block;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:12px;opacity:.85}
+.unit-head h2{font-size:22px;font-weight:600}
+.unit-head p{margin:2px 0 0;font-size:14px;opacity:.92}
+.guide-btn{border:2px solid rgba(255,255,255,.45);background:rgba(255,255,255,.12);border-radius:12px;padding:8px 10px;color:var(--on-color);display:flex;align-items:center;gap:6px;font-weight:800;font-size:13px;flex:none}
+.guide-btn:hover{background:rgba(255,255,255,.22)}
+.path{position:relative;overflow-x:clip;overflow-y:visible;display:flex;flex-direction:column;align-items:center;gap:22px;padding:28px 0 6px}
+.node-wrap{position:relative;display:flex;flex-direction:column;align-items:center}
+.node{width:74px;height:70px;border-radius:50%;border:0;background:var(--uc);box-shadow:0 7px 0 var(--ud);display:grid;place-items:center;color:var(--on-color);transition:transform .08s,box-shadow .08s}
+.node:active{transform:translateY(5px);box-shadow:0 2px 0 var(--ud)}
+.node .ic{width:34px;height:34px}
+.node.locked{background:var(--locked);box-shadow:0 7px 0 var(--locked-d);color:var(--locked-ink)}
+.node.current{outline:6px solid color-mix(in srgb,var(--uc) 28%,transparent);outline-offset:6px}
+.bubble{position:absolute;bottom:calc(100% + 14px);background:var(--surface);border:2px solid var(--line);color:var(--uc);font-weight:800;letter-spacing:.06em;font-size:14px;padding:6px 12px;border-radius:12px;white-space:nowrap;animation:bob 1.6s ease-in-out infinite}
+.bubble::after{content:"";position:absolute;left:50%;top:100%;width:12px;height:12px;background:var(--surface);border-right:2px solid var(--line);border-bottom:2px solid var(--line);transform:translate(-50%,-6px) rotate(45deg)}
+@keyframes bob{50%{transform:translateY(-4px)}}
+.pop{position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%);z-index:15;width:240px;max-width:calc(100vw - 40px);background:var(--uc);color:var(--on-color);border-radius:var(--r);padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.pop.locked{background:var(--surface);color:var(--muted);border:2px solid var(--line)}
+.pop h3{font-size:18px;font-weight:600}
+.pop p{margin:4px 0 12px;font-size:14px;opacity:.92}
+.pop .go{width:100%;border:0;border-radius:12px;padding:12px;background:var(--surface);color:var(--uc);font-weight:800;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+.deco{position:absolute;width:76px;height:76px;pointer-events:none;opacity:.95}
+
+/* bottom nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--surface);border-top:2px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav-in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+.nav button{border:0;background:none;padding:8px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.03em;border-radius:12px;margin:4px 2px}
+.nav button[aria-current="page"]{color:var(--forest);background:var(--surface-2)}
+.nav .ic{width:26px;height:26px}
+
+/* generic page sections */
+.page-h{margin-top:22px}
+.page-h h1{font-size:28px;font-weight:600}
+.page-h p{margin:4px 0 0;color:var(--muted)}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:var(--r);padding:16px 18px}
+.stack{display:flex;flex-direction:column;gap:14px;margin-top:18px}
+.prose{max-width:62ch}
+.prose p{margin:8px 0}
+.prose h2{font-size:20px;font-weight:600;margin-top:4px}
+.ex{font-weight:800;color:var(--forest)}
+.src{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.linkbtn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:800;font-size:14px;padding:9px 13px;border-radius:12px;border:2px solid var(--line);color:var(--ink);background:var(--surface);box-shadow:0 3px 0 var(--line)}
+.linkbtn:hover{background:var(--surface-2)}
+.linkbtn .ic{width:18px;height:18px}
+
+/* dictionary */
+.search{width:100%;margin-top:16px;padding:13px 16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.filters button{border:2px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 12px;font-weight:700;font-size:13px}
+.filters button[aria-pressed="true"]{background:var(--forest);border-color:var(--forest);color:var(--on-color)}
+.dict{margin-top:14px;border:2px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.drow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;padding:11px 16px;border-top:1px solid var(--line);align-items:baseline}
+.drow:first-child{border-top:0}
+.drow b{font-weight:800}
+.drow span{color:var(--muted)}
+.drow em{grid-column:1/-1;font-style:normal;font-size:13px;color:var(--muted);margin-top:-6px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--forest);margin-left:6px;vertical-align:middle}
+.empty{padding:24px 16px;color:var(--muted);text-align:center}
+
+/* music */
+.artist{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start}
+.avatar{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:var(--on-color);font-family:var(--display);font-weight:700;font-size:22px}
+.artist h2{font-size:20px;font-weight:600}
+.artist .tag{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.artist p{margin:6px 0 0}
+
+/* lesson overlay */
+.lesson{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.l-top{max-width:640px;width:100%;margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px max(16px,env(safe-area-inset-right,0px)) 6px max(16px,env(safe-area-inset-left,0px))}
+.x{border:0;background:none;color:var(--locked-ink);padding:4px;border-radius:8px}
+.x:hover{color:var(--ink)}
+.prog{flex:1;height:16px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--forest);border-radius:99px;transition:width .35s;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
+.l-body{flex:1;overflow-y:auto;max-width:640px;width:100%;margin:0 auto;padding:12px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px))}
+.l-kicker{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--u6);display:flex;align-items:center;gap:6px;min-height:20px}
+.l-q{font-size:24px;font-weight:600;margin:6px 0 18px}
+.prompt{display:flex;align-items:flex-end;gap:12px;margin-bottom:22px}
+.prompt .mascot{width:86px;flex:none}
+.say{position:relative;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 16px;font-size:20px;font-weight:800;margin-bottom:18px;min-width:0}
+.say::before{content:"";position:absolute;left:-9px;bottom:16px;width:14px;height:14px;background:var(--surface);border-left:2px solid var(--line);border-bottom:2px solid var(--line);transform:rotate(45deg)}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);box-shadow:0 4px 0 var(--line);font-weight:700;font-size:17px;min-width:0}
+.opt kbd{flex:none;width:26px;height:26px;border:2px solid var(--line);border-radius:8px;display:grid;place-items:center;font:800 13px var(--body);color:var(--muted)}
+.opt:hover{background:var(--surface-2)}
+.opt[aria-pressed="true"]{background:var(--sel);border-color:var(--sel-line);box-shadow:0 4px 0 var(--sel-line)}
+.opt.okk{background:var(--ok-bg);border-color:var(--ok);box-shadow:0 4px 0 var(--ok);color:var(--ok)}
+.opt.badd{background:var(--bad-bg);border-color:var(--bad);box-shadow:0 4px 0 var(--bad);color:var(--bad);animation:shake .3s}
+.opt.gone{opacity:.35;pointer-events:none;box-shadow:none}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match .col{display:grid;gap:10px;align-content:start}
+.match .opt{justify-content:center;text-align:center;font-size:16px;padding:14px 10px}
+.answer{min-height:112px;border-top:2px solid var(--line);border-bottom:2px solid var(--line);padding:10px 0;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;background:repeating-linear-gradient(180deg,transparent 0 50px,var(--line) 50px 52px)}
+.bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:22px}
+.tile{border:2px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 13px;font-weight:700;font-size:17px;box-shadow:0 4px 0 var(--line)}
+.tile:hover{background:var(--surface-2)}
+.tile.ghost{background:var(--surface-2);color:transparent;box-shadow:none;pointer-events:none}
+.l-foot{border-top:2px solid var(--line);background:var(--bg)}
+.l-foot.ok{background:var(--ok-bg);border-color:transparent}
+.l-foot.bad{background:var(--bad-bg);border-color:transparent}
+.l-foot-in{max-width:640px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-right,0px)) 18px max(16px,env(safe-area-inset-left,0px));display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.fb{flex:1 1 260px;min-width:0}
+.fb h3{font-size:22px;font-weight:600}
+.l-foot.ok .fb{color:var(--ok)} .l-foot.bad .fb{color:var(--bad)}
+.fb p{margin:2px 0 0;font-weight:700}
+.big{border:0;border-radius:14px;padding:14px 22px;min-width:160px;flex:1 1 160px;max-width:100%;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--forest);color:var(--on-color);box-shadow:0 5px 0 var(--forest-d)}
+.big:active{transform:translateY(3px);box-shadow:0 2px 0 var(--forest-d)}
+.big:disabled{background:var(--locked);color:var(--locked-ink);box-shadow:0 5px 0 var(--locked-d);cursor:default}
+.big.red{background:var(--lingon);box-shadow:0 5px 0 var(--lingon-d)}
+.big.ghostb{background:var(--surface);color:var(--muted);border:2px solid var(--line);box-shadow:0 5px 0 var(--line)}
+.l-foot .fb:empty{display:none}
+.l-foot.idle .big{flex:0 1 220px;margin-left:auto}
+
+/* done screen */
+.done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding-top:24px}
+.done .mascot{width:150px;animation:hop .9s ease-in-out 2}
+@keyframes hop{40%{transform:translateY(-18px) rotate(-4deg)}}
+.done h1{font-size:32px;font-weight:700;color:var(--hjorton-d)}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;max-width:420px;margin-top:10px}
+.st{border-radius:14px;border:2px solid var(--tc);overflow:hidden}
+.st small{display:block;background:var(--tc);color:var(--on-color);font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px}
+.st b{display:flex;align-items:center;justify-content:center;gap:4px;padding:10px 4px;font-size:22px;font-family:var(--display);font-variant-numeric:tabular-nums;color:var(--tc)}
+.st .ic{width:20px;height:20px}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:80;background:rgba(10,20,25,.55);display:grid;place-items:center;padding:16px}
+.sheet{background:var(--surface);border-radius:20px;padding:22px;max-width:420px;width:100%;max-height:85vh;overflow-y:auto}
+.sheet h2{font-size:22px;font-weight:600}
+.sheet ul{padding-left:20px;margin:10px 0}
+.sheet li{margin:8px 0}
+.sheet .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:700;z-index:90;max-width:calc(100% - 32px)}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:420px){.hero .mascot{width:76px}.hero h1{font-size:21px}.l-q{font-size:21px}.deco{display:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand" aria-label="Snåttren"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-hj"/></svg>Snåttren</div>
+    <button class="stat streak" id="s-streak" title="Dagar i rad"><svg class="ic" viewBox="0 0 24 24"><use href="#i-flame"/></svg><span>0</span></button>
+    <button class="stat hj" id="s-hj" title="Hjortron"><svg class="ic" viewBox="0 0 24 24"><use href="#i-hj"/></svg><span>0</span></button>
+    <button class="stat li" id="s-li" title="Lingon (liv)"><svg class="ic" viewBox="0 0 24 24"><use href="#i-lingon"/></svg><span>5</span></button>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<nav class="nav" aria-label="Meny">
+  <div class="nav-in">
+    <button data-tab="learn" aria-current="page"><svg class="ic" viewBox="0 0 24 24"><use href="#i-tree"/></svg>Lär dig</button>
+    <button data-tab="dict"><svg class="ic" viewBox="0 0 24 24"><use href="#i-book"/></svg>Ordbok</button>
+    <button data-tab="music"><svg class="ic" viewBox="0 0 24 24"><use href="#i-music"/></svg>Musik</button>
+    <button data-tab="about"><svg class="ic" viewBox="0 0 24 24"><use href="#i-info"/></svg>Om pitemål</button>
+  </div>
+</nav>
+
+<div id="layer"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-lingon" viewBox="0 0 24 24"><path d="M12 7c1-3 4-5 7-5-1 3-3 5-7 5z" fill="var(--forest)"/><circle cx="12" cy="14.5" r="7.5" fill="var(--lingon)"/><circle cx="9.3" cy="11.8" r="2" fill="#fff" opacity=".45"/></symbol>
+    <symbol id="i-hj" viewBox="0 0 24 24"><path d="M5 20c3-2 11-2 14 0" stroke="var(--forest)" stroke-width="2.2" fill="none" stroke-linecap="round"/><g fill="var(--hjorton)"><circle cx="12" cy="6.5" r="3.4"/><circle cx="7.6" cy="10" r="3.4"/><circle cx="16.4" cy="10" r="3.4"/><circle cx="9.5" cy="14.6" r="3.4"/><circle cx="14.5" cy="14.6" r="3.4"/><circle cx="12" cy="10.6" r="3.4"/></g><g fill="#fff" opacity=".5"><circle cx="11" cy="5.6" r="1"/><circle cx="6.8" cy="9" r="1"/><circle cx="15.5" cy="9" r="1"/></g></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2c1 4 6.5 6 6.5 12.2A6.5 6.5 0 0 1 5.5 14.2c0-3 1.7-5 3-6.8.2 2 1.2 3.2 2.3 3.6C10.5 7.6 10.8 4.6 12 2z" fill="var(--hjorton)"/><path d="M12 12c.6 2 3 3 3 5a3 3 0 0 1-6 0c0-1.5 1-2.6 1.8-3.4.1 1 .6 1.5 1.2 1.6-.2-1.3-.3-2.3 0-3.2z" fill="#FFD27A"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 2 6 10h3l-4 6h4l-3 4h12l-3-4h4l-4-6h3z" fill="currentColor"/><rect x="11" y="20" width="2" height="3" rx="1" fill="currentColor"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M8 7h8M8 11h6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" fill="currentColor"/><circle cx="17" cy="16" r="3" fill="currentColor"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 11v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17l-5.9 3.3 1.3-6.5L2.5 9.3l6.6-.8z" fill="currentColor"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10.5" rx="2.5" fill="currentColor"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2.4"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="currentColor"/><path d="M7 5H4a3 3 0 0 0 3 4M17 5h3a3 3 0 0 1-3 4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 13h4v4h-4zM7.5 20h9v2h-9z" fill="currentColor"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="currentColor"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="12" r="4" fill="currentColor"/></symbol>
+    <symbol id="d-gran" viewBox="0 0 80 80"><rect x="37" y="62" width="6" height="12" rx="2" fill="#6B4A2E"/><path d="M40 4 22 30h9L16 48h11L10 66h60L53 48h11L49 30h9z" fill="var(--forest)"/><path d="M40 4 22 30h9L16 48h11L10 66h30z" fill="#fff" opacity=".08"/><path d="M28 28c4 2 8 2 12 0M22 46c6 3 12 3 18 0M18 64c8 2 14 2 22 0" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7" fill="none"/></symbol>
+    <symbol id="d-lingon" viewBox="0 0 80 80"><path d="M40 70C40 50 30 30 14 22M40 70c0-18 10-32 26-38" stroke="var(--forest)" stroke-width="3" fill="none" stroke-linecap="round"/><g fill="var(--forest)"><ellipse cx="20" cy="26" rx="8" ry="4.5" transform="rotate(30 20 26)"/><ellipse cx="60" cy="34" rx="8" ry="4.5" transform="rotate(-25 60 34)"/><ellipse cx="30" cy="42" rx="7" ry="4" transform="rotate(50 30 42)"/></g><g fill="var(--lingon)"><circle cx="34" cy="56" r="7"/><circle cx="46" cy="54" r="7"/><circle cx="40" cy="64" r="7"/><circle cx="52" cy="44" r="6"/></g><g fill="#fff" opacity=".45"><circle cx="32" cy="54" r="2"/><circle cx="44" cy="52" r="2"/><circle cx="38" cy="62" r="2"/></g></symbol>
+    <symbol id="d-snow" viewBox="0 0 80 80"><g stroke="var(--u4)" stroke-width="4" stroke-linecap="round" fill="none"><path d="M40 8v64M12 24l56 32M12 56l56-32"/><path d="M32 14l8 8 8-8M32 66l8-8 8 8M14 34l11-3-3-11M66 46l-11 3 3 11M14 46l11 3-3 11M66 34l-11-3 3-11"/></g></symbol>
+    <symbol id="d-hj" viewBox="0 0 80 80"><path d="M40 74V48" stroke="var(--forest)" stroke-width="3"/><path d="M40 50c-10 0-20-6-22-14 10 0 18 4 22 14zM40 50c10 0 20-6 22-14-10 0-18 4-22 14z" fill="var(--forest)"/><g fill="var(--hjorton)"><circle cx="40" cy="18" r="7"/><circle cx="31" cy="25" r="7"/><circle cx="49" cy="25" r="7"/><circle cx="35" cy="35" r="7"/><circle cx="45" cy="35" r="7"/><circle cx="40" cy="27" r="7"/></g><g fill="#fff" opacity=".5"><circle cx="38" cy="16" r="2"/><circle cx="29" cy="23" r="2"/><circle cx="47" cy="23" r="2"/></g></symbol>
+    <symbol id="d-moose" viewBox="0 0 80 80"><path d="M22 18c-6-2-8-8-8-12 4 2 6 6 10 6 0-4 2-6 4-8 1 4 0 8 2 10M58 18c6-2 8-8 8-12-4 2-6 6-10 6 0-4-2-6-4-8-1 4 0 8-2 10" stroke="#8C6A45" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M28 20h24c4 0 6 4 5 8l-4 22c-1 6-5 12-13 12s-12-6-13-12l-4-22c-1-4 1-8 5-8z" fill="#7A5634"/><circle cx="33" cy="32" r="2.6" fill="#1b1b1b"/><circle cx="47" cy="32" r="2.6" fill="#1b1b1b"/><ellipse cx="40" cy="54" rx="9" ry="7" fill="#5E4127"/></symbol>
+  </defs>
+</svg>
+
+<script>
+"use strict";
+/* ---------- Kursinnehåll ---------- */
+// Ord och fraser från pitemal.wikidot.com, alterhedens.se och sv.wikipedia.org/wiki/Pitemål.
+// [pitemål, svenska, valfri kommentar]
+const UNITS = [
+  {id:"u1", title:"Föst ord", sub:"Säg vem du är och hälsa", c:"u1", deco:"d-gran",
+   tips:[
+    "<b>I</b> = jag, <b>dö</b> = du, <b>vä</b> = vi, <b>jä</b> = ni, <b>döm</b> = de.",
+    "<b>It</b> betyder inte. I vissa byar säger man <b>et</b>.",
+    "Före namn sätter man <b>'n</b> för män och <b>'a</b> för kvinnor: 'n Sixten, 'a Klara.",
+    "<b>Hä</b> betyder det: <b>Hä jär klaart</b> = Det är färdigt."],
+   words:[
+    ["i","jag"],["dö","du"],["hä","det"],["vä","vi"],["jä","ni"],["döm","de"],
+    ["it","inte","I vissa byar: et"],["jenna","här"],["denna","där"],["hejm","hem"],
+    ["boijn","byn","Används också om Älvsbyn"],["i hejt","jag heter"],
+    ["Vöre jär'e vä dä?","Hur är det med dig?"],["Vöre jär'e vä jä?","Hur är det med er?"],
+    ["I jär bådda boin","Jag är från Älvsbyn"],["Hä jär klaart","Det är färdigt"],["I behöv it","Jag behöver inte"]]},
+  {id:"u2", title:"Hejma", sub:"Stugan, köket och pitepalten", c:"u2", deco:"d-lingon",
+   tips:[
+    "Feminina ord får ofta <b>-a</b> i bestämd form: <b>båoka</b> = boken, <b>skåoLa</b> = skolan.",
+    "Maskulina ord får ofta <b>-n</b>: <b>hundn</b> = hunden, <b>gåLn</b> = gården.",
+    "Pitepalt äts med smör och lingon. Har man ätit för mycket är man <b>paltschwiim</b>."],
+   words:[
+    ["heus","hus"],["stögo","stuga"],["båol","bord"],["kaff","kaffe"],["pären","potatis"],
+    ["päroflos","potatisskal"],["klodden","mjukt tunnbröd"],["remidjen","bestick"],["slarva","trasa"],
+    ["nestjärla","matsäck"],["ita","äta"],["båka","baka"],["djära","göra"],
+    ["paltschwiim","övermätt av palt"],["kvedo","proppmätt"],["arbäjt","arbeta"],
+    ["I arbäjt nalta hendervä","Jag arbetar lite hemmavid"],["Foil opp mjölkhemtar'n","Fyll mjölkhämtaren"]]},
+  {id:"u3", title:"Skogen", sub:"Bär, djur och myggen", c:"u3", deco:"d-hj",
+   tips:[
+    "Gamla långa vokaler har blivit diftonger: <b>eis</b> (is), <b>heus</b> (hus), <b>skåog</b> (skog), <b>boi</b> (by).",
+    "<b>Snåttren</b> är hjortron, och <b>nåppe</b> betyder plockat.",
+    "<b>Åte</b> är allt som surrar: mygg, knott och andra insekter."],
+   words:[
+    ["skåog","skog"],["gren","gran"],["dårjnålen","tallbarr"],["snåttren","hjortron"],["be:r","bär"],
+    ["nåppe","plockat"],["stjer","tjäder"],["warg","varg"],["lekatt","hermelin"],["kangraot","spindel"],
+    ["moj","mygg"],["åte","mycket insekter"],["törrfuruvedagocken","hackspett"],["langbäjnemojj","harkrank"],
+    ["pärowann","sork"],["tjiroståmb","tjärstubbe"],["bLå`om","blomma"],
+    ["Hä var möche åte jena","Det var mycket insekter här"]]},
+  {id:"u4", title:"Veinter", sub:"Snö, kyla och skidor", c:"u4", deco:"d-snow",
+   tips:[
+    "Det tjocka L:et skrivs ofta med stort L: <b>kåLv</b>, <b>gLa:s</b>. Det uttalas längre bak i munnen och låter nästan som ett klick.",
+    "Ord med kort rotstavelse behåller slutvokalen: <b>vå`ra</b> (vara), <b>spå`da</b> (spade).",
+    "<b>Ándren</b> är skidorna. Dem tjärar man innan säsongen."],
+   words:[
+    ["veinter","vinter"],["eis","is"],["fjuksnönn","lätt snö"],["snöblint","kan inte se för all snö"],
+    ["djupränt","så djup snö att man sjunker"],["ánder","skida"],["skreck","åka skridskor"],["kwe:l","kväll"],
+    ["kå:l","kall"],["sjö","sjö"],["stjä`ärn","stjärna"],["snäägg","blåsa"],["schweites","svettas"],
+    ["viiderstöjt","cykelpump","Ordagrant: väder-stöt"],["jett","lätt"],
+    ["I ha tjira ándren","Jag har tjärat skidorna"],["Hä jär et tåongt móka fjuksnönn","Det är inte tungt att skotta lätt snö"]]},
+  {id:"u5", title:"Känslor & folk", sub:"Glad, trött eller tjurig", c:"u5", deco:"d-moose",
+   tips:[
+    "<b>Euskefeurat</b> betyder nedstämd eller modfälld. Det är också namnet på gruppen som sjunger på pitemål.",
+    "Många ord om humör slutar på <b>-at</b>: <b>tjeurat</b> (tjurigt), <b>göudat</b> (galet).",
+    "<b>Sörlenninga</b> är folk från södra Sverige."],
+   words:[
+    ["euskefeurat","nedstämd"],["blijdtjúkkt","gladlynt"],["illspecko","argsint"],["trobba","butter"],
+    ["tjeurat","tjurigt"],["ga`arn","galen"],["göuvd","galning"],["lejd","ful i sättet"],["äkshlänt","duktig"],
+    ["ä´xter","pigg för sin ålder"],["sömenkeurat","sömndrucken"],["beshwäshfåtti","lat"],
+    ["finfLos","högfärdig person"],["sörlenninga","folk från södra Sverige"],["fjälla","flickvän"],
+    ["påik","pojke"],["hakatent","kort stubin"],["släpphent","fumlig"],
+    ["I jär åll åll","Jag är trött"],["I jär så euskefurat","Jag är så hängig"],["I waal så trojt bårte häjna","Jag blir så trött på det här"],
+    ["Härri gu so arg i var","Herre gud så arg jag var"],["Åjj va dö sóorm","Oj vad du sölar ner dig"]]},
+  {id:"u6", title:"Småord", sub:"Lite, mycket, var och hur", c:"u6", deco:"d-gran",
+   tips:[
+    "<b>Vosch</b> = var, <b>vodda</b> = varifrån, <b>vöre</b> = hur.",
+    "<b>Jenna</b> = här, <b>denna</b> = där.",
+    "<b>Nest</b> betyder hos: <b>Döm våra nest n'Kalle</b> = De är hos Kalle."],
+   words:[
+    ["nalta","lite"],["åsit","ingenting"],["gode","ganska"],["mötje","mycket"],["nager","några"],
+    ["najn","någon"],["nagerst","någonstans"],["nanschtin","någonsin"],["åll`er","aldrig"],["vosch","var"],
+    ["vöre","hur"],["vodda","varifrån"],["piligröut","mycket lite"],["dell","till"],["lave","bredvid"],
+    ["nest","hos"],["söjna","så här"],["nöför","ingen konst"],
+    ["Lämen nalta slåkamon","Lämna lite mellanrum"],["Döm våra nest n'Kalle","De är hos Kalle"],["Hä soid","Det lutar"]]},
+  {id:"u7", title:"Uttryck", sub:"Fraser som pitebor säger", c:"u7", deco:"d-lingon",
+   tips:[
+    "Verbet ser ut som infinitiv i plural: <b>i spring</b> men <b>vä spriòing</b>.",
+    "Uppmaning till flera slutar på <b>-en</b>: <b>Kommen hijt onga!</b> = Kom hit ungar!",
+    "<b>Hä gäll it djööl</b> betyder ungefär bit ihop. Ordagrant: det gäller att inte grina."],
+   words:[
+    ["I sko stul en strucko","Jag ska vila en stund"],["Schönd dä","Skynda dig"],
+    ["Kom å seit lave mä","Kom och sitt bredvid mig"],["I hav illt öte bäjne","Jag har ont i benet"],
+    ["Hä jär båra na tjóller","Det är bara strunt"],["Hä gäll it djööl","Det gäller att inte grina","Ungefär: bit ihop"],
+    ["Kommen hijt onga","Kom hit ungar"],["I jär färda","Jag är klar"],["Slecke sleukt besleut","Vilket bra beslut"],
+    ["djööl","grina"],["löög","ljuga"],["twäjtes","lyckas"],["tjoller","strunt"]]},
+  {id:"u8", title:"Byn & gården", sub:"Ladugård, utedass och grannbyar", c:"u8", deco:"d-moose",
+   tips:[
+    "<b>Boijn</b> betyder byn, men också just Älvsbyn. Piteå är staden.",
+    "Klockorna på landet gick ofta 1–2 timmar före. Rätt tid kallades <b>bårgeli tijd</b>.",
+    "<b>Stjälät</b> är Skellefteå, och en <b>håsa´faot</b> är någon från Luleå. Lulebor sades hasa med fötterna."],
+   words:[
+    ["djäla","åker"],["feus-teven","ladugårdslukt"],["mokaråmme","gödselränna"],["stjitheuse","utedass"],
+    ["staoul","stol"],["hé ommar´n","fjärrkontroll"],["gnisterspännare","elektriker"],["mojl","boll"],
+    ["raate","skräp"],["stjälät","Skellefteå"],["håsa´faot","person från Luleå"],["tjällinga","käringen"],
+    ["tjörmakall","vimsig gubbe"],["skråpabúll","sladdbarn"],["örtda:gen","vardag"],["nojåsh-afta","nyårsafton"],
+    ["bärhuveafta","fest"],["bårgeli tijd","rätt tid"],["gå opa bójn","ryktas"],
+    ["Jär klåkka jen bårgeli?","Visar klockan rätt tid?"],["Vä håva wann ine pärolande","Vi har sork i potatislandet"]]},
+  {id:"u9", title:"Göra saker", sub:"Orka, vila och rusa iväg", c:"u9", deco:"d-snow",
+   tips:[
+    "Många verb tappar slutvokalen: <b>breuk</b> (bruka), <b>sjåong</b> (sjunga).",
+    "Verb som slutar på -er i svenskan blir bara stammen i presens: <b>han bit</b> = han biter.",
+    "Preteritum får ofta en vokal på slutet: <b>arbeite</b> = arbetade, <b>slete</b> = slet."],
+   words:[
+    ["jitt","orka"],["nöges","måste"],["stuul","vila"],["dårg å","rusa iväg"],["tette å","lunka iväg"],
+    ["ra`al","vråla"],["stchjäggles","grimasera"],["stijn opp","le"],["mööl","knåda"],["dråga dell","friskna till"],
+    ["stjilå","bero på"],["waal","blir"],["sovvel","sortera"],["lämmen","träningsvärk"],["kaggerbeint","skakig på benen"],
+    ["bärfåut","barfota"],["ilak-and´n","dålig andedräkt"],["böxskrede","byxorna har hasat ned"],
+    ["I sko stuul nalta","Jag ska vila lite"],["Jär dö öte fö:-dä?","Håller du på att äta?"],["Här gick snörrovaast","Det gick fort"]]},
+  {id:"u10", title:"Folk & lynne", sub:"Hetsig, slarvig eller jeshwingt", c:"u10", deco:"d-hj",
+   tips:[
+    "<b>Hakatent</b> är pitefint. På bondska säger man <b>håkatent</b>.",
+    "<b>Töckejen</b> = sån här och <b>töckenden</b> = sån där.",
+    "<b>Jeshwingt</b> används om något som är både snabbt och bra."],
+   words:[
+    ["spanágge","hetsig"],["angesht","harmsen"],["bålali","burdus"],["göudat","galet"],["hoven´droven","huller om buller"],
+    ["kolifäjs","slagsmål"],["lellhouwe","ungdomligt oförstånd"],["ùdd´man","barskrapad"],["ätthå:la","envist efterhängsen"],
+    ["schlåssali","slarvig"],["lagrann","noggrann"],["vhaller","svammel"],["jeshwingt","snabbt och bra"],
+    ["sowle","det godaste"],["snepp","snabbvisit"],["gammälschmöcko","gammeldags"],["ebräjdd vä åsit","obetydligt"],
+    ["töckejen","sån här"],["töckenden","sån där"],["skovvalottom","hur som helst"],
+    ["Han jär nalta spanagge","Han är lite hetsig"],["Hä vart så göudat","Det blev så galet"],["Var et så beshwäshfåtti","Var inte så lat"]]}
+];
+const PRAISE = [["Äkshlänt!","duktigt"],["Jeshwingt!","snabbt och bra"],["Slecke sleukt besleut!","vilket bra beslut"],["Hä jär klaart!","det är färdigt"]];
+const NODE_NAMES = ["Nya ord","Fler ord","Meningar","Repetition"];
+
+/* ---------- Ikoner och maskot ---------- */
+const ic = (id, cls="ic") => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true"><use href="#${id}"/></svg>`;
+function mascot(mood="happy"){
+  const mouth = mood==="sad" ? '<path d="M50 80q10-8 20 0" stroke="#3A2A1E" stroke-width="3.5" fill="none" stroke-linecap="round"/>'
+    : mood==="wow" ? '<ellipse cx="60" cy="80" rx="7" ry="8" fill="#3A2A1E"/><ellipse cx="60" cy="84" rx="4" ry="3" fill="#E06A7A"/>'
+    : '<path d="M48 76q12 12 24 0" stroke="#3A2A1E" stroke-width="3.5" fill="#3A2A1E" stroke-linecap="round"/><path d="M53 81q7 4 14 0" fill="#E06A7A"/>';
+  return `<svg class="mascot" viewBox="0 0 120 112" role="img" aria-label="Palten, en pitepalt">
+    <ellipse cx="60" cy="104" rx="38" ry="6" fill="#000" opacity=".15"/>
+    <ellipse cx="60" cy="68" rx="46" ry="36" fill="#A08D78"/>
+    <ellipse cx="60" cy="72" rx="46" ry="32" fill="#8E7B66"/>
+    <ellipse cx="60" cy="64" rx="42" ry="30" fill="#A99782"/>
+    <ellipse cx="44" cy="50" rx="14" ry="7" fill="#fff" opacity=".18"/>
+    <g fill="#7C6A57"><circle cx="32" cy="80" r="2"/><circle cx="88" cy="74" r="2.4"/><circle cx="80" cy="88" r="1.7"/><circle cx="40" cy="62" r="1.5"/><circle cx="92" cy="58" r="1.6"/></g>
+    <rect x="62" y="26" width="26" height="16" rx="5" fill="#F7D96B" transform="rotate(-8 75 34)"/>
+    <rect x="65" y="27" width="10" height="5" rx="2.5" fill="#fff" opacity=".6" transform="rotate(-8 75 34)"/>
+    <path d="M40 32c-2-8 2-14 8-16-1 6-3 11-8 16z" fill="#2E6B4E"/>
+    <circle cx="36" cy="38" r="7" fill="#C42B3F"/><circle cx="47" cy="36" r="6.5" fill="#C42B3F"/>
+    <circle cx="34" cy="36" r="2" fill="#fff" opacity=".5"/><circle cx="45" cy="34" r="2" fill="#fff" opacity=".5"/>
+    <ellipse cx="46" cy="62" rx="8" ry="9" fill="#fff"/><ellipse cx="74" cy="62" rx="8" ry="9" fill="#fff"/>
+    <circle cx="48" cy="64" r="4.5" fill="#22170F"/><circle cx="76" cy="64" r="4.5" fill="#22170F"/>
+    <circle cx="49.5" cy="62" r="1.5" fill="#fff"/><circle cx="77.5" cy="62" r="1.5" fill="#fff"/>
+    <ellipse cx="34" cy="74" rx="6" ry="3.5" fill="#E77D8A" opacity=".55"/><ellipse cx="86" cy="74" rx="6" ry="3.5" fill="#E77D8A" opacity=".55"/>
+    ${mouth}</svg>`;
+}
+
+/* ---------- Lagring ---------- */
+const KEY = "snattren-v1";
+const DEF = {xp:0, hj:20, lingon:5, lingonAt:Date.now(), streak:0, lastDay:null, done:{}, seen:{}, miss:{}, day:{d:null, xp:0}, sound:true};
+let S = Object.assign({}, DEF);
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign({}, DEF, JSON.parse(raw)); } catch(e) {}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+const MAXL = 5, REGEN = 30*60*1000, GOAL = 30;
+function today(off=0){ const d = new Date(Date.now()+off*864e5); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function regen(){
+  if (S.lingon >= MAXL){ S.lingonAt = Date.now(); return; }
+  const n = Math.floor((Date.now()-S.lingonAt)/REGEN);
+  if (n > 0){ S.lingon = Math.min(MAXL, S.lingon+n); S.lingonAt += n*REGEN; if (S.lingon>=MAXL) S.lingonAt = Date.now(); }
+}
+function streakAlive(){ return S.lastDay===today() || S.lastDay===today(-1); }
+function dayXp(){ return S.day.d===today() ? S.day.xp : 0; }
+
+/* ---------- Hjälpare ---------- */
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const pick = (a,n) => shuffle(a).slice(0,n);
+const isPhrase = w => w[0].trim().includes(" ") && w[1].trim().includes(" ");
+const norm = s => s.toLowerCase().replace(/[?!.,]/g,"").replace(/\s+/g," ").trim();
+const tok = s => s.replace(/[?!.,]/g,"").split(/\s+/).filter(Boolean);
+const ALL = UNITS.flatMap((u,ui) => u.words.map(w => ({p:w[0], s:w[1], note:w[2]||"", u:ui, ph:isPhrase(w)})));
+function toast(msg){ const t = document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(), 2200); }
+
+let actx = null;
+function tone(freqs, dur=.11){
+  if (!S.sound) return;
+  try {
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const t0 = actx.currentTime;
+    freqs.forEach((f,i) => { const o=actx.createOscillator(), g=actx.createGain(); o.type="triangle"; o.frequency.value=f;
+      const s=t0+i*dur; g.gain.setValueAtTime(.0001,s); g.gain.exponentialRampToValueAtTime(.18,s+.015); g.gain.exponentialRampToValueAtTime(.0001,s+dur+.06);
+      o.connect(g).connect(actx.destination); o.start(s); o.stop(s+dur+.08); });
+  } catch(e) {}
+}
+
+/* ---------- Lektionsstruktur ---------- */
+function lessonPools(ui){
+  const ws = ALL.filter(w => w.u===ui);
+  const words = ws.filter(w=>!w.ph), phr = ws.filter(w=>w.ph);
+  const k = Math.ceil(words.length/2);
+  return [
+    words.slice(0,k),
+    words.slice(k).concat(words.slice(0,2)),
+    phr.length ? phr.concat(pick(words,4)) : pick(words, 8),
+    ws
+  ];
+}
+const ORDER = UNITS.flatMap((u,ui) => [0,1,2,3].map(li => ui+"-"+li));
+function currentId(){ return ORDER.find(id => !S.done[id]) || null; }
+function unlocked(id){ const c = currentId(); return c===null || ORDER.indexOf(id) <= ORDER.indexOf(c); }
+
+/* ---------- Övningsgenerering ---------- */
+function distract(w, field, n){
+  const same = ALL.filter(x => x!==w && x.ph===w.ph && x[field]!==w[field]);
+  const near = same.filter(x => x.u===w.u);
+  const pool = shuffle(near).concat(shuffle(same.filter(x=>x.u!==w.u)));
+  const out = [], seen = new Set([norm(w[field])]);
+  for (const x of pool){ const k=norm(x[field]); if (!seen.has(k)){ seen.add(k); out.push(x[field]); } if (out.length>=n) break; }
+  return out;
+}
+function mkMC(w, dir){
+  const ans = dir==="ps" ? w.s : w.p;
+  return {t:"mc", dir, w, ans, opts: shuffle([ans, ...distract(w, dir==="ps"?"s":"p", 3)]), isNew: !S.seen[w.p]};
+}
+function mkBuild(w){
+  const dir = Math.random()<.5 ? "ps" : "sp";
+  const target = dir==="ps" ? w.s : w.p, field = dir==="ps" ? "s" : "p";
+  const ans = tok(target);
+  const have = new Set(ans.map(norm));
+  const extra = shuffle(ALL.filter(x=>x!==w).flatMap(x=>tok(x[field]))).filter(t=>{ const k=norm(t); if(have.has(k)) return false; have.add(k); return true; }).slice(0, Math.max(3, 6-ans.length));
+  return {t:"build", dir, w, ans, tiles: shuffle(ans.concat(extra)).map((t,i)=>({t,i}))};
+}
+function mkMatch(pool){
+  const seen = new Set(), pairs = [];
+  for (const w of shuffle(pool.filter(x=>!x.ph).length>=4 ? pool.filter(x=>!x.ph) : pool)){
+    const a=norm(w.p), b=norm(w.s); if (seen.has(a)||seen.has(b)) continue; seen.add(a); seen.add(b); pairs.push(w); if (pairs.length>=5) break;
+  }
+  return {t:"match", pairs};
+}
+function buildLesson(pool, len=11){
+  const words = pool.filter(w=>!w.ph), phr = pool.filter(w=>w.ph);
+  const fresh = words.filter(w=>!S.seen[w.p]).slice(0,4);
+  const ex = fresh.map(w => mkMC(w,"ps"));
+  const rest = [];
+  pick(phr, Math.min(3, phr.length)).forEach(w => rest.push(mkBuild(w)));
+  if (pool.length >= 4) rest.push(mkMatch(pool));
+  let i = 0; const src = shuffle(words.length ? words : pool);
+  while (ex.length + rest.length < len && src.length){ const w = src[i++ % src.length]; rest.push(mkMC(w, Math.random()<.5?"ps":"sp")); if (i > 40) break; }
+  return ex.concat(shuffle(rest));
+}
+
+/* ---------- Vyer ---------- */
+let tab = "learn", openPop = null, dictFilter = -1, dictQ = "";
+function renderStats(){
+  regen();
+  $("#s-streak span").textContent = streakAlive() ? S.streak : 0;
+  $("#s-streak").classList.toggle("off", !streakAlive() || !S.streak);
+  $("#s-hj span").textContent = S.hj;
+  $("#s-li span").textContent = S.lingon;
+}
+function render(){
+  renderStats();
+  document.querySelectorAll(".nav button").forEach(b => { if (b.dataset.tab===tab) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
+  const m = $("#main");
+  if (tab==="learn") m.innerHTML = viewLearn();
+  if (tab==="dict") { m.innerHTML = viewDict(); bindDict(); }
+  if (tab==="music") m.innerHTML = viewMusic();
+  if (tab==="about") m.innerHTML = viewAbout();
+  if (tab==="learn") startAurora();
+}
+
+function viewLearn(){
+  const cur = currentId();
+  const g = Math.min(1, dayXp()/GOAL);
+  const greet = !S.xp ? ["Välkommen!", "Jag är Palten. Vä lär oss pitemål tillsammans."]
+    : dayXp()>=GOAL ? ["Äkshlänt!", "Dagens mål är klart. Du får gärna köra en till."]
+    : ["Vöre jär'e vä dä?", "Några minuter om dagen räcker långt."];
+  let html = `<section class="hero" aria-label="Dagens mål"><canvas id="aurora" aria-hidden="true"></canvas>${mascot("happy")}
+    <div style="min-width:0;flex:1"><h1>${esc(greet[0])}</h1><p>${esc(greet[1])}</p>
+    <div class="goal"><span>${dayXp()}/${GOAL} XP</span><span class="bar"><i style="width:${g*100}%"></i></span></div>
+    <div class="hero-actions"><button class="chip" data-act="practice">${ic("i-bolt","ic")} Öva</button><button class="chip" data-act="sound">${S.sound?"Ljud på":"Ljud av"}</button></div></div></section>`;
+  const offs = [0, 54, 0, -54];
+  UNITS.forEach((u, ui) => {
+    html += `<section class="unit" style="--uc:var(--${u.c});--ud:var(--${u.c}d)">
+      <div class="unit-head" style="background:var(--${u.c})"><div class="t"><small>Del ${ui+1}</small><h2>${esc(u.title)}</h2><p>${esc(u.sub)}</p></div>
+      <button class="guide-btn" data-guide="${ui}">${ic("i-book")}Guide</button></div><div class="path">`;
+    [0,1,2,3].forEach(li => {
+      const id = ui+"-"+li, done = !!S.done[id], isCur = id===cur, lock = !unlocked(id);
+      const icon = lock ? "i-lock" : done ? "i-check" : li===3 ? "i-trophy" : "i-star";
+      html += `<div class="node-wrap" style="transform:translateX(${offs[li]}px);z-index:${openPop===id?5:1}">
+        ${isCur && openPop!==id ? `<div class="bubble">BÖRJA</div>` : ""}
+        <button class="node ${lock?"locked":""} ${isCur?"current":""}" data-node="${id}" aria-label="${esc(u.title)}: ${NODE_NAMES[li]}${done?", klar":lock?", låst":""}">${ic(icon)}</button>
+        ${openPop===id ? popHtml(u, ui, li, done, lock) : ""}
+        ${li===1 ? `<svg class="deco" style="left:${ui%2? "-150px":"110px"};top:-4px" aria-hidden="true"><use href="#${u.deco}"/></svg>` : ""}
+      </div>`;
+    });
+    html += `</div></section>`;
+  });
+  if (!cur) html += `<div class="card" style="margin-top:28px;text-align:center"><h2>Hela kursen är klar!</h2><p>Du kan pitemål bättre än de flesta sörlenninga. Kör <b>Öva</b> för att hålla orden färska.</p></div>`;
+  return html;
+}
+function popHtml(u, ui, li, done, lock){
+  if (lock) return `<div class="pop locked"><h3>${NODE_NAMES[li]}</h3><p>Klara lektionerna innan för att låsa upp den här.</p></div>`;
+  return `<div class="pop"><h3>${NODE_NAMES[li]}</h3><p>${esc(u.title)} · Lektion ${li+1} av 4</p>
+    <button class="go" data-start="${ui}-${li}">${done ? "Gör om +5 XP" : "Börja +"+(li===3?15:10)+" XP"}</button></div>`;
+}
+
+function viewDict(){
+  return `<div class="page-h"><h1>Ordbok</h1><p>${ALL.length} ord och fraser från kursen. En prick betyder att du har lärt dig ordet.</p></div>
+  <label for="q" class="sr" hidden>Sök</label>
+  <input id="q" class="search" type="search" placeholder="Sök på pitemål eller svenska" value="${esc(dictQ)}" autocomplete="off">
+  <div class="filters" role="group" aria-label="Filtrera på del">
+    <button data-f="-1" aria-pressed="${dictFilter===-1}">Alla</button>
+    ${UNITS.map((u,i)=>`<button data-f="${i}" aria-pressed="${dictFilter===i}">${esc(u.title)}</button>`).join("")}
+  </div><div class="dict" id="dict"></div>`;
+}
+function fillDict(){
+  const q = norm(dictQ);
+  const rows = ALL.filter(w => (dictFilter<0 || w.u===dictFilter) && (!q || norm(w.p).includes(q) || norm(w.s).includes(q)));
+  $("#dict").innerHTML = rows.length ? rows.map(w => `<div class="drow"><b>${esc(w.p)}${S.seen[w.p]?'<span class="dot" title="Inlärt"></span>':""}</b><span>${esc(w.s)}</span>${w.note?`<em>${esc(w.note)}</em>`:""}</div>`).join("")
+    : `<div class="empty">Inga träffar på "${esc(dictQ)}". Prova ett kortare ord.</div>`;
+}
+function bindDict(){
+  fillDict();
+  $("#q").addEventListener("input", e => { dictQ = e.target.value; fillDict(); });
+}
+
+function viewMusic(){
+  const L = (href, label) => `<a class="linkbtn" href="${href}" target="_blank" rel="noopener">${ic("i-ext")}${label}</a>`;
+  return `<div class="page-h"><h1>Musik på bondska</h1><p>Lyssna, sjung med och lär dig hur pitemål låter på riktigt.</p></div>
+  <div class="stack">
+    <article class="card artist"><div class="avatar" style="background:var(--u4)">EF</div><div style="min-width:0">
+      <div class="tag">Rock på pitemål</div><h2>Euskefeurat</h2>
+      <p>Gruppen som gjort mest för att sprida pitemålet. Namnet betyder nedstämd eller modfälld på bondska.</p>
+      <div class="src">${L("https://open.spotify.com/search/Euskefeurat","Spotify")}${L("https://www.youtube.com/results?search_query=Euskefeurat","YouTube")}</div></div></article>
+    <article class="card artist"><div class="avatar" style="background:var(--u2)">KG</div><div style="min-width:0">
+      <div class="tag">Hiphop från Piteå</div><h2>Kalle Gracias</h2>
+      <p>Kalle Granberg, född 1989 i Piteå. Rappar om småstadsliv och stora drömmar. Debut-EP:n Pulsen gick upp som etta på iTunes svenska hiphoplista 2011.</p>
+      <div class="src">${L("https://open.spotify.com/search/Kalle%20Gracias","Spotify")}${L("https://www.youtube.com/results?search_query=Kalle+Gracias","YouTube")}${L("https://www.sverigesradio.se/artikel/5680276","P4 Norrbotten")}</div></div></article>
+    <article class="card artist"><div class="avatar" style="background:var(--u1)">SG</div><div style="min-width:0">
+      <div class="tag">Visor på pitemål</div><h2>Sigurd Granström</h2>
+      <p>Piteåbo som skriver egna, underfundiga texter på pitemål till kända melodier. Han uppträder med Piteå Visklubb och besöker skolor för att sjunga och berätta om dialekten.</p>
+      <div class="src">${L("https://www.youtube.com/watch?v=NvJvS16vvTQ","Hemming S Mark")}${L("https://www.youtube.com/watch?v=1wWXaogzxBQ","Dö få gjärnom")}${L("https://www.youtube.com/watch?v=Bd4b8JW2Mig","Älsk mä gullång")}${L("https://www.youtube.com/results?search_query=Sigurd+Granstr%C3%B6m+pitem%C3%A5l","Fler låtar på YouTube")}${L("http://visklubb.se/","Piteå Visklubb")}</div></div></article>
+  </div>`;
+}
+
+function viewAbout(){
+  const L = (href, label) => `<a class="linkbtn" href="${href}" target="_blank" rel="noopener">${ic("i-ext")}${label}</a>`;
+  return `<div class="page-h"><h1>Om pitemål</h1><p>Dialekten som kallas bondska, peitmåle eller båonshka.</p></div>
+  <div class="stack">
+    <section class="card prose"><h2>Var pratas det?</h2>
+      <p>Pitemål talas i Piteå och Älvsbyn och längs hela Pite älvdal, upp i delar av Arvidsjaur och Jokkmokk. I byarna kallas dialekten <b>bondska</b>. I själva Piteå talas en mildare variant som kallas <b>pitefint</b>.</p>
+      <p>Orterna har egna namn på bondska, till exempel <span class="ex">Jiiver</span>, <span class="ex">Årter</span> och <span class="ex">Boin</span> (Älvsbyn).</p>
+      <p>Under 1900-talet förbjöds många barn att prata dialekt i skolan. I dag är bondska populärt bland unga igen, och Pitemålsakademin grundades 2014 för att vårda pitemålet som kulturarv.</p></section>
+    <section class="card prose"><h2>Så låter det</h2>
+      <p><b>Diftonger.</b> Gamla långa vokaler har blivit dubbelljud: <span class="ex">eis</span> (is), <span class="ex">heus</span> (hus), <span class="ex">skåog</span> (skog), <span class="ex">boi</span> (by).</p>
+      <p><b>Tjockt L.</b> Skrivs ofta med stort L, som i <span class="ex">kåLv</span> (kalv). Det sägs längre bak i munnen.</p>
+      <p><b>K och g blir tj och dj</b> före främre vokaler: <span class="ex">tjö&#96;örk</span> (kyrka), <span class="ex">djä&#96;ra</span> (göra).</p>
+      <p><b>Korta ord.</b> Inte blir <span class="ex">it</span>, och många ord tappar slutvokalen.</p>
+      <p><b>Tre genus.</b> Saker kan vara han eller hon: <span class="ex">hajna</span> (den här, han), <span class="ex">hojna</span> (den här, hon), <span class="ex">häjna</span> (det här).</p></section>
+    <section class="card prose"><h2>Om stavningen</h2>
+      <p>Det finns ingen rätt stavning. Uttalet skiljer sig mellan byar, så samma ord kan skrivas på flera sätt, till exempel <span class="ex">mötje</span>, <span class="ex">mytje</span> och <span class="ex">möche</span> (mycket). I kursen används en stavning per ord.</p></section>
+    <section class="card prose"><h2>Källor</h2>
+      <p>Orden och fraserna i kursen kommer från de här sidorna. Där finns mycket mer att läsa.</p>
+      <div class="src">${L("https://pitemal.wikidot.com/page","Pitemål wiki")}${L("https://pitemal.wikidot.com/glossary","Ordlista")}${L("https://www.alterhedens.se/pitemal-pitebondska.html","AlterHedens")}${L("https://www.alterhedens.se/korsord-pitemal-pitebondska.html","Korsord")}${L("https://www.alterhedens.se/quiz-vaxter-pitemal.html","Växtquiz")}${L("https://sv.wikipedia.org/wiki/Pitem%C3%A5l","Wikipedia")}</div></section>
+    <section class="card prose" id="reset-box"><h2>Dina framsteg</h2>
+      <p>${S.xp} XP totalt · ${Object.keys(S.seen).length} ord inlärda · ${Object.keys(S.done).length} av ${ORDER.length} lektioner klara.</p>
+      <div class="src"><button class="linkbtn" data-act="reset">Börja om från början</button></div></section>
+  </div>`;
+}
+
+/* ---------- Norrsken ---------- */
+let auroraRaf = 0;
+function startAurora(){
+  cancelAnimationFrame(auroraRaf);
+  const cv = $("#aurora"); if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const dpr = Math.min(2, devicePixelRatio||1);
+  let W=0,H=0;
+  const stars = Array.from({length:40}, ()=>({x:Math.random(), y:Math.random()*.7, r:Math.random()*1.2+.3, p:Math.random()*6}));
+  const flakes = Array.from({length:26}, ()=>({x:Math.random(), y:Math.random(), r:Math.random()*1.8+.6, v:Math.random()*.0015+.0006}));
+  function size(){ const b=cv.getBoundingClientRect(); W=b.width; H=b.height; cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  size();
+  function frame(t){
+    if (!cv.isConnected) return;
+    if (cv.width !== Math.round(cv.getBoundingClientRect().width*dpr)) size();
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{ ctx.globalAlpha=.35+.35*Math.sin(t/900+s.p); ctx.fillStyle="#fff"; ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,7); ctx.fill(); });
+    const bands = [["rgba(80,230,170,", .0, 0.28, 22],["rgba(70,200,210,", 1.7, 0.4, 30],["rgba(150,110,230,", 3.1, 0.18, 26]];
+    bands.forEach(([col, ph, base, amp], bi)=>{
+      ctx.globalAlpha = 1;
+      for (let x=0; x<=W; x+=4){
+        const y = H*base + Math.sin(x/90 + t/2600 + ph)*amp + Math.sin(x/37 + t/1700 + ph*2)*amp*.35;
+        const hgt = 50 + 30*Math.sin(x/60 + t/2000 + ph);
+        const g = ctx.createLinearGradient(0,y-hgt,0,y+10);
+        g.addColorStop(0, col+"0)"); g.addColorStop(.75, col+(bi===2?.16:.3)+")"); g.addColorStop(1, col+"0)");
+        ctx.fillStyle = g; ctx.fillRect(x, y-hgt, 4, hgt+10);
+      }
+    });
+    ctx.fillStyle="#fff";
+    flakes.forEach(f=>{ f.y += reduce?0:f.v; if (f.y>1) f.y=0; ctx.globalAlpha=.7; ctx.beginPath(); ctx.arc(f.x*W + Math.sin(t/1200+f.x*9)*6, f.y*H, f.r, 0, 7); ctx.fill(); });
+    ctx.globalAlpha = 1;
+    if (!reduce && !document.hidden) auroraRaf = requestAnimationFrame(frame);
+  }
+  frame(performance.now());
+  document.addEventListener("visibilitychange", ()=>{ if (!document.hidden && tab==="learn" && !L){ cancelAnimationFrame(auroraRaf); auroraRaf=requestAnimationFrame(frame);} }, {once:true});
+}
+
+/* ---------- Lektion ---------- */
+let L = null;
+function startLesson(id, practice=false){
+  regen();
+  if (!practice && S.lingon<=0) return noLingon(null);
+  let pool, ui = -1, li = -1;
+  if (practice){
+    const weak = ALL.filter(w => S.miss[w.p]>0);
+    const seen = ALL.filter(w => S.seen[w.p]);
+    if (seen.length < 4){ toast("Gör en lektion först, sedan kan du öva."); return; }
+    pool = shuffle(weak).slice(0,6).concat(pick(seen.filter(w=>!weak.includes(w)), 6));
+  } else {
+    [ui, li] = id.split("-").map(Number);
+    pool = lessonPools(ui)[li];
+  }
+  const items = buildLesson(pool, li===3 ? 13 : 11);
+  L = {id, ui, li, practice, items, pos:0, total:items.length, right:0, wrong:0, firstTry:0, state:null};
+  openPop = null;
+  cancelAnimationFrame(auroraRaf);
+  $("#layer").innerHTML = `<div class="lesson" role="dialog" aria-label="Lektion">
+    <div class="l-top"><button class="x" data-act="quit" aria-label="Avsluta lektionen">${ic("i-x")}</button>
+      <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i></i></div>
+      <span class="stat li ${practice?"off":""}" title="Lingon">${ic("i-lingon")}<span id="l-li">${practice?"∞":S.lingon}</span></span></div>
+    <div class="l-body" id="lb"></div>
+    <div class="l-foot idle" id="lf"><div class="l-foot-in"><div class="fb" id="fbx"></div><button class="big" id="check" disabled>Kontrollera</button></div></div></div>`;
+  document.body.style.overflow = "hidden";
+  showItem();
+}
+function setProg(){ const p = $(".prog"); p.firstElementChild.style.width = (L.right/L.total*100)+"%"; p.setAttribute("aria-valuenow", Math.round(L.right/L.total*100)); }
+function footIdle(enabled=false, label="Kontrollera"){
+  const f = $("#lf"); f.className = "l-foot idle"; $("#fbx").innerHTML = "";
+  const b = $("#check"); b.textContent = label; b.disabled = !enabled; b.className = "big";
+}
+function showItem(){
+  setProg();
+  const it = L.items[L.pos];
+  L.state = {sel:null, built:[], done:false};
+  const lb = $("#lb"); lb.scrollTop = 0;
+  footIdle(false);
+  if (it.t==="mc"){
+    const q = it.dir==="ps" ? "Vad betyder det här?" : "Hur säger man det på pitemål?";
+    const shown = it.dir==="ps" ? it.w.p : it.w.s;
+    lb.innerHTML = `<div class="l-kicker">${it.isNew ? `${ic("i-star")} Nytt ord` : it.redo ? "Tidigare misstag" : ""}</div>
+      <h2 class="l-q">${q}</h2>
+      <div class="prompt">${mascot(it.isNew?"wow":"happy")}<div class="say">${esc(shown)}</div></div>
+      <div class="opts">${it.opts.map((o,i)=>`<button class="opt" data-opt="${i}" aria-pressed="false"><kbd>${i+1}</kbd><span>${esc(o)}</span></button>`).join("")}</div>`;
+  } else if (it.t==="build"){
+    const q = it.dir==="ps" ? "Översätt till svenska" : "Översätt till pitemål";
+    const shown = it.dir==="ps" ? it.w.p : it.w.s;
+    lb.innerHTML = `<div class="l-kicker">${it.redo ? "Tidigare misstag" : ""}</div><h2 class="l-q">${q}</h2>
+      <div class="prompt">${mascot()}<div class="say">${esc(shown)}</div></div>
+      <div class="answer" id="ans" aria-label="Ditt svar"></div><div class="bank" id="bank"></div>`;
+    drawBuild();
+  } else if (it.t==="match"){
+    const left = shuffle(it.pairs), right = shuffle(it.pairs);
+    L.state.matched = 0; L.state.pick = null;
+    lb.innerHTML = `<div class="l-kicker"></div><h2 class="l-q">Para ihop orden</h2>
+      <div class="match"><div class="col">${left.map(w=>`<button class="opt" data-m="p" data-k="${esc(w.p)}">${esc(w.p)}</button>`).join("")}</div>
+      <div class="col">${right.map(w=>`<button class="opt" data-m="s" data-k="${esc(w.p)}">${esc(w.s)}</button>`).join("")}</div></div>`;
+  }
+}
+function drawBuild(){
+  const it = L.items[L.pos], st = L.state;
+  $("#ans").innerHTML = st.built.map((ti,k)=>`<button class="tile" data-un="${k}">${esc(it.tiles[ti].t)}</button>`).join("");
+  $("#bank").innerHTML = it.tiles.map((t,i)=>`<button class="tile ${st.built.includes(i)?"ghost":""}" data-tile="${i}" ${st.built.includes(i)?'tabindex="-1" aria-hidden="true"':""}>${esc(t.t)}</button>`).join("");
+  footIdle(st.built.length>0);
+}
+function check(){
+  const it = L.items[L.pos], st = L.state;
+  if (st.done) return next();
+  let ok = false, correct = "";
+  if (it.t==="mc"){
+    if (st.sel===null) return;
+    ok = it.opts[st.sel] === it.ans; correct = it.ans;
+    document.querySelectorAll("[data-opt]").forEach((b,i)=>{ b.disabled=true; if (it.opts[i]===it.ans) b.classList.add("okk"); else if (i===st.sel) b.classList.add("badd"); });
+  } else if (it.t==="build"){
+    if (!st.built.length) return;
+    ok = norm(st.built.map(i=>it.tiles[i].t).join(" ")) === norm(it.ans.join(" "));
+    correct = it.dir==="ps" ? it.w.s : it.w.p;
+    document.querySelectorAll("#ans .tile, #bank .tile").forEach(b=>b.disabled=true);
+  }
+  resolve(ok, correct, it);
+}
+function resolve(ok, correct, it){
+  const st = L.state; st.done = true;
+  const f = $("#lf"), b = $("#check");
+  const words = it.t==="match" ? it.pairs : [it.w];
+  if (ok){
+    L.right++; if (!it.redo) L.firstTry++;
+    words.forEach(w => { S.seen[w.p]=1; if (L.practice && S.miss[w.p]) S.miss[w.p]--; });
+    const pr = PRAISE[Math.floor(Math.random()*PRAISE.length)];
+    f.className = "l-foot ok";
+    $("#fbx").innerHTML = `<h3>${esc(pr[0])}</h3><p>Pitemål för ${esc(pr[1])}.${it.w && it.w.note ? " "+esc(it.w.note)+"." : ""}</p>`;
+    b.className = "big"; tone([660, 990]);
+  } else {
+    L.wrong++;
+    S.miss[it.w.p] = (S.miss[it.w.p]||0)+1;
+    const again = Object.assign({}, it, {redo:true});
+    if (again.opts) again.opts = shuffle(again.opts);
+    if (again.tiles) again.tiles = shuffle(again.tiles.map(x=>x.t)).map((t,i)=>({t,i}));
+    L.items.push(again);
+    if (!L.practice){ S.lingon = Math.max(0, S.lingon-1); if (S.lingon < MAXL && S.lingonAt > Date.now()-1000) S.lingonAt = Date.now(); $("#l-li").textContent = S.lingon; }
+    f.className = "l-foot bad";
+    $("#fbx").innerHTML = `<h3>Hä gäll it djööl!</h3><p>${it.t==="match" ? "Du får göra om den här i slutet." : "Rätt svar: "+esc(correct)}</p>`;
+    b.className = "big red"; tone([300, 210], .14);
+  }
+  save(); setProg();
+  b.textContent = "Fortsätt"; b.disabled = false; b.focus({preventScroll:true});
+}
+function next(){
+  if (!L.practice && S.lingon<=0 && L.pos < L.items.length-1) return noLingon(L);
+  L.pos++;
+  if (L.pos >= L.items.length) return finish();
+  showItem();
+}
+function finish(){
+  const acc = Math.round(L.firstTry / L.total * 100);
+  const base = L.practice ? 5 : S.done[L.id] ? 5 : (L.li===3 ? 15 : 10);
+  const xp = base + (L.wrong===0 ? 5 : 0);
+  const hj = L.practice ? 2 : (L.wrong===0 ? 10 : 5);
+  S.xp += xp; S.hj += hj;
+  if (S.day.d !== today()) S.day = {d:today(), xp:0};
+  S.day.xp += xp;
+  if (S.lastDay !== today()){ S.streak = S.lastDay===today(-1) ? S.streak+1 : 1; S.lastDay = today(); }
+  if (L.practice) S.lingon = Math.min(MAXL, S.lingon+1);
+  else S.done[L.id] = true;
+  save(); tone([523,659,784,1047], .1);
+  $("#lb").innerHTML = `<div class="done">${mascot("wow")}<h1>${L.wrong===0 ? "Felfritt!" : "Lektionen är klar!"}</h1>
+    <p>${L.practice ? "Bra övat. Du fick ett lingon tillbaka." : L.wrong===0 ? "Inte ett enda fel. Slecke sleukt besleut!" : "Hä jär klaart. Fortsätt så."}</p>
+    <div class="tiles">
+      <div class="st" style="--tc:var(--hjorton-d)"><small>XP</small><b>${ic("i-bolt")}${xp}</b></div>
+      <div class="st" style="--tc:var(--forest)"><small>Träffsäkerhet</small><b>${ic("i-target")}${acc}%</b></div>
+      <div class="st" style="--tc:var(--lingon)"><small>Hjortron</small><b>${ic("i-hj")}+${hj}</b></div>
+    </div></div>`;
+  $(".prog i").style.width = "100%";
+  const f = $("#lf"); f.className = "l-foot idle"; $("#fbx").innerHTML = "";
+  const b = $("#check"); b.textContent = "Fortsätt"; b.disabled = false; b.className = "big";
+  L.finished = true;
+}
+function closeLesson(){
+  L = null; $("#layer").innerHTML = ""; document.body.style.overflow = ""; render();
+}
+function noLingon(lesson){
+  const cost = 30, can = S.hj >= cost;
+  modal(`<h2>Slut på lingon</h2><p>Du har inga lingon kvar. Ett nytt lingon växer fram var 30:e minut, och du får ett när du gör en övning.</p>
+    <div class="row">${can ? `<button class="big" data-act="buy">Fyll på för ${cost} ${"hjortron"}</button>` : ""}
+    <button class="big ghostb" data-act="endlesson">${lesson ? "Avsluta lektionen" : "Stäng"}</button></div>`);
+}
+function modal(inner){
+  const m = document.createElement("div"); m.className="modal"; m.innerHTML = `<div class="sheet" role="dialog" aria-modal="true">${inner}</div>`;
+  m.addEventListener("click", e => { if (e.target===m) m.remove(); });
+  document.body.appendChild(m);
+  const f = m.querySelector("button"); if (f) f.focus();
+}
+
+/* ---------- Händelser ---------- */
+document.addEventListener("click", e => {
+  const t = e.target.closest("button"); if (!t) { if (openPop && !e.target.closest(".pop")){ openPop=null; if(!L) render(); } return; }
+  if (t.dataset.tab){ tab = t.dataset.tab; openPop=null; render(); window.scrollTo(0,0); return; }
+  if (t.dataset.node){ openPop = openPop===t.dataset.node ? null : t.dataset.node; render(); return; }
+  if (t.dataset.start){ startLesson(t.dataset.start); return; }
+  if (t.dataset.guide !== undefined){ const u = UNITS[+t.dataset.guide];
+    modal(`<h2>${esc(u.title)}</h2><p style="color:var(--muted);margin:2px 0 0">Guide till del ${+t.dataset.guide+1}</p><ul>${u.tips.map(x=>`<li>${x}</li>`).join("")}</ul>
+    <div class="row"><button class="big" data-act="closemodal">Uppfattat</button></div>`); return; }
+  const a = t.dataset.act;
+  if (a==="closemodal"){ t.closest(".modal").remove(); return; }
+  if (a==="practice"){ startLesson(null, true); return; }
+  if (a==="sound"){ S.sound=!S.sound; save(); render(); return; }
+  if (a==="reset"){ $("#reset-box .src").innerHTML = `<span style="font-weight:700">All XP och alla lektioner raderas.</span><button class="linkbtn" data-act="reset2" style="color:var(--bad)">Ja, börja om</button><button class="linkbtn" data-act="reset0">Avbryt</button>`; return; }
+  if (a==="reset0"){ render(); return; }
+  if (a==="reset2"){ S = Object.assign({}, DEF, {lingonAt:Date.now(), done:{}, seen:{}, miss:{}, day:{d:null,xp:0}}); save(); toast("Framstegen är nollställda"); tab="learn"; render(); return; }
+  if (a==="buy"){ S.hj -= 30; S.lingon = MAXL; S.lingonAt = Date.now(); save(); t.closest(".modal").remove(); if (L) $("#l-li").textContent = S.lingon; renderStats(); toast("Lingonen är påfyllda"); return; }
+  if (a==="endlesson"){ t.closest(".modal").remove(); if (L) closeLesson(); return; }
+  if (a==="quit"){ closeLesson(); return; }
+  if (t.dataset.f !== undefined){ dictFilter = +t.dataset.f; document.querySelectorAll("[data-f]").forEach(b=>b.setAttribute("aria-pressed", b===t)); fillDict(); return; }
+  if (!L) return;
+  if (t.id==="check"){ if (L.finished) return closeLesson(); check(); return; }
+  if (L.state && L.state.done) return;
+  const it = L.items[L.pos];
+  if (t.dataset.opt !== undefined){ L.state.sel = +t.dataset.opt; document.querySelectorAll("[data-opt]").forEach(b=>b.setAttribute("aria-pressed", b===t)); footIdle(true); tone([520], .05); return; }
+  if (t.dataset.tile !== undefined){ L.state.built.push(+t.dataset.tile); drawBuild(); tone([520], .04); return; }
+  if (t.dataset.un !== undefined){ L.state.built.splice(+t.dataset.un, 1); drawBuild(); return; }
+  if (t.dataset.m){
+    const st = L.state;
+    if (!st.pick || st.pick.dataset.m === t.dataset.m){
+      document.querySelectorAll("[data-m]").forEach(b=>b.setAttribute("aria-pressed","false"));
+      st.pick = t; t.setAttribute("aria-pressed","true"); tone([520], .04); return;
+    }
+    const a1 = st.pick, ok = a1.dataset.k === t.dataset.k;
+    a1.setAttribute("aria-pressed","false"); st.pick = null;
+    if (ok){
+      [a1,t].forEach(b=>{ b.classList.add("okk"); setTimeout(()=>b.classList.add("gone"), 350); });
+      st.matched++; tone([700], .06);
+      if (st.matched === it.pairs.length) setTimeout(()=>resolve(!st.missed, "", it), 400);
+    } else {
+      st.missed = true; [a1,t].forEach(b=>{ b.classList.add("badd"); setTimeout(()=>b.classList.remove("badd"), 450); }); tone([260], .1);
+      if (!it.w) it.w = it.pairs.find(w=>w.p===a1.dataset.k || w.p===t.dataset.k);
+    }
+  }
+});
+document.addEventListener("keydown", e => {
+  if (document.querySelector(".modal")){ if (e.key==="Escape") document.querySelector(".modal").remove(); return; }
+  if (!L) return;
+  if (e.key==="Enter"){ const b=$("#check"); if (b && !b.disabled){ e.preventDefault(); b.click(); } return; }
+  if (e.key==="Escape"){ closeLesson(); return; }
+  const n = parseInt(e.key,10);
+  if (n>=1 && n<=4){ const o = document.querySelector(`[data-opt="${n-1}"]`); if (o && !o.disabled) o.click(); }
+});
+setInterval(()=>{ if (!L) renderStats(); }, 60000);
+render();
+</script>
+</body>
+</html>
