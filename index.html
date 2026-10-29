@@ -121,10 +121,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .fine{font-size:13px;color:var(--muted);margin-top:12px}
 
 /* norrsken hero */
-.hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(180deg,var(--night) 0%,var(--night-2) 100%);color:var(--on-night);margin-top:16px;padding:20px 20px 18px;display:flex;gap:14px;align-items:center;min-height:150px}
+.hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(180deg,var(--night) 0%,var(--night-2) 100%);color:var(--on-night);margin-top:16px;padding:26px 20px 18px;display:flex;gap:14px;align-items:center;min-height:150px}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%}
 .hero > *:not(canvas){position:relative}
 .hero .mascot{width:96px;flex:none}
+.mascot-wrap{position:relative;flex:none;z-index:3}
+.say-bubble{position:absolute;left:-4px;bottom:calc(100% - 6px);z-index:2;width:max-content;max-width:104px;text-align:left;border:0;background:var(--surface);color:var(--ink);font:700 12px/1.2 var(--body);padding:6px 10px;border-radius:12px 12px 12px 3px;box-shadow:0 4px 14px rgba(0,0,0,.25);opacity:0;transform:translateY(4px) scale(.92);transform-origin:bottom left;pointer-events:none;transition:opacity .25s,transform .25s}
+.say-bubble.show{opacity:1;transform:none;pointer-events:auto}
+@media (hover:hover){.mascot-wrap:hover .say-bubble{opacity:1;transform:none;pointer-events:auto}}
 .mascot-btn{border:0;background:none;padding:0;flex:none;border-radius:20px;transition:transform .15s}
 .mascot-btn:hover{transform:rotate(-4deg) scale(1.04)}
 .mascot-btn:active{transform:scale(.96)}
@@ -1033,7 +1037,7 @@ function viewLearn(){
   const greet = !S.xp ? ["Välkommen!", "Jag är Palten. Vä lär oss pitemål tillsammans."]
     : dayXp()>=GOAL ? ["Äkshlänt!", "Dagens mål är klart. Du får gärna köra en till."]
     : ["Vöre jär'e vä dä?", "Några minuter om dagen räcker långt."];
-  let html = `<section class="hero" aria-label="Dagens mål"><canvas id="aurora" aria-hidden="true"></canvas><button class="mascot-btn" data-act="palten" aria-label="Palten, klicka för att läsa om pitepalt">${mascot("happy")}</button>
+  let html = `<section class="hero" aria-label="Dagens mål"><canvas id="aurora" aria-hidden="true"></canvas><div class="mascot-wrap"><button class="mascot-btn" data-act="palten" aria-label="Palten, klicka för att läsa om pitepalt">${mascot("happy")}</button><button class="say-bubble" id="palt-say" data-act="palten" tabindex="-1" aria-hidden="true">Lär dig tillaga mig!</button></div>
     <div style="min-width:0;flex:1"><h1>${esc(greet[0])}</h1><p>${esc(greet[1])}</p>
     <div class="goal"><span>${dayXp()}/${GOAL} XP</span><span class="bar"><i style="width:${g*100}%"></i></span></div>
     <div class="hero-actions"><button class="chip" data-act="practice">${ic("i-bolt","ic")} Öva</button><button class="chip" data-act="sound">${S.sound?"Ljud på":"Ljud av"}</button></div></div></section>`;
@@ -1471,6 +1475,19 @@ document.addEventListener("keydown", e => {
   if (n>=1 && n<=4){ const o = document.querySelector(`[data-opt="${n-1}"]`); if (o && !o.disabled) o.click(); }
 });
 setInterval(()=>{ if (!L) renderStats(); }, 60000);
+const PALT_SAYS = ["Lär dig tillaga mig!", "Tillaga palt?", "Jag har ett recept åt dig!"];
+let paltSayN = 0;
+(function paltTalk(first){
+  setTimeout(() => {
+    const b = $("#palt-say");
+    if (b && !L && !document.hidden && tab === "learn" && !document.querySelector(".modal")){
+      b.textContent = PALT_SAYS[paltSayN++ % PALT_SAYS.length];
+      b.classList.add("show");
+      setTimeout(() => { const x = $("#palt-say"); if (x){ x.classList.remove("show"); setTimeout(() => { x.textContent = PALT_SAYS[0]; }, 300); } }, 4000);
+    }
+    paltTalk(false);
+  }, first ? 6000 : 35000 + Math.random() * 25000);
+})(true);
 render();
 initAuth();
 </script>
