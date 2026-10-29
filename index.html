@@ -830,17 +830,15 @@ function awardWeekly(xp){
 
 
 /* ---------- Recept på pitepalt ---------- */
-// Mängder per portion, baserat på ICA:s recept för 4 portioner (12 paltar)
+// Kristina Lundbergs pitepalt från Nattberg (via Susannes skafferi): 8 portioner, 22 paltar. Mängder per portion.
 const PALT = [
-  {n:"mjölig potatis", q:250, u:"g"},
-  {n:"kornmjöl", q:0.25, u:"dl"},
-  {n:"vetemjöl, ungefär", q:0.625, u:"dl"},
-  {n:"salt till degen", q:0.375, u:"tsk"},
-  {n:"rimmat sidfläsk", q:37.5, u:"g"},
-  {n:"gul lök till fyllningen (valfritt)", q:0.25, u:"st"},
-  // Kokvattnet växer långsammare än degen: 4 portioner ger 4 l och 4 msk salt
-  {n:"vatten att koka i", f:n => 2 + n/2, u:"l"},
-  {n:"salt till kokvattnet", f:n => 2 + n/2, u:"msk"}
+  {n:"potatis, gärna mandelpotatis", q:187.5, u:"g"},
+  {n:"salt till degen", q:1.5/8, u:"msk"},
+  {n:"vetemjöl, ungefär", q:1.25, u:"dl"},
+  {n:"rimmat sidfläsk, hackat", q:56.25, u:"g"},
+  // Kokvattnet: 2,5 l till 8 portioner, men aldrig mindre än 1,5 l
+  {n:"vatten att koka i", f:n => Math.max(1.5, n * 2.5 / 8), u:"l"},
+  {n:"salt till kokvattnet, 1 msk per liter", f:n => Math.max(1.5, n * 2.5 / 8), u:"msk"}
 ];
 let paltPortions = 4;
 const FR = {0.25:"¼", 0.5:"½", 0.75:"¾"};
@@ -855,6 +853,8 @@ function fmtQty(q, u){
     if (q >= 1000) return (Math.round(q / 100) / 10).toString().replace(".", ",") + " kg";
     return (Math.round(q / 5) * 5) + " g";
   }
+  if (u === "msk" && q < 1) return fmtNum(Math.max(0.25, Math.round(q * 3 * 4) / 4)) + " tsk";
+  if (u === "dl" && q >= 10) return fmtNum(Math.round(q / 10 * 4) / 4) + " l";
   if (u === "dl" && q < 0.5) return fmtNum(Math.max(0.5, Math.round(q * 6.67 * 2) / 2)) + " msk";
   if (u === "tsk" && q >= 3) return fmtNum(Math.round(q / 3 * 4) / 4) + " msk";
   if (u === "l") return fmtNum(Math.max(1, Math.round(q * 2) / 2)) + " l";
@@ -864,24 +864,31 @@ function fmtQty(q, u){
 function recipeHtml(){
   const n = paltPortions;
   return `<section class="card prose recipe" id="recept"><h2>Recept: pitepalt</h2>
-    <p>Palten själv berättar hur han blir till. Välj hur många ni är, så räknas mängderna om.</p>
+    <p>Kristina Lundbergs pitepalt från Nattberg, mellan Arvidsjaur och Älvsbyn. Välj hur många ni är, så räknas mängderna om.</p>
     <div class="portions" role="group" aria-label="Antal portioner">
       <button class="pbtn" data-act="portions-" aria-label="Färre portioner" ${n<=1?"disabled":""}>−</button>
-      <span class="pnum" aria-live="polite"><b>${n}</b> ${n===1?"portion":"portioner"} · ${n*3} paltar</span>
+      <span class="pnum" aria-live="polite"><b>${n}</b> ${n===1?"portion":"portioner"} · ca ${Math.max(1, Math.round(n*22/8))} paltar</span>
       <button class="pbtn" data-act="portions+" aria-label="Fler portioner" ${n>=20?"disabled":""}>+</button>
     </div>
     <ul class="ingr">${PALT.map(x => `<li><b>${fmtQty(x.f ? x.f(n) : x.q*n, x.u)}</b> <span>${x.n}</span></li>`).join("")}</ul>
+    <p class="fine">Till servering: smör, mjölk, lingon, kryddpeppar och gärna lite örtkrydda och salt.</p>
     <h3>Gör så här</h3>
     <ol class="steps">
-      <li>Skala potatisen och riv den fint. Låt den rinna av i en sil och krama ur så mycket vätska du kan.</li>
-      <li>Skär fläsket i små tärningar. Hacka löken fint om du vill ha med den och blanda med fläsket.</li>
-      <li>Blanda potatisen med kornmjöl och salt. Tillsätt vetemjöl lite i taget tills degen är fast och går att forma. Hur mycket som behövs beror på potatisen.</li>
-      <li>Dela degen i ${n*3} bitar. Gör en grop i varje, lägg i ungefär en matsked fläsk och nyp ihop till en rund boll.</li>
-      <li>Koka upp vattnet med saltet i en stor kastrull. Lägg i paltarna och låt dem sjuda på svag värme i ungefär 45 minuter. Rör försiktigt i början så att de inte fastnar i botten.</li>
-      <li>Servera med smör, lingonsylt och ett glas kall mjölk.</li>
+      <li>Skala potatisen. Riv den på rivjärn eller mal den i köttkvarn och pressa ur lite av vätskan.</li>
+      <li>Blanda i salt och vetemjöl. Fortsätt tillsätta mjöl tills degen är så fast att en träslev står rakt upp i den.</li>
+      <li>Rulla fläsket till stora köttbullar och ställ dem i kylen medan du gör resten.</li>
+      <li>Koka upp vattnet med 1 msk salt per liter.</li>
+      <li>Strö lite mjöl på en långpanna med bakplåtspapper. Klicka ut degklumpar med två skedar, ungefär tio åt gången.</li>
+      <li>Platta till varje klump, gör en grop i mitten och lägg i en fläskbulle. Tryck ihop till en rund palt och lägg ner den i grytan.</li>
+      <li>Koka paltarna i en timme.</li>
     </ol>
-    <p class="fine">Blir det palt över? Skiva den nästa dag och stek i smör. Den som har ätit för mycket är <b>paltschwiim</b>.</p>
-    <div class="src"><a class="linkbtn" href="https://www.ica.se/recept/pitepalt-702154/" target="_blank" rel="noopener">${ic("i-ext")}Originalrecept hos ICA</a></div>
+    <h3>Tips från Nattberg</h3>
+    <ul class="steps">
+      <li><b>Flatpalt:</b> gör en lite större degbit och platta till den. Den kokas i 30 minuter och serveras med stekt fläsk.</li>
+      <li><b>Annan fyllning:</b> fläskfärs som du kryddar själv.</li>
+      <li><b>Dagen efter:</b> skiva palten och stek den, gärna ute vid elden, med kokkaffe till. Den som ätit för mycket är <b>paltschwiim</b>.</li>
+    </ul>
+    <div class="src"><a class="linkbtn" href="https://susannesskafferi.se/2026/04/pitepalt-i-nattberg-2/" target="_blank" rel="noopener">${ic("i-ext")}Kristinas recept hos Susannes skafferi</a></div>
   </section>`;
 }
 function showRecipe(){
@@ -1393,7 +1400,7 @@ document.addEventListener("click", async e => {
   if (a==="recipe"){ const m = t.closest(".modal"); if (m) m.remove(); showRecipe(); return; }
   if (a==="palten"){
     modal(`<div class="palten-pop">${mascot("wow")}</div><h2>Hej, jag är Palten!</h2>
-      <p>Jag är en pitepalt, gjord av potatis och kornmjöl med fläsk inuti. På sidan <b>Om pitemål</b> finns receptet på hur du lagar mig, och du kan välja hur många portioner du vill göra.</p>
+      <p>Jag är en pitepalt, gjord av riven potatis och mjöl med fläsk inuti. På sidan <b>Om pitemål</b> finns receptet på hur du lagar mig, och du kan välja hur många portioner du vill göra.</p>
       <div class="row"><button class="big" data-act="recipe">Visa receptet</button><button class="big ghostb" data-act="closemodal">Stäng</button></div>`);
     tone([520, 700], .08); return;
   }
