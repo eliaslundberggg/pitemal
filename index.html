@@ -112,6 +112,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .login{display:grid;gap:10px;margin-top:12px}
 .login label{font-weight:700;font-size:14px}
 .email-row{display:flex;gap:8px;align-items:stretch}
+.login input.otp{font-size:24px;letter-spacing:6px;text-align:center;font-variant-numeric:tabular-nums}
 .email-row input{flex:1 1 auto;min-width:0}
 .email-row .linkbtn{flex:none;box-shadow:none}
 .login input,.codebox{width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
@@ -390,6 +391,7 @@ const UNITS = [
     ["it","inte","I vissa byar: et"],["jenna","här"],["denna","där"],["hejm","hem"],
     ["boijn","byn","Används också om Älvsbyn"],["i hejt","jag heter"],
     ["Vöre jär'e vä dä?","Hur är det med dig?"],["Vöre jär'e vä jä?","Hur är det med er?"],
+    ["'a","hon","Sätts före kvinnonamn: 'a Klara"],["'n","han","Sätts före mansnamn: 'n Sixten"],["eitt","ett"],["hejt","heter"],["sko","ska"],["sku","skulle"],["ve","med","Även vä"],
     ["I jär bådda boin","Jag är från Älvsbyn"],["Hä jär klaart","Det är färdigt"],["I behöv it","Jag behöver inte"]]},
   {id:"u11", title:"Hajna, hojna, hejna", sub:"Han, hon och det här", c:"u11", deco:"d-moose",
    tips:[
@@ -417,7 +419,8 @@ const UNITS = [
     ["päroflos","potatisskal"],["klodden","mjukt tunnbröd"],["remidjen","bestick"],["slarva","trasa"],
     ["nestjärla","matsäck"],["ita","äta"],["båka","baka"],["djära","göra"],
     ["paltschwiim","övermätt av palt"],["kvedo","proppmätt"],["arbäjt","arbeta"],
-    ["I arbäjt nalta hendervä","Jag arbetar lite hemmavid"],["Foil opp mjölkhemtar'n","Fyll mjölkhämtaren"]]},
+    ["foil","fylla"],["hendervä","hemmavid"],["smola","tunnbröd i mjölk","Även smolanedi eller bruta"],
+    ["I arbäjt nalta hendervä","Jag arbetar lite hemmavid"],["On höst'n båka vä tonnbröde för vinterbehåove","På hösten bakade vi tunnbröd för vinterns behov"],["It dö båra sowle?","Äter du bara det godaste?"],["Foil opp mjölkhemtar'n","Fyll mjölkhämtaren"]]},
   {id:"u3", title:"Skogen", sub:"Bär, djur och myggen", c:"u3", deco:"d-hj",
    tips:[
     "Gamla långa vokaler har blivit diftonger: <b>eis</b> (is), <b>heus</b> (hus), <b>skåog</b> (skog), <b>boi</b> (by).",
@@ -428,7 +431,7 @@ const UNITS = [
     ["nåppe","plockat"],["stjer","tjäder"],["warg","varg"],["lekatt","hermelin"],["kangraot","spindel"],
     ["moj","mygg"],["åte","mycket insekter"],["törrfuruvedagocken","hackspett"],["langbäjnemojj","harkrank"],
     ["pärowann","sork"],["tjiroståmb","tjärstubbe"],["bLå`om","blomma"],
-    ["Hä var möche åte jena","Det var mycket insekter här"]]},
+    ["mojjat","mycket mygg"],["Hä var möche åte jena","Det var mycket insekter här"]]},
   {id:"u4", title:"Veinter", sub:"Snö, kyla och skidor", c:"u4", deco:"d-snow",
    tips:[
     "Det tjocka L:et skrivs ofta med stort L: <b>kåLv</b>, <b>gLa:s</b>. Det uttalas längre bak i munnen och låter nästan som ett klick.",
@@ -451,6 +454,8 @@ const UNITS = [
     ["ä´xter","pigg för sin ålder"],["sömenkeurat","sömndrucken"],["beshwäshfåtti","lat"],
     ["finfLos","högfärdig person"],["sörlenninga","folk från södra Sverige"],["fjälla","flickvän"],
     ["påik","pojke"],["hakatent","kort stubin"],["släpphent","fumlig"],
+    ["skwe`eL","gråta"],["slepa´durres","kyssas","Av munslepan, munnen, och durra, darra"],["sóorm","smutsa"],["skwe:l","barn fött utanför äktenskapet"],
+    ["malln borta kalln","likna sin far"],["Hä jär läjsamt dáansh vä ejn som ha ilak-and´n","Det är tråkigt att dansa med en som har dålig andedräkt"],
     ["I jär åll åll","Jag är trött"],["I jär så euskefurat","Jag är så hängig"],["I waal så trojt bårte hejna","Jag blir så trött på det här"],
     ["Härri gu so arg i var","Herre gud så arg jag var"],["Åjj va dö sóorm","Oj vad du sölar ner dig"]]},
   {id:"u6", title:"Småord", sub:"Lite, mycket, var och hur", c:"u6", deco:"d-gran",
@@ -463,6 +468,7 @@ const UNITS = [
     ["najn","någon"],["nagerst","någonstans"],["nanschtin","någonsin"],["åll`er","aldrig"],["vosch","var"],
     ["vöre","hur"],["vodda","varifrån"],["piligröut","mycket lite"],["dell","till"],["lave","bredvid"],
     ["nest","hos"],["söjna","så här"],["nöför","ingen konst"],
+    ["nalitta","litegrann","Även nalta"],["sönna","så där","Även sönn"],["kreggom","runt om","Även kregom"],["illt","ont"],["va`aL","bliva","Egentligen varda"],
     ["Lämen nalta slåkamon","Lämna lite mellanrum"],["Döm våra nest n'Kalle","De är hos Kalle"],["Hä soid","Det lutar"]]},
   {id:"u7", title:"Uttryck", sub:"Fraser som pitebor säger", c:"u7", deco:"d-lingon",
    tips:[
@@ -606,6 +612,11 @@ function loadSupabase(){
 }
 async function initAuth(){
   if (!CAN_LOGIN) return;
+  const hp = new URLSearchParams(location.hash.slice(1));
+  if (hp.get("error") || hp.get("error_code")){
+    history.replaceState(null, "", location.pathname + location.search);
+    setTimeout(() => toast("Inloggningslänken har redan använts eller gått ut. Tryck på personikonen och be om en ny kod."), 600);
+  }
   $("#s-acct").hidden = false;
   try { await loadSupabase(); } catch(e){ return; }
   sb = window.supabase.createClient(SUPA.url, SUPA.key);
@@ -651,11 +662,11 @@ function accountModal(){
       <div class="row"><button class="big" data-act="closemodal">Klart</button><button class="big ghostb" data-act="logout">Logga ut</button></div>`);
     return;
   }
-  modal(`<h2>Spara dina framsteg</h2><p>Logga in med din e-post så sparas XP, lektioner och ord. Då finns de kvar på både mobilen och datorn. Du får en inloggningslänk i mejlet och behöver inget lösenord.</p>
+  modal(`<h2>Spara dina framsteg</h2><p>Logga in med din e-post så sparas XP, lektioner och ord. Då finns de kvar på både mobilen och datorn. Du får en kod i mejlet och behöver inget lösenord.</p>
     <form id="login-form" class="login" novalidate><label for="login-email">E-post</label>
     <div class="email-row"><input id="login-email" name="email" type="text" inputmode="email" autocomplete="email" autocapitalize="none" autocorrect="on" spellcheck="false" required placeholder="namn@exempel.se">
     ${navigator.clipboard && navigator.clipboard.readText ? `<button type="button" class="linkbtn" data-act="paste-email">Klistra in</button>` : ""}</div>
-    <button class="big" type="submit">Skicka inloggningslänk</button></form>
+    <button class="big" type="submit">Skicka kod</button></form>
     <p class="fine">Du kan spela utan konto. Då sparas allt bara i den här webbläsaren.</p>`);
 }
 document.addEventListener("submit", async e => {
@@ -664,10 +675,36 @@ document.addEventListener("submit", async e => {
   const inp = $("#login-email"), email = inp.value.replace(/[\s\u200B-\u200D\uFEFF]+/g, "");
   inp.value = email;
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ inp.focus(); toast("Skriv en e-postadress, till exempel namn@exempel.se."); return; }
-  const btn = e.target.querySelector("button"); btn.disabled = true; btn.textContent = "Skickar…";
+  const btn = e.target.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Skickar…";
+  if (!(await sendCode(email))){ btn.disabled = false; btn.textContent = "Skicka kod"; return; }
+  e.target.outerHTML = codeForm(email);
+  const c = $("#otp-code"); if (c) c.focus();
+});
+let lastEmail = "";
+async function sendCode(email){
   const { error } = await sb.auth.signInWithOtp({ email, options:{ emailRedirectTo: location.origin + "/" } });
-  if (error){ btn.disabled = false; btn.textContent = "Skicka inloggningslänk"; toast("Det gick inte att skicka länken. Försök igen om en stund."); return; }
-  e.target.outerHTML = `<p><b>Kolla din mejl.</b> Vi har skickat en inloggningslänk till ${esc(email)}. Öppna den på den här enheten.</p><div class="row"><button class="big" data-act="closemodal">Okej</button></div>`;
+  if (error){
+    toast(/rate|seconds|too many/i.test(error.message||"") ? "Vänta en minut innan du ber om en ny kod." : "Det gick inte att skicka koden. Försök igen om en stund.");
+    return false;
+  }
+  lastEmail = email; return true;
+}
+function codeForm(email){
+  return `<div id="otp-box"><p><b>Kolla din mejl.</b> Vi har skickat en kod till ${esc(email)}. Skriv in den här, så loggas du in på den här enheten. Du kan också trycka på knappen i mejlet.</p>
+    <form id="otp-form" class="login" novalidate><label for="otp-code">Kod från mejlet</label>
+    <input id="otp-code" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456" class="otp">
+    <button class="big" type="submit">Logga in</button></form>
+    <p class="fine">Ingen kod? Kolla skräpposten eller <button class="linkish" data-act="resend-code">skicka en ny kod</button>. Den nya koden ersätter den gamla.</p></div>`;
+}
+document.addEventListener("submit", async e => {
+  if (e.target.id !== "otp-form") return;
+  e.preventDefault();
+  const inp = $("#otp-code"), token = inp.value.replace(/\D+/g, "");
+  if (token.length < 6){ inp.focus(); toast("Skriv in hela koden från mejlet."); return; }
+  const btn = e.target.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Loggar in…";
+  const { error } = await sb.auth.verifyOtp({ email: lastEmail, token, type: "email" });
+  if (error){ btn.disabled = false; btn.textContent = "Logga in"; inp.select(); toast("Koden stämmer inte eller har gått ut. Kontrollera att det är det senaste mejlet."); return; }
+  const m = e.target.closest(".modal"); if (m) m.remove();
 });
 function exportCode(){ return "PITE1:" + btoa(unescape(encodeURIComponent(JSON.stringify(S)))); }
 function importCode(code){
@@ -1249,6 +1286,11 @@ document.addEventListener("click", async e => {
   if (a==="account"){ if (CAN_LOGIN && sb) accountModal(); else if (CAN_LOGIN) toast("Inloggningen laddar, försök igen om en sekund."); return; }
   if (a==="logout"){ t.closest(".modal").remove(); if (sb) await sb.auth.signOut(); toast("Utloggad. Framstegen finns kvar i den här webbläsaren."); return; }
   if (a==="rename"){ myName = ""; fillBoard(); const i = $("#name-input"); if (i) i.focus(); return; }
+  if (a==="resend-code"){
+    t.disabled = true;
+    if (await sendCode(lastEmail)){ toast("En ny kod är skickad. Använd koden i det senaste mejlet."); const c = $("#otp-code"); if (c){ c.value = ""; c.focus(); } }
+    t.disabled = false; return;
+  }
   if (a==="paste-email"){
     try { const txt = (await navigator.clipboard.readText()).replace(/[\s\u200B-\u200D\uFEFF]+/g, ""); const inp = $("#login-email"); inp.value = txt; inp.focus(); }
     catch(e){ const inp = $("#login-email"); inp.focus(); toast("Håll fingret i rutan och välj Klistra in."); }
