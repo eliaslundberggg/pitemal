@@ -908,7 +908,22 @@ const pick = (a,n) => shuffle(a).slice(0,n);
 const isPhrase = w => w[0].trim().includes(" ") && w[1].trim().includes(" ");
 const norm = s => s.toLowerCase().replace(/[?!.,]/g,"").replace(/\s+/g," ").trim();
 const tok = s => s.replace(/[?!.,]/g,"").split(/\s+/).filter(Boolean);
-const ALL = UNITS.flatMap((u,ui) => u.words.map(w => ({p:w[0], s:w[1], note:w[2]||"", u:ui, ph:isPhrase(w)})));
+// Andra sätt att skriva eller säga orden, enligt ordlistan på pitemal.wikidot.com
+const VARIANTS = {
+  "'a":"Även a eller hon", "'n":"Även n, en eller han", "eitt":"Även e eller ett",
+  "ánder":"Även ánd, skidorna = ándren", "båol":"Även baoul", "denna":"Även denn",
+  "euskefeurat":"Även öuskeföurat, i Kalix öskefurot", "gnisterspännare":"Även gnisterspännar",
+  "hänna":"Även hädenna", "ita":"Även ite eller eta, åt = å:t", "jä":"Även je", "jenna":"Även jenn",
+  "jeshwingt":"Även geshwingt eller jeshwängt", "langbäjnemojj":"Även koggamoj", "mötje":"Även mytje",
+  "nöges":"Även nööst, tvingades = nögese", "pären":"Även päro", "ra`al":"Vrålade = raLe",
+  "söjna":"Även söjn", "stjer":"Även stjeer", "vä":"Även ve", "vosch":"Betyder också vart",
+  "gode":"Även gåode", "skreck":"Skridskorna = skrecken", "nalta":"Även nalitta", "moj":"Mycket mygg = mojjat",
+  "hakatent":"På bondska håkatent", "hojna":"Bestämd form", "va`aL":"Heter vaL i presens"
+};
+// Här ersätts den gamla anteckningen helt
+const VARIANT_NOTES = { "hejna":"Skrivs också häina eller häjna", "it":"Även et, som man säger i vissa byar", "nå":"Även na, nage eller naa" };
+const noteFor = w => VARIANT_NOTES[w[0]] || [w[2], VARIANTS[w[0]]].filter(Boolean).join(". ");
+const ALL = UNITS.flatMap((u,ui) => u.words.map(w => ({p:w[0], s:w[1], note:noteFor(w), u:ui, ph:isPhrase(w)})));
 function toast(msg){ const t = document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(), 2200); }
 
 let actx = null;
@@ -1090,7 +1105,7 @@ function drow(w, extra=""){
 }
 function fillDict(){
   const q = norm(dictQ);
-  let rows = ALL.filter(w => (dictFilter<0 || w.u===dictFilter) && (!q || norm(w.p).includes(q) || norm(w.s).includes(q)));
+  let rows = ALL.filter(w => (dictFilter<0 || w.u===dictFilter) && (!q || norm(w.p).includes(q) || norm(w.s).includes(q) || norm(w.note).includes(q)));
   const box = $("#dict"), lb = $("#letters");
   lb.innerHTML = "";
   if (!rows.length){ box.innerHTML = `<div class="empty">Inga träffar på "${esc(dictQ)}". Prova ett kortare ord.</div>`; return; }
@@ -1149,7 +1164,7 @@ function viewAbout(){
       <p><b>Korta ord.</b> Inte blir <span class="ex">it</span>, och många ord tappar slutvokalen.</p>
       <p><b>Tre genus.</b> Saker kan vara han eller hon: <span class="ex">hajna</span> (den här, han), <span class="ex">hojna</span> (den här, hon), <span class="ex">hejna</span> (det här).</p></section>
     <section class="card prose"><h2>Om stavningen</h2>
-      <p>Det finns ingen rätt stavning. Uttalet skiljer sig mellan byar, så samma ord kan skrivas på flera sätt, till exempel <span class="ex">mötje</span>, <span class="ex">mytje</span> och <span class="ex">möche</span> (mycket). I kursen används en stavning per ord.</p></section>
+      <p>Det finns ingen rätt stavning. Uttalet skiljer sig mellan byar, så samma ord kan skrivas på flera sätt, till exempel <span class="ex">mötje</span>, <span class="ex">mytje</span> och <span class="ex">möche</span> (mycket) eller <span class="ex">hejna</span>, <span class="ex">häina</span> och <span class="ex">häjna</span> (det här). I kursen används en stavning per ord, och andra stavningar står i ordboken under ordet. Sök gärna på en annan stavning, så hittar du ordet ändå.</p></section>
     <section class="card prose"><h2>Källor</h2>
       <p>Orden och fraserna i kursen kommer från de här sidorna. Där finns mycket mer att läsa.</p>
       <div class="src">${L("https://pitemal.wikidot.com/page","Pitemål wiki")}${L("https://pitemal.wikidot.com/glossary","Ordlista")}${L("https://www.alterhedens.se/pitemal-pitebondska.html","AlterHedens")}${L("https://www.alterhedens.se/korsord-pitemal-pitebondska.html","Korsord")}${L("https://www.alterhedens.se/quiz-vaxter-pitemal.html","Växtquiz")}${L("https://sv.wikipedia.org/wiki/Pitem%C3%A5l","Wikipedia")}${L("https://www.diva-portal.org/smash/get/diva2:1327765/FULLTEXT01.pdf","Uppsats, Uppsala universitet")}${L("https://fraufurtenbach.wordpress.com/category/veckans-ord-pa-pitemal/","Veckans ord på pitemål")}${L("https://sprakkonsultjosefin.wordpress.com/tag/pitemal/","Språkkonsult Josefin")}${L("https://detskullevararoligt.wordpress.com/2012/11/18/hojna-hajna-hejna-2/","Hojna, hajna, hejna")}</div></section>
