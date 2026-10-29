@@ -99,6 +99,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 :root[data-theme="dark"] .brand{color:var(--hjorton)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand{color:var(--hjorton)}}
 .stat{display:flex;align-items:center;gap:4px;font-weight:800;font-variant-numeric:tabular-nums;padding:4px 8px;border-radius:10px;background:none;border:0}
+@media (max-width:400px){.stat{padding:4px 4px;gap:2px}.top-in{gap:2px}.brand{font-size:20px}}
 .stat:hover{background:var(--surface-2)}
 .stat.streak{color:var(--hjorton-d)} .stat.hj{color:var(--hjorton-d)} .stat.li{color:var(--lingon)}
 .stat.off{color:var(--locked-ink)}
@@ -124,6 +125,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hero canvas{position:absolute;inset:0;width:100%;height:100%}
 .hero > *:not(canvas){position:relative}
 .hero .mascot{width:96px;flex:none}
+.mascot-btn{border:0;background:none;padding:0;flex:none;border-radius:20px;transition:transform .15s}
+.mascot-btn:hover{transform:rotate(-4deg) scale(1.04)}
+.mascot-btn:active{transform:scale(.96)}
 .hero h1{font-size:24px;font-weight:600}
 .hero p{margin:4px 0 10px;opacity:.85;font-size:15px}
 .goal{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}
@@ -240,6 +244,20 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .lb-lock .lb-goal{width:100%;max-width:320px;color:var(--muted)}
 .lb-lock .lb-goal .bar{background:var(--surface-2)}
 .lb-lock .big{flex:0 1 auto;margin-top:6px}
+/* recept */
+.recipe h3{font-size:17px;font-weight:600;margin-top:16px}
+.portions{display:flex;align-items:center;gap:12px;margin:14px 0 6px;flex-wrap:wrap}
+.pbtn{width:44px;height:44px;border-radius:12px;border:2px solid var(--line);background:var(--surface);font-size:24px;font-weight:800;color:var(--forest);box-shadow:0 3px 0 var(--line);line-height:1}
+.pbtn:disabled{opacity:.4;cursor:default}
+.pnum{font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.pnum b{font-family:var(--display);font-size:24px;color:var(--ink)}
+.ingr{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+.ingr li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px;padding:8px 12px;border-radius:10px;background:var(--surface-2)}
+.ingr b{font-variant-numeric:tabular-nums;color:var(--forest)}
+.steps{padding-left:22px;margin:6px 0}
+.steps li{margin:8px 0}
+.palten-pop{display:flex;justify-content:center}
+.palten-pop .mascot{width:120px}
 /* music */
 .artist{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start}
 .avatar{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:var(--on-color);font-family:var(--display);font-weight:700;font-size:22px}
@@ -329,6 +347,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <button class="stat streak" id="s-streak" title="Dagar i rad" aria-label="Dagar i rad"><svg class="ic" viewBox="0 0 24 24"><use href="#i-flame"/></svg><span>0</span></button>
     <button class="stat hj" id="s-hj" title="Hjortron" aria-label="Hjortron"><svg class="ic" viewBox="0 0 24 24"><use href="#i-hj"/></svg><span>0</span></button>
     <button class="stat li" id="s-li" title="Lingon (liv)" aria-label="Lingon, dina liv"><svg class="ic" viewBox="0 0 24 24"><use href="#i-lingon"/></svg><span>5</span></button>
+    <button class="stat palt" data-act="recipe" title="Recept på pitepalt" aria-label="Recept på pitepalt"><svg class="ic" viewBox="0 0 24 24"><use href="#i-palt"/></svg></button>
     <button class="stat acct" id="s-acct" data-act="account" title="Spara framsteg" aria-label="Spara dina framsteg" hidden><svg class="ic" viewBox="0 0 24 24"><use href="#i-user"/></svg></button>
   </div>
 </header>
@@ -361,6 +380,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10.5" rx="2.5" fill="currentColor"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2.4"/></symbol>
     <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="currentColor"/><path d="M7 5H4a3 3 0 0 0 3 4M17 5h3a3 3 0 0 1-3 4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 13h4v4h-4zM7.5 20h9v2h-9z" fill="currentColor"/></symbol>
+    <symbol id="i-palt" viewBox="0 0 24 24"><ellipse cx="12" cy="14.5" rx="9.5" ry="7.5" fill="#A08D78"/><ellipse cx="12" cy="13.5" rx="8.5" ry="6" fill="#B3A18C"/><circle cx="8.6" cy="7.6" r="2.4" fill="#C42B3F"/><circle cx="11.6" cy="7" r="2.2" fill="#C42B3F"/><rect x="13" y="6.2" width="6" height="3.6" rx="1.2" fill="#F7D96B" transform="rotate(-8 16 8)"/><circle cx="9.5" cy="13.5" r="1" fill="#22170F"/><circle cx="14.5" cy="13.5" r="1" fill="#22170F"/><path d="M10.2 16q1.8 1.5 3.6 0" stroke="#3A2A1E" stroke-width="1.1" fill="none" stroke-linecap="round"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M4 21c1-4.5 4.5-6.5 8-6.5s7 2 8 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
     <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -808,6 +828,67 @@ function awardWeekly(xp){
   sb.rpc("add_xp", { amount: Math.min(20, Math.max(1, xp)) }).then(() => { board = null; }).catch(() => {});
 }
 
+
+/* ---------- Recept på pitepalt ---------- */
+// Mängder per portion, baserat på ICA:s recept för 4 portioner (12 paltar)
+const PALT = [
+  {n:"mjölig potatis", q:250, u:"g"},
+  {n:"kornmjöl", q:0.25, u:"dl"},
+  {n:"vetemjöl, ungefär", q:0.625, u:"dl"},
+  {n:"salt till degen", q:0.375, u:"tsk"},
+  {n:"rimmat sidfläsk", q:37.5, u:"g"},
+  {n:"gul lök till fyllningen (valfritt)", q:0.25, u:"st"},
+  // Kokvattnet växer långsammare än degen: 4 portioner ger 4 l och 4 msk salt
+  {n:"vatten att koka i", f:n => 2 + n/2, u:"l"},
+  {n:"salt till kokvattnet", f:n => 2 + n/2, u:"msk"}
+];
+let paltPortions = 4;
+const FR = {0.25:"¼", 0.5:"½", 0.75:"¾"};
+function fmtNum(x){
+  const whole = Math.floor(x + 1e-9), frac = Math.round((x - whole) * 4) / 4;
+  if (frac === 1) return String(whole + 1);
+  if (FR[frac]) return (whole ? whole + " " : "") + FR[frac];
+  return String(whole);
+}
+function fmtQty(q, u){
+  if (u === "g"){
+    if (q >= 1000) return (Math.round(q / 100) / 10).toString().replace(".", ",") + " kg";
+    return (Math.round(q / 5) * 5) + " g";
+  }
+  if (u === "dl" && q < 0.5) return fmtNum(Math.max(0.5, Math.round(q * 6.67 * 2) / 2)) + " msk";
+  if (u === "tsk" && q >= 3) return fmtNum(Math.round(q / 3 * 4) / 4) + " msk";
+  if (u === "l") return fmtNum(Math.max(1, Math.round(q * 2) / 2)) + " l";
+  if (u === "st") return fmtNum(Math.max(0.25, Math.round(q * 4) / 4)) + " st";
+  return fmtNum(Math.max(0.25, Math.round(q * 4) / 4)) + " " + u;
+}
+function recipeHtml(){
+  const n = paltPortions;
+  return `<section class="card prose recipe" id="recept"><h2>Recept: pitepalt</h2>
+    <p>Palten själv berättar hur han blir till. Välj hur många ni är, så räknas mängderna om.</p>
+    <div class="portions" role="group" aria-label="Antal portioner">
+      <button class="pbtn" data-act="portions-" aria-label="Färre portioner" ${n<=1?"disabled":""}>−</button>
+      <span class="pnum" aria-live="polite"><b>${n}</b> ${n===1?"portion":"portioner"} · ${n*3} paltar</span>
+      <button class="pbtn" data-act="portions+" aria-label="Fler portioner" ${n>=20?"disabled":""}>+</button>
+    </div>
+    <ul class="ingr">${PALT.map(x => `<li><b>${fmtQty(x.f ? x.f(n) : x.q*n, x.u)}</b> <span>${x.n}</span></li>`).join("")}</ul>
+    <h3>Gör så här</h3>
+    <ol class="steps">
+      <li>Skala potatisen och riv den fint. Låt den rinna av i en sil och krama ur så mycket vätska du kan.</li>
+      <li>Skär fläsket i små tärningar. Hacka löken fint om du vill ha med den och blanda med fläsket.</li>
+      <li>Blanda potatisen med kornmjöl och salt. Tillsätt vetemjöl lite i taget tills degen är fast och går att forma. Hur mycket som behövs beror på potatisen.</li>
+      <li>Dela degen i ${n*3} bitar. Gör en grop i varje, lägg i ungefär en matsked fläsk och nyp ihop till en rund boll.</li>
+      <li>Koka upp vattnet med saltet i en stor kastrull. Lägg i paltarna och låt dem sjuda på svag värme i ungefär 45 minuter. Rör försiktigt i början så att de inte fastnar i botten.</li>
+      <li>Servera med smör, lingonsylt och ett glas kall mjölk.</li>
+    </ol>
+    <p class="fine">Blir det palt över? Skiva den nästa dag och stek i smör. Den som har ätit för mycket är <b>paltschwiim</b>.</p>
+    <div class="src"><a class="linkbtn" href="https://www.ica.se/recept/pitepalt-702154/" target="_blank" rel="noopener">${ic("i-ext")}Originalrecept hos ICA</a></div>
+  </section>`;
+}
+function showRecipe(){
+  tab = "about"; openPop = null; render();
+  const r = $("#recept"); if (r) r.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+}
+
 /* ---------- Hjälpare ---------- */
 const $ = (s, r=document) => r.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -945,7 +1026,7 @@ function viewLearn(){
   const greet = !S.xp ? ["Välkommen!", "Jag är Palten. Vä lär oss pitemål tillsammans."]
     : dayXp()>=GOAL ? ["Äkshlänt!", "Dagens mål är klart. Du får gärna köra en till."]
     : ["Vöre jär'e vä dä?", "Några minuter om dagen räcker långt."];
-  let html = `<section class="hero" aria-label="Dagens mål"><canvas id="aurora" aria-hidden="true"></canvas>${mascot("happy")}
+  let html = `<section class="hero" aria-label="Dagens mål"><canvas id="aurora" aria-hidden="true"></canvas><button class="mascot-btn" data-act="palten" aria-label="Palten, klicka för att läsa om pitepalt">${mascot("happy")}</button>
     <div style="min-width:0;flex:1"><h1>${esc(greet[0])}</h1><p>${esc(greet[1])}</p>
     <div class="goal"><span>${dayXp()}/${GOAL} XP</span><span class="bar"><i style="width:${g*100}%"></i></span></div>
     <div class="hero-actions"><button class="chip" data-act="practice">${ic("i-bolt","ic")} Öva</button><button class="chip" data-act="sound">${S.sound?"Ljud på":"Ljud av"}</button></div></div></section>`;
@@ -1061,6 +1142,7 @@ function viewAbout(){
     <section class="card prose"><h2>Källor</h2>
       <p>Orden och fraserna i kursen kommer från de här sidorna. Där finns mycket mer att läsa.</p>
       <div class="src">${L("https://pitemal.wikidot.com/page","Pitemål wiki")}${L("https://pitemal.wikidot.com/glossary","Ordlista")}${L("https://www.alterhedens.se/pitemal-pitebondska.html","AlterHedens")}${L("https://www.alterhedens.se/korsord-pitemal-pitebondska.html","Korsord")}${L("https://www.alterhedens.se/quiz-vaxter-pitemal.html","Växtquiz")}${L("https://sv.wikipedia.org/wiki/Pitem%C3%A5l","Wikipedia")}${L("https://www.diva-portal.org/smash/get/diva2:1327765/FULLTEXT01.pdf","Uppsats, Uppsala universitet")}${L("https://fraufurtenbach.wordpress.com/category/veckans-ord-pa-pitemal/","Veckans ord på pitemål")}${L("https://sprakkonsultjosefin.wordpress.com/tag/pitemal/","Språkkonsult Josefin")}${L("https://detskullevararoligt.wordpress.com/2012/11/18/hojna-hajna-hejna-2/","Hojna, hajna, hejna")}</div></section>
+    ${recipeHtml()}
     <section class="card prose" id="reset-box"><h2>Dina framsteg</h2>
       <p>${S.xp} XP totalt · ${Object.keys(S.seen).length} ord inlärda · ${ORDER.filter(id=>S.done[dk(id)]).length} av ${ORDER.length} lektioner klara.</p>
       ${CAN_LOGIN ? `<p>${user ? `Inloggad som <b>${esc(user.email||"")}</b>. Allt sparas automatiskt.` : "Logga in för att spara framstegen på alla dina enheter."}</p>
@@ -1166,7 +1248,7 @@ function showItem(){
   } else if (it.t==="build"){
     const q = it.dir==="ps" ? "Översätt till svenska" : "Översätt till pitemål";
     const shown = it.dir==="ps" ? it.w.p : it.w.s;
-    lb.innerHTML = `<div class="l-kicker">${it.redo ? "Tidigare misstag" : ""}</div><h2 class="l-q">${q}</h2>
+    lb.innerHTML = `<div class="l-kicker">${it.redo ? "Tidigare misstag" : it.fromWord ? `${ic("i-star")} Fras med ordet ${esc(it.fromWord)}` : ""}</div><h2 class="l-q">${q}</h2>
       <div class="prompt">${mascot()}<div class="say">${esc(shown)}</div></div>
       <div class="answer" id="ans" aria-label="Ditt svar"></div><div class="bank" id="bank"></div>`;
     drawBuild();
@@ -1200,6 +1282,22 @@ function check(){
   }
   resolve(ok, correct, it);
 }
+// När ett ord sitter kommer en fras som använder ordet, högst två per lektion
+function phraseFor(w){
+  const k = norm(w.p);
+  const hits = ALL.filter(x => x.ph && tok(x.p).some(t => norm(t) === k));
+  if (!hits.length) return null;
+  const fresh = hits.filter(x => !(S.phraseSeen||{})[x.p]);
+  return pick(fresh.length ? fresh : hits, 1)[0];
+}
+function queuePhraseFor(w){
+  if ((L.phraseCount||0) >= 2) return;
+  if (L.items.slice(L.pos+1).some(x => x.fromWord)) return;
+  const ph = phraseFor(w); if (!ph) return;
+  const ex = Object.assign(mkBuild(ph), {fromWord: w.p});
+  L.items.splice(L.pos+1, 0, ex); L.total++; L.phraseCount = (L.phraseCount||0)+1;
+  S.phraseSeen = S.phraseSeen || {}; S.phraseSeen[ph.p] = 1;
+}
 function resolve(ok, correct, it){
   const st = L.state; st.done = true;
   const f = $("#lf"), b = $("#check");
@@ -1207,6 +1305,7 @@ function resolve(ok, correct, it){
   if (ok){
     L.right++; if (!it.redo) L.firstTry++;
     words.forEach(w => { S.seen[w.p]=1; S.count[w.p]=(S.count[w.p]||0)+1; if (L.practice && S.miss[w.p]) S.miss[w.p]--; });
+    if (it.t==="mc" && !it.w.ph && !it.redo) queuePhraseFor(it.w);
     const pr = PRAISE[Math.floor(Math.random()*PRAISE.length)];
     f.className = "l-foot ok";
     $("#fbx").innerHTML = `<h3>${esc(pr[0])}</h3><p>Pitemål för ${esc(pr[1])}.${it.w && it.w.note ? " "+esc(it.w.note)+"." : ""}</p>`;
@@ -1290,6 +1389,18 @@ document.addEventListener("click", async e => {
     t.disabled = true;
     if (await sendCode(lastEmail)){ toast("En ny kod är skickad. Använd koden i det senaste mejlet."); const c = $("#otp-code"); if (c){ c.value = ""; c.focus(); } }
     t.disabled = false; return;
+  }
+  if (a==="recipe"){ const m = t.closest(".modal"); if (m) m.remove(); showRecipe(); return; }
+  if (a==="palten"){
+    modal(`<div class="palten-pop">${mascot("wow")}</div><h2>Hej, jag är Palten!</h2>
+      <p>Jag är en pitepalt, gjord av potatis och kornmjöl med fläsk inuti. På sidan <b>Om pitemål</b> finns receptet på hur du lagar mig, och du kan välja hur många portioner du vill göra.</p>
+      <div class="row"><button class="big" data-act="recipe">Visa receptet</button><button class="big ghostb" data-act="closemodal">Stäng</button></div>`);
+    tone([520, 700], .08); return;
+  }
+  if (a==="portions-" || a==="portions+"){
+    paltPortions = Math.min(20, Math.max(1, paltPortions + (a==="portions+" ? 1 : -1)));
+    const r = $("#recept"); if (r){ r.outerHTML = recipeHtml(); const b = document.querySelector(`[data-act="${a}"]`); if (b && !b.disabled) b.focus(); }
+    return;
   }
   if (a==="paste-email"){
     try { const txt = (await navigator.clipboard.readText()).replace(/[\s\u200B-\u200D\uFEFF]+/g, ""); const inp = $("#login-email"); inp.value = txt; inp.focus(); }
