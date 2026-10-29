@@ -3,10 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Lär dig pitemål (pitebondska) med korta lektioner, ordbok och musik från Piteå.">
+<title>Pitemål – lär dig pitebondska gratis</title>
+<meta name="description" content="Lär dig pitemål, dialekten från Piteå. Korta lektioner, ordbok A–Ö med hundratals ord och fraser, uttal, grammatik och musik på bondska. Gratis på mobil och dator.">
+<link rel="canonical" href="https://xn--piteml-mua.se/">
+<meta name="theme-color" content="#0F1E2C">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pitemål">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:title" content="Pitemål – lär dig pitebondska gratis">
+<meta property="og:description" content="Lär dig pitemål, dialekten från Piteå. Korta lektioner, ordbok A–Ö med hundratals ord och fraser, uttal, grammatik och musik på bondska. Gratis på mobil och dator.">
+<meta property="og:url" content="https://xn--piteml-mua.se/">
+<meta property="og:image" content="https://xn--piteml-mua.se/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Pitemål – lär dig pitebondska. Palten, en pitepalt med lingon, under norrsken.">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "Pitemål", "url": "https://xn--piteml-mua.se/", "inLanguage": "sv"}, {"@type": "WebApplication", "name": "Pitemål", "url": "https://xn--piteml-mua.se/", "applicationCategory": "EducationalApplication", "operatingSystem": "Alla", "inLanguage": "sv", "isAccessibleForFree": true, "description": "Lär dig pitemål, dialekten från Piteå. Korta lektioner, ordbok A–Ö med hundratals ord och fraser, uttal, grammatik och musik på bondska. Gratis på mobil och dator.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "SEK"}, "about": {"@type": "Language", "name": "Pitemål", "alternateName": ["Pitebondska", "Bondska"]}}]}</script>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>Pitemål</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
@@ -64,7 +82,8 @@
 *{box-sizing:border-box}
 html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
-button{font:inherit;color:inherit;cursor:pointer}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--sel-line);outline-offset:2px}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
 a{color:var(--forest)}
@@ -82,6 +101,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .stat:hover{background:var(--surface-2)}
 .stat.streak{color:var(--hjorton-d)} .stat.hj{color:var(--hjorton-d)} .stat.li{color:var(--lingon)}
 .stat.off{color:var(--locked-ink)}
+.stat.acct{color:var(--muted);position:relative}
+.stat.acct.on{color:var(--forest)}
+.stat.acct.on::after{content:"";position:absolute;right:5px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--forest);border:2px solid var(--bg)}
+.nudge{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:20px;padding:12px 14px;border:2px dashed var(--line);border-radius:14px;color:var(--muted);font-size:14px}
+.nudge b{color:var(--ink)}
+.nudge .sp{flex:1 1 180px;min-width:0}
+.linkish{border:0;background:none;padding:0;color:var(--forest);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.login{display:grid;gap:10px;margin-top:12px}
+.login label{font-weight:700;font-size:14px}
+.login input,.codebox{width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+.codebox{font-size:13px;font-family:ui-monospace,Menlo,monospace;min-height:80px;resize:vertical}
+.fine{font-size:13px;color:var(--muted);margin-top:12px}
 
 /* norrsken hero */
 .hero{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(180deg,var(--night) 0%,var(--night-2) 100%);color:var(--on-night);margin-top:16px;padding:20px 20px 18px;display:flex;gap:14px;align-items:center;min-height:150px}
@@ -112,7 +143,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .node:active{transform:translateY(5px);box-shadow:0 2px 0 var(--ud)}
 .node .ic{width:34px;height:34px}
 .node.locked{background:var(--locked);box-shadow:0 7px 0 var(--locked-d);color:var(--locked-ink)}
-.node.current{outline:6px solid color-mix(in srgb,var(--uc) 28%,transparent);outline-offset:6px}
+.node.current{outline:6px solid var(--line);outline:6px solid color-mix(in srgb,var(--uc) 28%,transparent);outline-offset:6px}
 .bubble{position:absolute;bottom:calc(100% + 14px);background:var(--surface);border:2px solid var(--line);color:var(--uc);font-weight:800;letter-spacing:.06em;font-size:14px;padding:6px 12px;border-radius:12px;white-space:nowrap;animation:bob 1.6s ease-in-out infinite}
 .bubble::after{content:"";position:absolute;left:50%;top:100%;width:12px;height:12px;background:var(--surface);border-right:2px solid var(--line);border-bottom:2px solid var(--line);transform:translate(-50%,-6px) rotate(45deg)}
 @keyframes bob{50%{transform:translateY(-4px)}}
@@ -248,15 +279,21 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 </style>
 </head>
 <body>
+<noscript><div style="max-width:560px;margin:40px auto;padding:0 16px;font-family:system-ui,sans-serif">
+<h2>Pitemål – lär dig pitebondska</h2>
+<p>Lär dig pitemål, dialekten från Piteå och Pite älvdal, med korta lektioner, en ordbok och musik på bondska. Sidan behöver JavaScript för att fungera.</p>
+</div></noscript>
 <header class="top">
   <div class="top-in">
     <div class="brand"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-hj"/></svg>Pitemål</div>
-    <button class="stat streak" id="s-streak" title="Dagar i rad"><svg class="ic" viewBox="0 0 24 24"><use href="#i-flame"/></svg><span>0</span></button>
-    <button class="stat hj" id="s-hj" title="Hjortron"><svg class="ic" viewBox="0 0 24 24"><use href="#i-hj"/></svg><span>0</span></button>
-    <button class="stat li" id="s-li" title="Lingon (liv)"><svg class="ic" viewBox="0 0 24 24"><use href="#i-lingon"/></svg><span>5</span></button>
+    <button class="stat streak" id="s-streak" title="Dagar i rad" aria-label="Dagar i rad"><svg class="ic" viewBox="0 0 24 24"><use href="#i-flame"/></svg><span>0</span></button>
+    <button class="stat hj" id="s-hj" title="Hjortron" aria-label="Hjortron"><svg class="ic" viewBox="0 0 24 24"><use href="#i-hj"/></svg><span>0</span></button>
+    <button class="stat li" id="s-li" title="Lingon (liv)" aria-label="Lingon, dina liv"><svg class="ic" viewBox="0 0 24 24"><use href="#i-lingon"/></svg><span>5</span></button>
+    <button class="stat acct" id="s-acct" data-act="account" title="Spara framsteg" aria-label="Spara dina framsteg" hidden><svg class="ic" viewBox="0 0 24 24"><use href="#i-user"/></svg></button>
   </div>
 </header>
 
+<h1 class="sr">Pitemål – lär dig pitebondska</h1>
 <main class="wrap" id="main"></main>
 
 <nav class="nav" aria-label="Meny">
@@ -283,6 +320,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10.5" rx="2.5" fill="currentColor"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2.4"/></symbol>
     <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 3h10v5a5 5 0 0 1-10 0z" fill="currentColor"/><path d="M7 5H4a3 3 0 0 0 3 4M17 5h3a3 3 0 0 1-3 4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 13h4v4h-4zM7.5 20h9v2h-9z" fill="currentColor"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M4 21c1-4.5 4.5-6.5 8-6.5s7 2 8 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
     <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="currentColor"/></symbol>
@@ -326,6 +364,8 @@ const UNITS = [
     ["hänna","det där"],["dömjen","de här"],["döm`dena","de där"],
     ["påtjen","pojken"],["fLècka","flickan"],["ståóln","stolen"],["stö`gon","stugan"],["båoLe","bordet"],["loj`se","lyset"],
     ["I veit itt","Jag vet inte"],["I be it höv","Jag behöver inte"],["bråorn men","min bror"],["I vorte rädd","Jag blev rädd"],
+    ["wo","vad"],["häjn","det här","Kortform av häjna"],["nå","något","Även na eller nage"],["pappa dijn","din pappa","Possessivet kommer efter ordet"],
+    ["Wo jär häjn för nå?","Vad är det här för något?","Ihopsatt av belagda ord: wo, jär, häjn och nå"],
     ["Voda jär dö då?","Varifrån kommer du?"],["Wo heijt pappa dijn då?","Vad heter din pappa?"],["Bö dö et hö:v hänn?","Behöver du inte det där?"]]},
   {id:"u2", title:"Hejma", sub:"Stugan, köket och pitepalten", c:"u2", deco:"d-lingon",
    tips:[
@@ -438,7 +478,9 @@ const UNITS = [
    words:[
     ["kLeut","blöja"],["stjöLja","tvättkorg"],["stjällkåo","skällko"],["rä`Nsk","gnägga"],["daNs","dansa"],
     ["kangråotne:t","spindelnät"],["sööm","sy"],["tråck","tråckla"],["kaark","sy grovt och slarvigt"],["neest","sy nätt"],
-    ["gåod","god"],["mågahove","måttlighet med mat"],["slokkamon","mellanrum"],["waller","svamla"],
+    ["gåod","god"],["kle:da","kläder"],["nagesht","någonstans","Även nagerst"],["nagesht woshtánsh","här och var"],
+    ["brö:de","brödet"],["verklit","verkligen"],["gåodsmukot","god i smaken"],["kalasä:re","kalasade, åt gott"],["volpstjöle","valpkorg"],
+    ["mågahove","måttlighet med mat"],["slokkamon","mellanrum"],["waller","svamla"],
     ["Åj, vå vä kalasä:re e gå:r!","Oj, vad vi åt gott i går!"],["Brö:de jen jär verklit gåodsmukot","Det här brödet smakar verkligen gott"],
     ["Hä låg kle:da nagesht woshtánsh","Det låg kläder här och var"],["Hä jär som ine-n volpstjöle","Det är som i en valpkorg","Det vill säga stökigt"]]},
   {id:"u13", title:"Väder & krämpor", sub:"Drivsnö, oväder och lite krumo", c:"u13", deco:"d-snow",
@@ -451,6 +493,8 @@ const UNITS = [
     ["krakla","skral"],["kröko","liten och svag"],["skröppli","skröplig"],["bo`rN","bulna, bli inflammerad"],["swi`d","svida"],
     ["bLåi`ta","blöta"],["èut","ute"],["sLeùt","sluta"],["sLeùk","sluka"],["stjùt","skjuta"],["heuali´gen","ojdå!"],
     ["twärdjära","göra något snabbt"],["pitjmåLe","pitemålet"],
+    ["e da:g","i dag"],["e gå:r","i går"],["a-mörnom","i morgonbitti"],["fåra","fara, åka"],["fämfläjte","fyndig"],
+    ["kwekka","öm punkt","Egentligen den mjuka delen"],["dråga","dra"],["katta","katten"],["åtaba:k","baklänges"],["jösh å:t","hjälpts åt"],
     ["I tjänn mä nalta krumo e da:g","Jag känner mig lite sjuk i dag"],["Sko vä fåra a-mörnom?","Ska vi fara i morgonbitti?"],
     ["Hon jär gåode fämfläjte","Hon är ganska fyndig"],["Hänna tåo opa kwekka","Det där tog på en öm punkt"],
     ["Vä ha jösh å:t","Vi har hjälpts åt"],["Hä jär som dråga katta åtaba:k","Det är som att dra katten baklänges","Sägs om något som går tungt"]]}
@@ -492,7 +536,8 @@ try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign({}, DEF,
 const OLD_IDS = ["u1","u2","u3","u4","u5","u6","u7","u8","u9","u10"];
 for (const k of Object.keys(S.done)){ const m = k.match(/^(\d+)-(\d)$/); if (m){ if (OLD_IDS[m[1]]) S.done[OLD_IDS[m[1]]+"-"+m[2]] = true; delete S.done[k]; } }
 if (!S.count) S.count = {};
-function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+function saveLocal(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+function save(){ saveLocal(); if (typeof queueSync === "function") queueSync(); }
 const MAXL = 5, REGEN = 30*60*1000, GOAL = 30;
 function today(off=0){ const d = new Date(Date.now()+off*864e5); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function regen(){
@@ -502,6 +547,89 @@ function regen(){
 }
 function streakAlive(){ return S.lastDay===today() || S.lastDay===today(-1); }
 function dayXp(){ return S.day.d===today() ? S.day.xp : 0; }
+
+
+/* ---------- Konto och synk (valfritt) ---------- */
+// Fyll i från Supabase-projektet (Project Settings → API). Nyckeln är publik och skyddas av radregler i databasen.
+const SUPA = {url:"", key:""};
+const CAN_LOGIN = !!(SUPA.url && SUPA.key) && /(^|\.)xn--piteml-mua\.se$|^localhost$|^127\.0\.0\.1$/.test(location.hostname);
+let sb = null, user = null, syncTimer = 0;
+function loadSupabase(){
+  return new Promise((res, rej) => {
+    if (window.supabase) return res();
+    const el = document.createElement("script");
+    el.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js";
+    el.onload = res; el.onerror = rej; document.head.appendChild(el);
+  });
+}
+async function initAuth(){
+  if (!CAN_LOGIN) return;
+  $("#s-acct").hidden = false;
+  try { await loadSupabase(); } catch(e){ return; }
+  sb = window.supabase.createClient(SUPA.url, SUPA.key);
+  const { data } = await sb.auth.getSession();
+  await setUser(data.session ? data.session.user : null);
+  sb.auth.onAuthStateChange((_e, session) => { setUser(session ? session.user : null); });
+}
+async function setUser(u){
+  const was = user && user.id;
+  user = u;
+  $("#s-acct").classList.toggle("on", !!u);
+  $("#s-acct").setAttribute("aria-label", u ? "Ditt konto, inloggad" : "Spara dina framsteg");
+  if (u && u.id !== was){ await pullRemote(); if (!was) toast("Inloggad. Dina framsteg sparas nu."); }
+  if (!L) render();
+}
+function mergeState(a, b){
+  const m = Object.assign({}, DEF, a);
+  for (const k of ["xp","hj"]) m[k] = Math.max(a[k]||0, b[k]||0);
+  for (const k of ["done","seen"]) m[k] = Object.assign({}, b[k]||{}, a[k]||{});
+  for (const k of ["count","miss"]){ m[k] = Object.assign({}, b[k]||{}); for (const [w,n] of Object.entries(a[k]||{})) m[k][w] = Math.max(n, m[k][w]||0); }
+  if ((b.lastDay||"") > (a.lastDay||"")){ m.lastDay = b.lastDay; m.streak = b.streak; }
+  else if (b.lastDay === a.lastDay) m.streak = Math.max(a.streak||0, b.streak||0);
+  if (b.day && b.day.d === today() && (!a.day || a.day.d !== today() || b.day.xp > a.day.xp)) m.day = b.day;
+  return m;
+}
+async function pullRemote(){
+  try {
+    const { data, error } = await sb.from("progress").select("data").eq("user_id", user.id).maybeSingle();
+    if (error) throw error;
+    if (data && data.data){ S = mergeState(S, data.data); saveLocal(); }
+    await pushRemote();
+  } catch(e){ toast("Kunde inte hämta dina sparade framsteg just nu. Försök igen senare."); }
+}
+async function pushRemote(){
+  if (!sb || !user) return;
+  try { await sb.from("progress").upsert({user_id:user.id, data:S, updated_at:new Date().toISOString()}); } catch(e) {}
+}
+function queueSync(){ if (!user) return; clearTimeout(syncTimer); syncTimer = setTimeout(pushRemote, 1500); }
+function accountModal(){
+  if (user){
+    modal(`<h2>Ditt konto</h2><p>Inloggad som <b>${esc(user.email||"")}</b>. Dina framsteg sparas automatiskt och finns på alla enheter där du loggar in.</p>
+      <div class="row"><button class="big" data-act="closemodal">Klart</button><button class="big ghostb" data-act="logout">Logga ut</button></div>`);
+    return;
+  }
+  modal(`<h2>Spara dina framsteg</h2><p>Logga in med din e-post så sparas XP, lektioner och ord. Då finns de kvar på både mobilen och datorn. Du får en inloggningslänk i mejlet och behöver inget lösenord.</p>
+    <form id="login-form" class="login" novalidate><label for="login-email">E-post</label>
+    <input id="login-email" type="email" required autocomplete="email" inputmode="email" placeholder="namn@exempel.se">
+    <button class="big" type="submit">Skicka inloggningslänk</button></form>
+    <p class="fine">Du kan spela utan konto. Då sparas allt bara i den här webbläsaren.</p>`);
+}
+document.addEventListener("submit", async e => {
+  if (e.target.id !== "login-form") return;
+  e.preventDefault();
+  const inp = $("#login-email"), email = inp.value.trim();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ inp.focus(); toast("Skriv en e-postadress, till exempel namn@exempel.se."); return; }
+  const btn = e.target.querySelector("button"); btn.disabled = true; btn.textContent = "Skickar…";
+  const { error } = await sb.auth.signInWithOtp({ email, options:{ emailRedirectTo: location.origin + "/" } });
+  if (error){ btn.disabled = false; btn.textContent = "Skicka inloggningslänk"; toast("Det gick inte att skicka länken. Försök igen om en stund."); return; }
+  e.target.outerHTML = `<p><b>Kolla din mejl.</b> Vi har skickat en inloggningslänk till ${esc(email)}. Öppna den på den här enheten.</p><div class="row"><button class="big" data-act="closemodal">Okej</button></div>`;
+});
+function exportCode(){ return "PITE1:" + btoa(unescape(encodeURIComponent(JSON.stringify(S)))); }
+function importCode(code){
+  const c = code.trim();
+  if (!c.startsWith("PITE1:")) throw new Error("bad");
+  return JSON.parse(decodeURIComponent(escape(atob(c.slice(6)))));
+}
 
 /* ---------- Hjälpare ---------- */
 const $ = (s, r=document) => r.querySelector(s);
@@ -660,6 +788,9 @@ function viewLearn(){
     });
     html += `</div></section>`;
   });
+  if (CAN_LOGIN && !user && !S.nudgeOff && ORDER.filter(id=>S.done[dk(id)]).length >= 2){
+    html = html.replace('<section class="unit"', `<div class="nudge" role="note"><span class="sp"><b>Spara dina framsteg?</b> Logga in med e-post så finns de kvar på alla dina enheter.</span><button class="linkish" data-act="account">Logga in</button><button class="linkish" data-act="nudgeoff" aria-label="Dölj påminnelsen">Inte nu</button></div><section class="unit"`);
+  }
   if (!cur) html += `<div class="card" style="margin-top:28px;text-align:center"><h2>Hela kursen är klar!</h2><p>Du kan pitemål bättre än de flesta sörlenninga. Kör <b>Öva</b> för att hålla orden färska.</p></div>`;
   return html;
 }
@@ -754,7 +885,13 @@ function viewAbout(){
       <div class="src">${L("https://pitemal.wikidot.com/page","Pitemål wiki")}${L("https://pitemal.wikidot.com/glossary","Ordlista")}${L("https://www.alterhedens.se/pitemal-pitebondska.html","AlterHedens")}${L("https://www.alterhedens.se/korsord-pitemal-pitebondska.html","Korsord")}${L("https://www.alterhedens.se/quiz-vaxter-pitemal.html","Växtquiz")}${L("https://sv.wikipedia.org/wiki/Pitem%C3%A5l","Wikipedia")}${L("https://www.diva-portal.org/smash/get/diva2:1327765/FULLTEXT01.pdf","Uppsats, Uppsala universitet")}${L("https://fraufurtenbach.wordpress.com/category/veckans-ord-pa-pitemal/","Veckans ord på pitemål")}${L("https://sprakkonsultjosefin.wordpress.com/tag/pitemal/","Språkkonsult Josefin")}${L("https://detskullevararoligt.wordpress.com/2012/11/18/hojna-hajna-hejna-2/","Hojna, hajna, hejna")}</div></section>
     <section class="card prose" id="reset-box"><h2>Dina framsteg</h2>
       <p>${S.xp} XP totalt · ${Object.keys(S.seen).length} ord inlärda · ${ORDER.filter(id=>S.done[dk(id)]).length} av ${ORDER.length} lektioner klara.</p>
-      <div class="src"><button class="linkbtn" data-act="reset">Börja om från början</button></div></section>
+      ${CAN_LOGIN ? `<p>${user ? `Inloggad som <b>${esc(user.email||"")}</b>. Allt sparas automatiskt.` : "Logga in för att spara framstegen på alla dina enheter."}</p>
+      <div class="src"><button class="linkbtn" data-act="account">${user ? "Ditt konto" : "Logga in och spara"}</button></div>` : ""}
+      <p>Du kan också flytta framstegen med en kod. Kopiera koden här och klistra in den på den andra enheten.</p>
+      <div class="src"><button class="linkbtn" data-act="export">Kopiera framstegskod</button></div>
+      <label for="import-code" class="sr">Klistra in framstegskod</label>
+      <textarea id="import-code" class="codebox" placeholder="Klistra in en kod som börjar med PITE1:"></textarea>
+      <div class="src"><button class="linkbtn" data-act="import">Hämta framsteg från koden</button><button class="linkbtn" data-act="reset">Börja om från början</button></div></section>
   </div>`;
 }
 
@@ -771,8 +908,14 @@ function startAurora(){
   const flakes = Array.from({length:26}, ()=>({x:Math.random(), y:Math.random(), r:Math.random()*1.8+.6, v:Math.random()*.0015+.0006}));
   function size(){ const b=cv.getBoundingClientRect(); W=b.width; H=b.height; cv.width=W*dpr; cv.height=H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
   size();
+  let visible = true;
+  const io = "IntersectionObserver" in window ? new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    if (visible && !reduce){ cancelAnimationFrame(auroraRaf); auroraRaf = requestAnimationFrame(frame); }
+  }) : null;
+  if (io) io.observe(cv);
   function frame(t){
-    if (!cv.isConnected) return;
+    if (!cv.isConnected){ if (io) io.disconnect(); return; }
     if (cv.width !== Math.round(cv.getBoundingClientRect().width*dpr)) size();
     ctx.clearRect(0,0,W,H);
     stars.forEach(s=>{ ctx.globalAlpha=.35+.35*Math.sin(t/900+s.p); ctx.fillStyle="#fff"; ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,7); ctx.fill(); });
@@ -790,7 +933,7 @@ function startAurora(){
     ctx.fillStyle="#fff";
     flakes.forEach(f=>{ f.y += reduce?0:f.v; if (f.y>1) f.y=0; ctx.globalAlpha=.7; ctx.beginPath(); ctx.arc(f.x*W + Math.sin(t/1200+f.x*9)*6, f.y*H, f.r, 0, 7); ctx.fill(); });
     ctx.globalAlpha = 1;
-    if (!reduce && !document.hidden) auroraRaf = requestAnimationFrame(frame);
+    if (!reduce && !document.hidden && visible) auroraRaf = requestAnimationFrame(frame);
   }
   frame(performance.now());
   document.addEventListener("visibilitychange", ()=>{ if (!document.hidden && tab==="learn" && !L){ cancelAnimationFrame(auroraRaf); auroraRaf=requestAnimationFrame(frame);} }, {once:true});
@@ -929,7 +1072,7 @@ function finish(){
       <div class="st" style="--tc:var(--hjorton-d)"><small>XP</small><b>${ic("i-bolt")}${xp}</b></div>
       <div class="st" style="--tc:var(--forest)"><small>Träffsäkerhet</small><b>${ic("i-target")}${acc}%</b></div>
       <div class="st" style="--tc:var(--lingon)"><small>Hjortron</small><b>${ic("i-hj")}+${hj}</b></div>
-    </div></div>`;
+    </div>${CAN_LOGIN && !user ? `<p class="fine">Vill du spara framstegen på alla enheter? <button class="linkish" data-act="account">Logga in</button></p>` : ""}</div>`;
   $(".prog i").style.width = "100%";
   const f = $("#lf"); f.className = "l-foot idle"; $("#fbx").innerHTML = "";
   const b = $("#check"); b.textContent = "Fortsätt"; b.disabled = false; b.className = "big";
@@ -952,7 +1095,7 @@ function modal(inner){
 }
 
 /* ---------- Händelser ---------- */
-document.addEventListener("click", e => {
+document.addEventListener("click", async e => {
   const t = e.target.closest("button"); if (!t) { if (openPop && !e.target.closest(".pop")){ openPop=null; if(!L) render(); } return; }
   if (t.dataset.tab){ tab = t.dataset.tab; openPop=null; render(); window.scrollTo(0,0); return; }
   if (t.dataset.node){ openPop = openPop===t.dataset.node ? null : t.dataset.node; render(); return; }
@@ -962,6 +1105,20 @@ document.addEventListener("click", e => {
     <div class="row"><button class="big" data-act="closemodal">Uppfattat</button></div>`); return; }
   const a = t.dataset.act;
   if (a==="closemodal"){ t.closest(".modal").remove(); return; }
+  if (a==="account"){ if (CAN_LOGIN && sb) accountModal(); else if (CAN_LOGIN) toast("Inloggningen laddar, försök igen om en sekund."); return; }
+  if (a==="logout"){ t.closest(".modal").remove(); if (sb) await sb.auth.signOut(); toast("Utloggad. Framstegen finns kvar i den här webbläsaren."); return; }
+  if (a==="nudgeoff"){ S.nudgeOff = true; save(); render(); return; }
+  if (a==="export"){
+    const code = exportCode();
+    try { await navigator.clipboard.writeText(code); toast("Koden är kopierad. Klistra in den på den andra enheten."); }
+    catch(e){ const ta = $("#import-code"); ta.value = code; ta.focus(); ta.select(); toast("Markera och kopiera koden i rutan."); }
+    return;
+  }
+  if (a==="import"){
+    try { const data = importCode($("#import-code").value); S = mergeState(S, data); save(); toast("Framstegen är hämtade."); render(); }
+    catch(e){ toast("Koden gick inte att läsa. Kontrollera att hela koden är med, från PITE1: till slutet."); }
+    return;
+  }
   if (a==="practice"){ startLesson(null, true); return; }
   if (a==="sound"){ S.sound=!S.sound; save(); render(); return; }
   if (a==="reset"){ $("#reset-box .src").innerHTML = `<span style="font-weight:700">All XP och alla lektioner raderas.</span><button class="linkbtn" data-act="reset2" style="color:var(--bad)">Ja, börja om</button><button class="linkbtn" data-act="reset0">Avbryt</button>`; return; }
@@ -1008,6 +1165,8 @@ document.addEventListener("keydown", e => {
 });
 setInterval(()=>{ if (!L) renderStats(); }, 60000);
 render();
+initAuth();
 </script>
+<script>if ("serviceWorker" in navigator && location.protocol === "https:") addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));</script>
 </body>
 </html>
