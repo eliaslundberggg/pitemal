@@ -351,21 +351,21 @@ const UNITS = [
     ["boijn","byn","Används också om Älvsbyn"],["i hejt","jag heter"],
     ["Vöre jär'e vä dä?","Hur är det med dig?"],["Vöre jär'e vä jä?","Hur är det med er?"],
     ["I jär bådda boin","Jag är från Älvsbyn"],["Hä jär klaart","Det är färdigt"],["I behöv it","Jag behöver inte"]]},
-  {id:"u11", title:"Hajna, hojna, häjna", sub:"Han, hon och det här", c:"u11", deco:"d-moose",
+  {id:"u11", title:"Hajna, hojna, hejna", sub:"Han, hon och det här", c:"u11", deco:"d-moose",
    tips:[
-    "<b>Hajna</b> = han eller den här (om han-ord), <b>hojna</b> = hon eller den här (om hon-ord), <b>häjna</b> = det här.",
+    "<b>Hajna</b> = han eller den här (om han-ord), <b>hojna</b> = hon eller den här (om hon-ord), <b>hejna</b> = det här.",
     "A:et kan falla bort: <b>hajn</b> och <b>hojn</b>. Man kan säga både <b>Hojna</b> och <b>Hojn</b> beroende på hur det låter bäst.",
     "Saker är han eller hon på pitemål. Stolen är en han (<b>ståóln</b>), stugan är en hon (<b>stö`gon</b>) och bordet är hä (<b>båoLe</b>).",
     "<b>Hänna</b> = det där, <b>dömjen</b> = de här, <b>döm`dena</b> = de där."],
    words:[
     ["hajna","han","Betyder också den här, om ett han-ord"],["hajn","han","Kortform av hajna"],
-    ["hojna","hon","Betyder också den här, om ett hon-ord"],["hojn","hon","Kortform av hojna"],["häjna","det här"],
+    ["hojna","hon","Betyder också den här, om ett hon-ord"],["hojn","hon","Kortform av hojna"],["hejna","det här","Skrivs också häjna"],
     ["Hojna jär åll åll","Hon är trött"],["Hajn hejt Kalle","Han heter Kalle"],
     ["hänna","det där"],["dömjen","de här"],["döm`dena","de där"],
     ["påtjen","pojken"],["fLècka","flickan"],["ståóln","stolen"],["stö`gon","stugan"],["båoLe","bordet"],["loj`se","lyset"],
     ["I veit itt","Jag vet inte"],["I be it höv","Jag behöver inte"],["bråorn men","min bror"],["I vorte rädd","Jag blev rädd"],
-    ["wo","vad"],["häjn","det här","Kortform av häjna"],["nå","något","Även na eller nage"],["pappa dijn","din pappa","Possessivet kommer efter ordet"],
-    ["Wo jär häjn för nå?","Vad är det här för något?","Ihopsatt av belagda ord: wo, jär, häjn och nå"],
+    ["wo","vad"],["hejn","det här","Kortform av hejna, skrivs också häjn"],["nå","något","Även na eller nage"],["pappa dijn","din pappa","Possessivet kommer efter ordet"],
+    ["Wo jär hejn för nå?","Vad är det här för något?","Ihopsatt av belagda ord: wo, jär, hejn och nå"],
     ["Voda jär dö då?","Varifrån kommer du?"],["Wo heijt pappa dijn då?","Vad heter din pappa?"],["Bö dö et hö:v hänn?","Behöver du inte det där?"]]},
   {id:"u2", title:"Hejma", sub:"Stugan, köket och pitepalten", c:"u2", deco:"d-lingon",
    tips:[
@@ -411,7 +411,7 @@ const UNITS = [
     ["ä´xter","pigg för sin ålder"],["sömenkeurat","sömndrucken"],["beshwäshfåtti","lat"],
     ["finfLos","högfärdig person"],["sörlenninga","folk från södra Sverige"],["fjälla","flickvän"],
     ["påik","pojke"],["hakatent","kort stubin"],["släpphent","fumlig"],
-    ["I jär åll åll","Jag är trött"],["I jär så euskefurat","Jag är så hängig"],["I waal så trojt bårte häjna","Jag blir så trött på det här"],
+    ["I jär åll åll","Jag är trött"],["I jär så euskefurat","Jag är så hängig"],["I waal så trojt bårte hejna","Jag blir så trött på det här"],
     ["Härri gu so arg i var","Herre gud så arg jag var"],["Åjj va dö sóorm","Oj vad du sölar ner dig"]]},
   {id:"u6", title:"Småord", sub:"Lite, mycket, var och hur", c:"u6", deco:"d-gran",
    tips:[
@@ -536,6 +536,8 @@ try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign({}, DEF,
 const OLD_IDS = ["u1","u2","u3","u4","u5","u6","u7","u8","u9","u10"];
 for (const k of Object.keys(S.done)){ const m = k.match(/^(\d+)-(\d)$/); if (m){ if (OLD_IDS[m[1]]) S.done[OLD_IDS[m[1]]+"-"+m[2]] = true; delete S.done[k]; } }
 if (!S.count) S.count = {};
+for (const [o, n] of [["häjna","hejna"],["häjn","hejn"],["Wo jär häjn för nå?","Wo jär hejn för nå?"],["I waal så trojt bårte häjna","I waal så trojt bårte hejna"]])
+  for (const k of ["seen","count","miss"]) if (S[k] && S[k][o] !== undefined){ S[k][n] = S[k][o]; delete S[k][o]; }
 function saveLocal(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
 function save(){ saveLocal(); if (typeof queueSync === "function") queueSync(); }
 const MAXL = 5, REGEN = 30*60*1000, GOAL = 30;
@@ -877,7 +879,7 @@ function viewAbout(){
       <p><b>Tjockt L.</b> Skrivs ofta med stort L, som i <span class="ex">kåLv</span> (kalv). Det sägs längre bak i munnen.</p>
       <p><b>K och g blir tj och dj</b> före främre vokaler: <span class="ex">tjö&#96;örk</span> (kyrka), <span class="ex">djä&#96;ra</span> (göra).</p>
       <p><b>Korta ord.</b> Inte blir <span class="ex">it</span>, och många ord tappar slutvokalen.</p>
-      <p><b>Tre genus.</b> Saker kan vara han eller hon: <span class="ex">hajna</span> (den här, han), <span class="ex">hojna</span> (den här, hon), <span class="ex">häjna</span> (det här).</p></section>
+      <p><b>Tre genus.</b> Saker kan vara han eller hon: <span class="ex">hajna</span> (den här, han), <span class="ex">hojna</span> (den här, hon), <span class="ex">hejna</span> (det här).</p></section>
     <section class="card prose"><h2>Om stavningen</h2>
       <p>Det finns ingen rätt stavning. Uttalet skiljer sig mellan byar, så samma ord kan skrivas på flera sätt, till exempel <span class="ex">mötje</span>, <span class="ex">mytje</span> och <span class="ex">möche</span> (mycket). I kursen används en stavning per ord.</p></section>
     <section class="card prose"><h2>Källor</h2>
