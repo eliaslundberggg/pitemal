@@ -111,6 +111,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .linkish{border:0;background:none;padding:0;color:var(--forest);font-weight:800;text-decoration:underline;text-underline-offset:3px}
 .login{display:grid;gap:10px;margin-top:12px}
 .login label{font-weight:700;font-size:14px}
+.email-row{display:flex;gap:8px;align-items:stretch}
+.email-row input{flex:1 1 auto;min-width:0}
+.email-row .linkbtn{flex:none;box-shadow:none}
 .login input,.codebox{width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
 .codebox{font-size:13px;font-family:ui-monospace,Menlo,monospace;min-height:80px;resize:vertical}
 .fine{font-size:13px;color:var(--muted);margin-top:12px}
@@ -650,14 +653,16 @@ function accountModal(){
   }
   modal(`<h2>Spara dina framsteg</h2><p>Logga in med din e-post så sparas XP, lektioner och ord. Då finns de kvar på både mobilen och datorn. Du får en inloggningslänk i mejlet och behöver inget lösenord.</p>
     <form id="login-form" class="login" novalidate><label for="login-email">E-post</label>
-    <input id="login-email" type="email" required autocomplete="email" inputmode="email" placeholder="namn@exempel.se">
+    <div class="email-row"><input id="login-email" name="email" type="text" inputmode="email" autocomplete="email" autocapitalize="none" autocorrect="on" spellcheck="false" required placeholder="namn@exempel.se">
+    ${navigator.clipboard && navigator.clipboard.readText ? `<button type="button" class="linkbtn" data-act="paste-email">Klistra in</button>` : ""}</div>
     <button class="big" type="submit">Skicka inloggningslänk</button></form>
     <p class="fine">Du kan spela utan konto. Då sparas allt bara i den här webbläsaren.</p>`);
 }
 document.addEventListener("submit", async e => {
   if (e.target.id !== "login-form") return;
   e.preventDefault();
-  const inp = $("#login-email"), email = inp.value.trim();
+  const inp = $("#login-email"), email = inp.value.replace(/[\s\u200B-\u200D\uFEFF]+/g, "");
+  inp.value = email;
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ inp.focus(); toast("Skriv en e-postadress, till exempel namn@exempel.se."); return; }
   const btn = e.target.querySelector("button"); btn.disabled = true; btn.textContent = "Skickar…";
   const { error } = await sb.auth.signInWithOtp({ email, options:{ emailRedirectTo: location.origin + "/" } });
@@ -1244,6 +1249,11 @@ document.addEventListener("click", async e => {
   if (a==="account"){ if (CAN_LOGIN && sb) accountModal(); else if (CAN_LOGIN) toast("Inloggningen laddar, försök igen om en sekund."); return; }
   if (a==="logout"){ t.closest(".modal").remove(); if (sb) await sb.auth.signOut(); toast("Utloggad. Framstegen finns kvar i den här webbläsaren."); return; }
   if (a==="rename"){ myName = ""; fillBoard(); const i = $("#name-input"); if (i) i.focus(); return; }
+  if (a==="paste-email"){
+    try { const txt = (await navigator.clipboard.readText()).replace(/[\s\u200B-\u200D\uFEFF]+/g, ""); const inp = $("#login-email"); inp.value = txt; inp.focus(); }
+    catch(e){ const inp = $("#login-email"); inp.focus(); toast("Håll fingret i rutan och välj Klistra in."); }
+    return;
+  }
   if (a==="nudgeoff"){ S.nudgeOff = true; save(); render(); return; }
   if (a==="export"){
     const code = exportCode();
