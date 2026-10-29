@@ -227,6 +227,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .name-form input{flex:1 1 200px;min-width:0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
 .name-form .big{flex:0 1 auto;min-width:0}
 @media (max-width:420px){.nav button{font-size:11px}}
+.lb-lock{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding-block:26px}
+.lb-lock .big-ic{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;background:var(--locked);color:var(--locked-ink)}
+.lb-lock .big-ic .ic{width:34px;height:34px}
+.lb-lock h2{font-size:20px;font-weight:600;max-width:30ch}
+.lb-lock p{margin:0;color:var(--muted);max-width:40ch}
+.lb-lock .lb-goal{width:100%;max-width:320px;color:var(--muted)}
+.lb-lock .lb-goal .bar{background:var(--surface-2)}
+.lb-lock .big{flex:0 1 auto;margin-top:6px}
 /* music */
 .artist{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start}
 .avatar{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:var(--on-color);font-family:var(--display);font-weight:700;font-size:22px}
@@ -672,7 +680,20 @@ function weekEnds(){
   const ms = end - d, h = Math.floor(ms / 36e5);
   return h >= 24 ? `${Math.floor(h/24)} d ${h%24} h` : `${h} h ${Math.floor(ms/6e4)%60} min`;
 }
+const BOARD_UNLOCK = 2;
+const lessonsDone = () => ORDER.filter(id => S.done[dk(id)]).length;
 function viewTop(){
+  const n = lessonsDone();
+  if (n < BOARD_UNLOCK){
+    return `<div class="page-h"><h1>Veckans topplista</h1><p>Ny tävling varje måndag.</p></div>
+  <section class="card lb-lock" style="margin-top:18px">
+    <div class="big-ic">${ic("i-lock")}</div>
+    <h2>Gör ${BOARD_UNLOCK} lektioner för att låsa upp topplistan</h2>
+    <p>Ta lektioner, samla XP och tävla mot andra på veckans topplista.</p>
+    <div class="goal lb-goal"><span>${n}/${BOARD_UNLOCK} lektioner</span><span class="bar"><i style="width:${n/BOARD_UNLOCK*100}%"></i></span></div>
+    <button class="big" data-tab="learn">${n ? "Fortsätt med lektionerna" : "Börja första lektionen"}</button>
+  </section>`;
+  }
   return `<div class="page-h"><h1>Veckans topplista</h1><p>Ny tävling varje måndag.</p></div>
   <section class="card lb-intro" style="margin-top:18px">
     <div class="big-ic">${ic("i-trophy")}</div>
@@ -684,7 +705,7 @@ function viewTop(){
   <div id="board">${CAN_LOGIN ? `<div class="lb"><div class="empty">Hämtar topplistan…</div></div>` : `<div class="lb"><div class="empty">Topplistan finns på <b>pitemål.se</b>.</div></div>`}</div>`;
 }
 async function loadBoard(){
-  if (!CAN_LOGIN) return;
+  if (!CAN_LOGIN || lessonsDone() < BOARD_UNLOCK) return;
   if (!sb){ setTimeout(() => { if (tab==="top") loadBoard(); }, 400); return; }
   try {
     const { data, error } = await sb.rpc("leaderboard");
@@ -840,7 +861,7 @@ function render(){
   if (tab==="learn") m.innerHTML = viewLearn();
   if (tab==="dict") { m.innerHTML = viewDict(); bindDict(); }
   if (tab==="music") m.innerHTML = viewMusic();
-  if (tab==="top"){ m.innerHTML = viewTop(); loadBoard(); }
+  if (tab==="top"){ m.innerHTML = viewTop(); if (lessonsDone() >= BOARD_UNLOCK) loadBoard(); }
   if (tab==="about") m.innerHTML = viewAbout();
   if (tab==="learn"){ startAurora(); drawTrails(); }
 }
