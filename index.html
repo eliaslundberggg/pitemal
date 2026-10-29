@@ -551,7 +551,7 @@ function dayXp(){ return S.day.d===today() ? S.day.xp : 0; }
 
 /* ---------- Konto och synk (valfritt) ---------- */
 // Fyll i från Supabase-projektet (Project Settings → API). Nyckeln är publik och skyddas av radregler i databasen.
-const SUPA = {url:"", key:""};
+const SUPA = {url:"https://oflbwrguddqaszirgcci.supabase.co", key:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mbGJ3cmd1ZGRxYXN6aXJnY2NpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyMzcxMjUsImV4cCI6MjEwODgxMzEyNX0.jro_5DO7RRk8OR6rqogTE7iNShWC9wVxeVYhqNrFpnc"};
 const CAN_LOGIN = !!(SUPA.url && SUPA.key) && /(^|\.)xn--piteml-mua\.se$|^localhost$|^127\.0\.0\.1$/.test(location.hostname);
 let sb = null, user = null, syncTimer = 0;
 function loadSupabase(){
