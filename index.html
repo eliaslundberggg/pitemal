@@ -159,8 +159,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* bottom nav */
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--surface);border-top:2px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
-.nav-in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
-.nav button{border:0;background:none;padding:8px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.03em;border-radius:12px;margin:4px 2px}
+.nav-in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+.nav button{border:0;background:none;padding:8px 2px 10px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.03em;border-radius:12px;margin:4px 2px}
 .nav button[aria-current="page"]{color:var(--forest);background:var(--surface-2)}
 .nav .ic{width:26px;height:26px}
 
@@ -200,6 +200,33 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .letters button:hover{background:var(--surface-2)}
 .rank{font-size:13px;font-weight:700;color:var(--hjorton-d);white-space:nowrap}
 
+/* topplista */
+.lb-intro{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center}
+.lb-intro .big-ic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--hjorton);color:var(--on-color)}
+.lb-intro .big-ic .ic{width:32px;height:32px}
+.lb-intro h2{font-size:20px;font-weight:600}
+.lb-steps{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.lb-steps span{font-weight:800;font-size:13px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:var(--surface-2);color:var(--forest)}
+.lb-intro p{margin:4px 0 0;color:var(--muted)}
+.lb-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px;font-weight:700;color:var(--muted);font-size:14px}
+.lb-meta b{color:var(--ink);font-variant-numeric:tabular-nums}
+.lb{margin-top:10px;border:2px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.lrow{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 14px;border-top:1px solid var(--line)}
+.lrow:first-child{border-top:0}
+.lrow .pl{font-family:var(--display);font-weight:700;font-size:18px;text-align:center;color:var(--muted);font-variant-numeric:tabular-nums}
+.lrow .pl.m1,.lrow .pl.m2,.lrow .pl.m3{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:16px;margin:0 auto}
+.lrow .pl.m1{background:#D9A520}.lrow .pl.m2{background:#9AA7AE}.lrow .pl.m3{background:#B9733F}
+.lrow .nm{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lrow .xp{font-weight:800;font-variant-numeric:tabular-nums;color:var(--hjorton-d)}
+.lrow.me{background:var(--sel)}
+.lrow.gap{grid-template-columns:1fr;text-align:center;color:var(--muted);padding:4px}
+.lb-cta{margin-top:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 16px;border-radius:var(--r);background:var(--surface-2)}
+.lb-cta p{margin:0;flex:1 1 220px;min-width:0}
+.lb-cta .big{flex:0 1 auto;min-width:0}
+.name-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.name-form input{flex:1 1 200px;min-width:0;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+.name-form .big{flex:0 1 auto;min-width:0}
+@media (max-width:420px){.nav button{font-size:11px}}
 /* music */
 .artist{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start}
 .avatar{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;color:var(--on-color);font-family:var(--display);font-weight:700;font-size:22px}
@@ -300,6 +327,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <div class="nav-in">
     <button data-tab="learn" aria-current="page"><svg class="ic" viewBox="0 0 24 24"><use href="#i-tree"/></svg>Lär dig</button>
     <button data-tab="dict"><svg class="ic" viewBox="0 0 24 24"><use href="#i-book"/></svg>Ordbok</button>
+    <button data-tab="top"><svg class="ic" viewBox="0 0 24 24"><use href="#i-trophy"/></svg>Topplista</button>
     <button data-tab="music"><svg class="ic" viewBox="0 0 24 24"><use href="#i-music"/></svg>Musik</button>
     <button data-tab="about"><svg class="ic" viewBox="0 0 24 24"><use href="#i-info"/></svg>Om pitemål</button>
   </div>
@@ -576,6 +604,7 @@ async function initAuth(){
 async function setUser(u){
   const was = user && user.id;
   user = u;
+  if ((u && u.id) !== was){ myName = null; board = null; }
   $("#s-acct").classList.toggle("on", !!u);
   $("#s-acct").setAttribute("aria-label", u ? "Ditt konto, inloggad" : "Spara dina framsteg");
   if (u && u.id !== was){ await pullRemote(); if (!was) toast("Inloggad. Dina framsteg sparas nu."); }
@@ -631,6 +660,88 @@ function importCode(code){
   const c = code.trim();
   if (!c.startsWith("PITE1:")) throw new Error("bad");
   return JSON.parse(decodeURIComponent(escape(atob(c.slice(6)))));
+}
+
+
+/* ---------- Veckans topplista ---------- */
+let board = null, myName = null, boardErr = false;
+const ordSv = n => { const t = n % 100, o = n % 10; return n + ((o===1 || o===2) && t!==11 && t!==12 ? ":a" : ":e"); };
+function weekEnds(){
+  const d = new Date(); const day = (d.getDay() + 6) % 7;
+  const end = new Date(d.getFullYear(), d.getMonth(), d.getDate() - day + 7);
+  const ms = end - d, h = Math.floor(ms / 36e5);
+  return h >= 24 ? `${Math.floor(h/24)} d ${h%24} h` : `${h} h ${Math.floor(ms/6e4)%60} min`;
+}
+function viewTop(){
+  return `<div class="page-h"><h1>Veckans topplista</h1><p>Ny tävling varje måndag.</p></div>
+  <section class="card lb-intro" style="margin-top:18px">
+    <div class="big-ic">${ic("i-trophy")}</div>
+    <div style="min-width:0"><h2>Vad är topplistor?</h2>
+      <div class="lb-steps"><span>Ta lektioner</span><span>Samla XP</span><span>Tävla</span></div>
+      <p>Samla XP genom lektioner och tävla mot andra användare på veckans topplista.</p></div>
+  </section>
+  <div class="lb-meta"><span>Veckan slutar om <b>${weekEnds()}</b></span><span id="lb-me"></span></div>
+  <div id="board">${CAN_LOGIN ? `<div class="lb"><div class="empty">Hämtar topplistan…</div></div>` : `<div class="lb"><div class="empty">Topplistan finns på <b>pitemål.se</b>.</div></div>`}</div>`;
+}
+async function loadBoard(){
+  if (!CAN_LOGIN) return;
+  if (!sb){ setTimeout(() => { if (tab==="top") loadBoard(); }, 400); return; }
+  try {
+    const { data, error } = await sb.rpc("leaderboard");
+    if (error) throw error;
+    board = data || []; boardErr = false;
+    if (user && myName === null){
+      const r = await sb.from("profiles").select("display_name").eq("user_id", user.id).maybeSingle();
+      myName = r.data ? r.data.display_name : "";
+    }
+  } catch(e){ boardErr = true; }
+  if (tab==="top" && !L) fillBoard();
+}
+function fillBoard(){
+  const box = $("#board"); if (!box) return;
+  if (boardErr){ box.innerHTML = `<div class="lb"><div class="empty">Topplistan gick inte att hämta just nu. Försök igen om en stund.</div></div>`; return; }
+  const rows = board || [];
+  let html = "";
+  if (!rows.length){
+    html = `<div class="lb"><div class="empty">Ingen har samlat XP den här veckan än. Gör en lektion och ta förstaplatsen!</div></div>`;
+  } else {
+    let prev = 0;
+    html = `<div class="lb">` + rows.map(r => {
+      const gap = prev && r.placering > prev + 1 && r.ar_jag ? `<div class="lrow gap">⋯</div>` : "";
+      prev = r.placering;
+      const m = r.placering <= 3 ? ` m${r.placering}` : "";
+      return gap + `<div class="lrow${r.ar_jag ? " me" : ""}"><span class="pl${m}">${r.placering}</span><span class="nm">${esc(r.namn)}${r.ar_jag ? " (du)" : ""}</span><span class="xp">${r.xp} XP</span></div>`;
+    }).join("") + `</div>`;
+  }
+  const mine = rows.find(r => r.ar_jag);
+  const meEl = $("#lb-me"); if (meEl) meEl.innerHTML = mine ? `Du ligger <b>${ordSv(mine.placering)}</b> med <b>${mine.xp} XP</b>` : "";
+  if (!user){
+    html += `<div class="lb-cta"><p><b>Vill du vara med?</b> Logga in, så räknas din XP på topplistan och dina framsteg sparas.</p><button class="big" data-act="account">Logga in</button></div>`;
+  } else if (!myName){
+    html += `<div class="lb-cta" style="display:block"><p><b>Välj ett namn</b> som syns på topplistan. Du kan ändra det senare.</p>
+      <form id="name-form" class="name-form"><label for="name-input" class="sr">Namn på topplistan</label>
+      <input id="name-input" maxlength="20" autocomplete="nickname" placeholder="t.ex. Elias i Öjebyn" required>
+      <button class="big" type="submit">Spara namn</button></form></div>`;
+  } else {
+    html += `<p class="fine">Du syns som <b>${esc(myName)}</b>. <button class="linkish" data-act="rename">Ändra namn</button></p>`;
+  }
+  box.innerHTML = html;
+}
+async function saveName(name){
+  const n = name.trim().replace(/\s+/g, " ");
+  if (n.length < 2 || n.length > 20){ toast("Namnet ska vara 2–20 tecken."); return false; }
+  const { error } = await sb.from("profiles").upsert({ user_id: user.id, display_name: n });
+  if (error){ toast("Namnet gick inte att spara. Försök igen."); return false; }
+  myName = n; toast("Namnet är sparat."); loadBoard(); return true;
+}
+document.addEventListener("submit", async e => {
+  if (e.target.id !== "name-form") return;
+  e.preventDefault();
+  await saveName($("#name-input").value);
+});
+function awardWeekly(xp){
+  if (!sb || !user) return;
+  sb.rpc("add_xp", { amount: Math.min(20, Math.max(1, xp)) }).then(() => { board = null; }).catch(() => {});
 }
 
 /* ---------- Hjälpare ---------- */
@@ -729,6 +840,7 @@ function render(){
   if (tab==="learn") m.innerHTML = viewLearn();
   if (tab==="dict") { m.innerHTML = viewDict(); bindDict(); }
   if (tab==="music") m.innerHTML = viewMusic();
+  if (tab==="top"){ m.innerHTML = viewTop(); loadBoard(); }
   if (tab==="about") m.innerHTML = viewAbout();
   if (tab==="learn"){ startAurora(); drawTrails(); }
 }
@@ -1067,7 +1179,7 @@ function finish(){
   if (S.lastDay !== today()){ S.streak = S.lastDay===today(-1) ? S.streak+1 : 1; S.lastDay = today(); }
   if (L.practice) S.lingon = Math.min(MAXL, S.lingon+1);
   else S.done[dk(L.id)] = true;
-  save(); tone([523,659,784,1047], .1);
+  save(); awardWeekly(xp); tone([523,659,784,1047], .1);
   $("#lb").innerHTML = `<div class="done">${mascot("wow")}<h1>${L.wrong===0 ? "Felfritt!" : "Lektionen är klar!"}</h1>
     <p>${L.practice ? "Bra övat. Du fick ett lingon tillbaka." : L.wrong===0 ? "Inte ett enda fel. Slecke sleukt besleut!" : "Hä jär klaart. Fortsätt så."}</p>
     <div class="tiles">
@@ -1109,6 +1221,7 @@ document.addEventListener("click", async e => {
   if (a==="closemodal"){ t.closest(".modal").remove(); return; }
   if (a==="account"){ if (CAN_LOGIN && sb) accountModal(); else if (CAN_LOGIN) toast("Inloggningen laddar, försök igen om en sekund."); return; }
   if (a==="logout"){ t.closest(".modal").remove(); if (sb) await sb.auth.signOut(); toast("Utloggad. Framstegen finns kvar i den här webbläsaren."); return; }
+  if (a==="rename"){ myName = ""; fillBoard(); const i = $("#name-input"); if (i) i.focus(); return; }
   if (a==="nudgeoff"){ S.nudgeOff = true; save(); render(); return; }
   if (a==="export"){
     const code = exportCode();
