@@ -864,7 +864,7 @@ function fmtQty(q, u){
 function recipeHtml(){
   const n = paltPortions;
   return `<section class="card prose recipe" id="recept"><h2>Recept: pitepalt</h2>
-    <p>Kristina Lundbergs pitepalt från Nattberg, mellan Arvidsjaur och Älvsbyn. Välj hur många ni är, så räknas mängderna om.</p>
+    <p>Kristina Lundbergs pitepalt från Nattberg</p>
     <div class="portions" role="group" aria-label="Antal portioner">
       <button class="pbtn" data-act="portions-" aria-label="Färre portioner" ${n<=1?"disabled":""}>−</button>
       <span class="pnum" aria-live="polite"><b>${n}</b> ${n===1?"portion":"portioner"} · ca ${Math.max(1, Math.round(n*22/8))} paltar</span>
