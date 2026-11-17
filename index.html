@@ -248,6 +248,25 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .lb-lock .lb-goal{width:100%;max-width:320px;color:var(--muted)}
 .lb-lock .lb-goal .bar{background:var(--surface-2)}
 .lb-lock .big{flex:0 1 auto;margin-top:6px}
+/* översätt */
+.seg{display:inline-flex;gap:4px;padding:4px;border-radius:14px;background:var(--surface-2);margin-top:14px}
+.seg button{border:0;background:none;padding:8px 16px;border-radius:10px;font-weight:800;color:var(--muted)}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--forest);box-shadow:0 2px 0 var(--line)}
+.tr-in{width:100%;margin-top:14px;padding:13px 16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:18px;resize:vertical;min-height:64px}
+.tr-meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:13px;color:var(--muted)}
+#tr-count{font-weight:800;font-variant-numeric:tabular-nums}
+#tr-count.over{color:var(--bad)}
+.tr-ex{min-width:0}
+.tr-res{margin-top:14px}
+.tr-lbl{display:block;font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tr-big{font-family:var(--display);font-size:26px;font-weight:600;margin:4px 0 12px;line-height:1.25;overflow-wrap:anywhere}
+.tr-parts{display:flex;flex-wrap:wrap;gap:6px}
+.tr-chip{display:inline-flex;flex-direction:column;align-items:center;padding:6px 10px;border-radius:10px;font-size:15px;line-height:1.2}
+.tr-chip i{font-style:normal;font-size:11px;color:var(--muted);margin-top:2px}
+.tr-chip.ok{background:var(--ok-bg);color:var(--ok)}
+.tr-chip.approx{outline:2px dashed var(--ok);outline-offset:-2px}
+.tr-chip.miss{background:var(--surface-2);color:var(--locked-ink)}
+.tr-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--muted);font-weight:700}
 /* recept */
 .recipe h3{font-size:17px;font-weight:600;margin-top:16px}
 .portions{display:flex;align-items:center;gap:12px;margin:14px 0 6px;flex-wrap:wrap}
@@ -902,6 +921,105 @@ function showRecipe(){
   const r = $("#recept"); if (r) r.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
 }
 
+
+/* ---------- Översätt till pitemål ---------- */
+const TR_MAX = 20;
+// Vanliga småord från källorna (Wikipedia, wikidot och AlterHedens). De går före ordboken.
+const TR_CORE = {
+  "jag":"i", "du":"dö", "han":"han", "hon":"hon", "det":"hä", "vi":"vä", "ni":"jä", "de":"döm", "dem":"döm",
+  "mig":"mä", "dig":"dä", "oss":"åss", "inte":"it", "är":"jär", "och":"å", "med":"vä", "i":"e", "på":"opa",
+  "till":"dell", "här":"jenna", "där":"denna", "hem":"hejm", "mycket":"mötje", "lite":"nalta", "ingenting":"åsit",
+  "ganska":"gode", "aldrig":"åll`er", "hur":"vöre", "vart":"vosch", "varifrån":"vodda", "bredvid":"lave", "hos":"nest",
+  "något":"nå", "någon":"najn", "några":"nager", "någonsin":"nanschtin", "ska":"sko", "skulle":"sku", "heter":"hejt",
+  "måste":"nöges", "blir":"waal", "har":"ha", "bara":"båra", "nu":"nö", "gör":"djä:r", "trött":"trojt", "hit":"hijt",
+  "ungar":"onga", "vad":"wo", "ett":"e", "dessa":"dömjen",
+  "så här":"söjna", "så där":"sönna", "sån här":"töckejen", "sån där":"töckenden", "det här":"hejna", "det där":"hänna",
+  "de här":"dömjen", "de där":"döm`dena", "den här":"hajna", "här och var":"nagesht woshtánsh"
+};
+// Ord som betyder flera olika saker på svenska och därför lämnas som de är
+const TR_SKIP = new Set(["var", "en", "som", "om", "att", "för"]);
+const trNorm = t => t.toLowerCase().replace(/[.,!?;:"”“()]/g, "").replace(/\s+/g, " ").trim();
+let TR_WORDS = null, TR_PHRASES = null;
+function trBuild(){
+  TR_WORDS = new Map(); TR_PHRASES = new Map();
+  for (const [k, v] of Object.entries(TR_CORE)) TR_WORDS.set(k, {p:v, alt:[]});
+  for (const w of ALL){
+    if (w.ph){ const k = trNorm(w.s); if (!TR_PHRASES.has(k)) TR_PHRASES.set(k, w.p); continue; }
+    for (const part of w.s.split(/,\s*|\s*\/\s*|\s+eller\s+/)){
+      const k = trNorm(part);
+      if (!k || k.split(" ").length > 4 || TR_SKIP.has(k)) continue;
+      const hit = TR_WORDS.get(k);
+      if (!hit) TR_WORDS.set(k, {p:w.p, alt:[]});
+      else if (hit.p !== w.p && !hit.alt.includes(w.p) && hit.alt.length < 3) hit.alt.push(w.p);
+    }
+  }
+}
+function translate(text){
+  if (!TR_WORDS) trBuild();
+  const raw = text.trim(), end = (raw.match(/[.!?]+$/) || [""])[0];
+  const whole = trNorm(raw);
+  if (!whole) return null;
+  if (TR_PHRASES.has(whole)) return {out: TR_PHRASES.get(whole) + (end && !/[.!?]$/.test(TR_PHRASES.get(whole)) ? end : ""), parts:[{sv:raw.replace(/[.!?]+$/, ""), pm:TR_PHRASES.get(whole), hit:true, phrase:true}], known:1, total:1};
+  const toks = whole.split(" "), parts = [];
+  for (let i = 0; i < toks.length;){
+    let done = false;
+    for (let n = Math.min(4, toks.length - i); n >= 1; n--){
+      const k = toks.slice(i, i + n).join(" ");
+      const hit = (n > 1 || !TR_SKIP.has(k)) && (TR_PHRASES.get(k) ? {p:TR_PHRASES.get(k), alt:[]} : TR_WORDS.get(k));
+      if (hit){ parts.push({sv:k, pm:hit.p, alt:hit.alt, hit:true}); i += n; done = true; break; }
+    }
+    if (!done){
+      // Verb i presens: ljuger → ljuga, arbetar → arbeta. Märks som ungefärliga.
+      const w = toks[i], base = /er$/.test(w) ? w.slice(0, -2) + "a" : /ar$/.test(w) ? w.slice(0, -1) : null;
+      const hit = base && TR_WORDS.get(base);
+      parts.push(hit ? {sv:w, pm:hit.p, alt:hit.alt, hit:true, approx:true} : {sv:w, pm:w, hit:false});
+      i++;
+    }
+  }
+  let out = parts.map(x => x.pm).join(" ");
+  if (/^[A-ZÅÄÖ]/.test(raw)) out = out.charAt(0).toLocaleUpperCase("sv") + out.slice(1);
+  const known = parts.filter(x => x.hit).length;
+  return {out: out + end, parts, known, total: parts.length};
+}
+function modeTabs(){
+  return `<div class="seg" role="tablist" aria-label="Välj vy">
+    <button role="tab" data-dmode="ord" aria-selected="${dictMode==="ord"}">Ordbok</button>
+    <button role="tab" data-dmode="tr" aria-selected="${dictMode==="tr"}">Översätt</button></div>`;
+}
+function viewTranslate(){
+  const ex = ["Jag är trött", "Hur är det med dig?", "Det är bara strunt", "Kom och sitt bredvid mig", "Vi ska vila lite i dag"];
+  return `<div class="page-h"><h1>Översätt till pitemål</h1><p>Skriv en kort mening på svenska, högst ${TR_MAX} ord.</p></div>
+  ${modeTabs()}
+  <label for="tr-in" class="sr">Mening på svenska</label>
+  <textarea id="tr-in" class="tr-in" rows="2" placeholder="Till exempel: Jag är trött i dag" autocomplete="off">${esc(trText)}</textarea>
+  <div class="tr-meta"><span id="tr-count"></span><span class="tr-ex">Prova: ${ex.map(x => `<button class="linkish" data-trex="${esc(x)}">${esc(x)}</button>`).join(" · ")}</span></div>
+  <div id="tr-out"></div>
+  <p class="fine">Översättningen görs ord för ord med appens ordbok. Pitemål har egen grammatik och låter olika mellan byar, så se resultatet som ett hjälpmedel. Grå ord finns inte i ordboken än och står kvar på svenska. Streckade ord är ungefärliga.</p>`;
+}
+function fillTranslate(){
+  const words = trText.trim() ? trText.trim().split(/\s+/).length : 0;
+  const c = $("#tr-count"); if (c){ c.textContent = `${words}/${TR_MAX} ord`; c.classList.toggle("over", words > TR_MAX); }
+  const box = $("#tr-out"); if (!box) return;
+  if (!words){ box.innerHTML = ""; return; }
+  if (words > TR_MAX){ box.innerHTML = `<div class="empty">Meningen är för lång. Korta ner den till ${TR_MAX} ord.</div>`; return; }
+  const r = translate(trText);
+  if (!r){ box.innerHTML = ""; return; }
+  box.innerHTML = `<section class="card tr-res" aria-live="polite">
+    <small class="tr-lbl">På pitemål</small>
+    <p class="tr-big">${esc(r.out)}</p>
+    <div class="tr-parts">${r.parts.map(x => `<span class="tr-chip ${x.hit ? (x.approx ? "ok approx" : "ok") : "miss"}" title="${x.hit ? esc((x.approx ? "Ungefär: " : "") + x.sv + " = " + x.pm + (x.alt && x.alt.length ? ". Även: " + x.alt.join(", ") : "")) : "Finns inte i ordboken än"}"><b>${esc(x.pm)}</b>${x.hit && !x.phrase ? `<i>${esc(x.sv)}</i>` : ""}</span>`).join("")}</div>
+    <div class="tr-foot"><span>${r.known === r.total ? (r.parts[0].phrase ? "Hela meningen finns i ordboken" : "Alla ord hittades i ordboken") : `${r.known} av ${r.total} ord hittades`}</span>
+    <button class="linkbtn" data-act="tr-copy">Kopiera</button></div>
+  </section>`;
+}
+let trTimer = 0;
+function bindTranslate(){
+  const t = $("#tr-in");
+  t.addEventListener("input", e => { trText = e.target.value; clearTimeout(trTimer); trTimer = setTimeout(fillTranslate, 120); });
+  fillTranslate();
+  if (!trText) t.focus({preventScroll:true});
+}
+
 /* ---------- Hjälpare ---------- */
 const $ = (s, r=document) => r.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -998,7 +1116,7 @@ function buildLesson(pool, len=11){
 }
 
 /* ---------- Vyer ---------- */
-let tab = "learn", openPop = null, dictFilter = -1, dictQ = "", dictSort = "az";
+let tab = "learn", openPop = null, dictFilter = -1, dictQ = "", dictSort = "az", dictMode = "ord", trText = "";
 function renderStats(){
   regen();
   $("#s-streak span").textContent = streakAlive() ? S.streak : 0;
@@ -1011,7 +1129,7 @@ function render(){
   document.querySelectorAll(".nav button").forEach(b => { if (b.dataset.tab===tab) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
   const m = $("#main");
   if (tab==="learn") m.innerHTML = viewLearn();
-  if (tab==="dict") { m.innerHTML = viewDict(); bindDict(); }
+  if (tab==="dict") { if (dictMode === "tr"){ m.innerHTML = viewTranslate(); bindTranslate(); } else { m.innerHTML = viewDict(); bindDict(); } }
   if (tab==="music") m.innerHTML = viewMusic();
   if (tab==="top"){ m.innerHTML = viewTop(); if (lessonsDone() >= BOARD_UNLOCK) loadBoard(); }
   if (tab==="about") m.innerHTML = viewAbout();
@@ -1090,6 +1208,7 @@ function popHtml(u, ui, li, done, lock){
 function viewDict(){
   const modes = [["az","A–Ö"],["top","Mest övade"],["hard","Svårast"],["del","Efter del"]];
   return `<div class="page-h"><h1>Ordbok</h1><p>${ALL.length} ord och fraser. En prick betyder att du har lärt dig ordet.</p></div>
+  ${modeTabs()}
   <label for="q" hidden>Sök</label>
   <input id="q" class="search" type="search" placeholder="Sök på pitemål eller svenska" value="${esc(dictQ)}" autocomplete="off">
   <div class="filters" role="group" aria-label="Sortera">
@@ -1402,6 +1521,8 @@ function modal(inner){
 /* ---------- Händelser ---------- */
 document.addEventListener("click", async e => {
   const t = e.target.closest("button"); if (!t) { if (openPop && !e.target.closest(".pop")){ openPop=null; if(!L) render(); } return; }
+  if (t.dataset.dmode){ dictMode = t.dataset.dmode; render(); return; }
+  if (t.dataset.trex){ trText = t.dataset.trex; const i = $("#tr-in"); if (i) i.value = trText; fillTranslate(); return; }
   if (t.dataset.tab){ tab = t.dataset.tab; openPop=null; render(); window.scrollTo(0,0); return; }
   if (t.dataset.node){ openPop = openPop===t.dataset.node ? null : t.dataset.node; render(); return; }
   if (t.dataset.start){ startLesson(t.dataset.start); return; }
@@ -1417,6 +1538,11 @@ document.addEventListener("click", async e => {
     t.disabled = true;
     if (await sendCode(lastEmail)){ toast("En ny kod är skickad. Använd koden i det senaste mejlet."); const c = $("#otp-code"); if (c){ c.value = ""; c.focus(); } }
     t.disabled = false; return;
+  }
+  if (a==="tr-copy"){
+    const txt = ($(".tr-big") || {}).textContent || "";
+    try { await navigator.clipboard.writeText(txt); toast("Kopierat."); } catch(e){ toast("Markera texten och kopiera den."); }
+    return;
   }
   if (a==="recipe"){ const m = t.closest(".modal"); if (m) m.remove(); showRecipe(); return; }
   if (a==="palten"){
