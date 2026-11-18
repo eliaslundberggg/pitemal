@@ -267,6 +267,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .tr-chip.approx{outline:2px dashed var(--ok);outline-offset:-2px}
 .tr-chip.miss{background:var(--surface-2);color:var(--locked-ink)}
 .tr-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--muted);font-weight:700}
+.suggest{margin-top:14px}
+.suggest h2{font-size:18px;font-weight:600}
+.suggest p{margin:4px 0 10px;color:var(--muted)}
+.sug{display:grid;gap:6px}
+.sug label{font-weight:700;font-size:14px}
+.sug input{width:100%;padding:11px 14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:16px}
+.sug .big{margin-top:8px;justify-self:start;flex:none}
 /* recept */
 .recipe h3{font-size:17px;font-weight:600;margin-top:16px}
 .portions{display:flex;align-items:center;gap:12px;margin:14px 0 6px;flex-wrap:wrap}
@@ -934,7 +941,9 @@ const TR_CORE = {
   "måste":"nöges", "blir":"waal", "har":"ha", "bara":"båra", "nu":"nö", "gör":"djä:r", "trött":"trojt", "hit":"hijt",
   "ungar":"onga", "vad":"wo", "ett":"e", "dessa":"dömjen",
   "så här":"söjna", "så där":"sönna", "sån här":"töckejen", "sån där":"töckenden", "det här":"hejna", "det där":"hänna",
-  "de här":"dömjen", "de där":"döm`dena", "den här":"hajna", "här och var":"nagesht woshtánsh"
+  "de här":"dömjen", "de där":"döm`dena", "den här":"hajna", "här och var":"nagesht woshtánsh",
+  "är det":"jär'e", "blev":"vorte", "behöver":"behöv", "använder":"nö:t", "kan":"kan", "vill":"vel", "finns":"feinnsh",
+  "springer":"spring", "allt":"ållt", "ut":"eut", "ute":"èut", "kommer":"kom", "hemma":"hejm"
 };
 // Ord som betyder flera olika saker på svenska och därför lämnas som de är
 const TR_SKIP = new Set(["var", "en", "som", "om", "att", "för"]);
@@ -969,9 +978,21 @@ function translate(text){
       if (hit){ parts.push({sv:k, pm:hit.p, alt:hit.alt, hit:true}); i += n; done = true; break; }
     }
     if (!done){
-      // Verb i presens: ljuger → ljuga, arbetar → arbeta. Märks som ungefärliga.
-      const w = toks[i], base = /er$/.test(w) ? w.slice(0, -2) + "a" : /ar$/.test(w) ? w.slice(0, -1) : null;
-      const hit = base && TR_WORDS.get(base);
+      // Böjda ord söks i grundform och märks som ungefärliga:
+      // verb (ljuger → ljuga, arbetade → arbeta, köpte → köpa) och substantiv (huset → hus, skorna → skor).
+      const w = toks[i];
+      const tries = [];
+      if (/er$/.test(w)) tries.push(w.slice(0, -2) + "a", w.slice(0, -2));
+      if (/ar$/.test(w)) tries.push(w.slice(0, -1), w.slice(0, -2));
+      if (/ade$/.test(w)) tries.push(w.slice(0, -2));
+      if (/(de|te)$/.test(w)) tries.push(w.slice(0, -2) + "a", w.slice(0, -2));
+      if (/(arna|orna|erna)$/.test(w)) tries.push(w.slice(0, -2), w.slice(0, -4));
+      if (/(en|et)$/.test(w)) tries.push(w.slice(0, -2), w.slice(0, -1));
+      if (/[aeiouyåäö](n|t)$/.test(w)) tries.push(w.slice(0, -1));
+      if (/s$/.test(w)) tries.push(w.slice(0, -1));
+      if (/t$/.test(w)) tries.push(w.slice(0, -1));
+      let hit = null;
+      for (const b of tries){ if (b.length > 1 && !TR_SKIP.has(b) && TR_WORDS.get(b)){ hit = TR_WORDS.get(b); break; } }
       parts.push(hit ? {sv:w, pm:hit.p, alt:hit.alt, hit:true, approx:true} : {sv:w, pm:w, hit:false});
       i++;
     }
@@ -1010,8 +1031,29 @@ function fillTranslate(){
     <div class="tr-parts">${r.parts.map(x => `<span class="tr-chip ${x.hit ? (x.approx ? "ok approx" : "ok") : "miss"}" title="${x.hit ? esc((x.approx ? "Ungefär: " : "") + x.sv + " = " + x.pm + (x.alt && x.alt.length ? ". Även: " + x.alt.join(", ") : "")) : "Finns inte i ordboken än"}"><b>${esc(x.pm)}</b>${x.hit && !x.phrase ? `<i>${esc(x.sv)}</i>` : ""}</span>`).join("")}</div>
     <div class="tr-foot"><span>${r.known === r.total ? (r.parts[0].phrase ? "Hela meningen finns i ordboken" : "Alla ord hittades i ordboken") : `${r.known} av ${r.total} ord hittades`}</span>
     <button class="linkbtn" data-act="tr-copy">Kopiera</button></div>
-  </section>`;
+  </section>${suggestHtml(r.parts.filter(x => !x.hit).map(x => x.sv))}`;
 }
+function suggestHtml(missing){
+  if (!CAN_LOGIN || !missing.length) return "";
+  return `<section class="card suggest"><h2>Vet du vad det heter på pitemål?</h2>
+    <p>Skicka ett förslag, så kan ordet komma med i ordboken och göra översättningen bättre.</p>
+    <form id="sug-form" class="sug" novalidate>
+      <label for="sug-sv">På svenska</label><input id="sug-sv" maxlength="60" value="${esc(missing[0])}" autocomplete="off">
+      <label for="sug-pm">På pitemål</label><input id="sug-pm" maxlength="60" placeholder="Som du säger det" autocomplete="off">
+      <label for="sug-note">Exempel eller by (valfritt)</label><input id="sug-note" maxlength="200" placeholder="t.ex. Säger vi i Hortlax" autocomplete="off">
+      <button class="big" type="submit">Skicka förslag</button></form></section>`;
+}
+document.addEventListener("submit", async e => {
+  if (e.target.id !== "sug-form") return;
+  e.preventDefault();
+  const sv = $("#sug-sv").value.trim(), pm = $("#sug-pm").value.trim(), note = $("#sug-note").value.trim();
+  if (!sv || !pm){ toast("Fyll i ordet både på svenska och på pitemål."); return; }
+  if (!sb){ toast("Förslaget gick inte att skicka just nu."); return; }
+  const btn = e.target.querySelector("button"); btn.disabled = true; btn.textContent = "Skickar…";
+  const { error } = await sb.from("suggestions").insert({ sv, pm, note: note || null });
+  if (error){ btn.disabled = false; btn.textContent = "Skicka förslag"; toast("Förslaget gick inte att skicka. Försök igen om en stund."); return; }
+  e.target.closest(".suggest").innerHTML = `<h2>Tack!</h2><p>Ditt förslag <b>${esc(sv)} = ${esc(pm)}</b> är skickat. Äkshlänt!</p>`;
+});
 let trTimer = 0;
 function bindTranslate(){
   const t = $("#tr-in");
@@ -1028,6 +1070,36 @@ const pick = (a,n) => shuffle(a).slice(0,n);
 const isPhrase = w => w[0].trim().includes(" ") && w[1].trim().includes(" ");
 const norm = s => s.toLowerCase().replace(/[?!.,]/g,"").replace(/\s+/g," ").trim();
 const tok = s => s.replace(/[?!.,]/g,"").split(/\s+/).filter(Boolean);
+// Fler ordformer ur källorna. De syns i ordboken och används av översättaren, men inte i lektionerna.
+const EXTRA_WORDS = [
+  // Wikipedia: ljud, böjning och pronomen
+  ["tåom","tom"],["boi","by"],["häim","hem"],["råik","rök"],["göuk","gök"],["öim","öm"],["drö`im","drömma"],
+  ["fo`ill","fylla"],["tä`intj","tänka"],["sto`ittj","stycke"],["bå:t","båt"],["la:n","lån"],["ållt","allt"],
+  ["kåLv","kalv"],["vå`ra","vara"],["spå`da","spade"],["tröno","trana"],["fåLk","folk"],["goLv","golv"],
+  ["tåong","tung"],["kne:","knä"],["he:L","häl"],["sjett","slät"],["ve`ko","vecka"],["vel","vill"],["sönd","synd"],
+  ["ö`öx","yxa"],["breu`t","bryta"],["fLe`ut","flyta"],["shwåll","strunt"],["feinnsh","finns"],["håsh","hals"],
+  ["tjö`örk","kyrka"],["skåojen","skogen"],["väddjen","väggen"],["stangg","stång"],["kamb","kam"],["bärg","berg"],
+  ["häLg","helg"],["va`nder","vandra"],["wåmb","våm"],["twi`vel","tvivla"],["dwe`ven","ruggig"],["ne`hl","nässla"],
+  ["måga","mage"],["kako","kaka"],["vatn","vatten"],["ka`ast","kasta"],["kas`te","kastade"],["sö`go","saga"],
+  ["djä`ädd","gädda"],["tö`Lo","tålig"],["håong`ra","hungrig"],["deu","du","Betonad form av dö"],["ha`nom","honom"],
+  ["he`nar","henne"],["åss","oss"],["mä","mig"],["dä","dig"],
+  ["Opa gameLdågan","På gamla dagar"],["StömbeL!","Usling!"],
+  // pitemal.wikidot.com: grammatik
+  ["arbeite","arbetade"],["slijt","slita"],["slete","slet"],["tjöp","köpa"],["tjöft","köpte"],["klepp","klippa"],
+  ["kleft","klippte"],["såg","såga"],["såge","sågade"],["spring","springer"],["spriòing","springa"],["sjåong","sjunga"],
+  ["breuk","bruka"],["stjiòick","skicka"],["hav","har"],["håva","ha"],["kona","kunna"],["behöv","behöva"],
+  ["ganga","gången"],["skåoLa","skolan"],["äLva","älven"],["båoka","boken"],["gåLn","gården"],["hundn","hunden"],
+  ["tjäLan","tjälen"],["granna","grannar"],["bila","bilar"],["herrom","herrar"],["hännren","händer"],["fLecken","flickor"],
+  ["åra","år"],["åoLa","ord"],["skånn","skor"],["såcken","sockar"],["bullen","bullar"],["sååck","socka"],["bull","bulle"],
+  ["noi","ny"],["spoi","spy"],["våorn","våren"],["eut","ut"],["stjorta","skjorta"],["stjit","skit"],["va¨nkën","vakna"],
+  ["sp`åoL","spola"],["sp´åoL","spole"],["gLa:s","glas"],["vorte","blev"],
+  ["einni byrnom","i byn"],["unner boL`ern","under bordet"],["möitje flöuwom","mycket flugor"],["kLänning at mamm`en","klänning åt mamma"],
+  ["Paitjen jär lik farom","Pojken är lik fadern"],
+  // Språkkonsult Josefin och AlterHedens
+  ["nö:t","använda"],["sy:jkeln","cykeln"],["gangshu:k","smittsam sjukdom"],["vorsh","var","Som i var någonstans"],
+  ["Nö:t dö sy:jkeln jena nanshtin?","Använder du någonsin den här cykeln?"],
+  ["I behöv et häjn, hä kan dö få","Jag behöver inte det här, det kan du få"],["Sprint asta","Skynda sig"]
+];
 // Andra sätt att skriva eller säga orden, enligt ordlistan på pitemal.wikidot.com
 const VARIANTS = {
   "'a":"Även a eller hon", "'n":"Även n, en eller han", "eitt":"Även e eller ett",
@@ -1044,6 +1116,7 @@ const VARIANTS = {
 const VARIANT_NOTES = { "hejna":"Skrivs också häina eller häjna", "it":"Även et, som man säger i vissa byar", "nå":"Även na, nage eller naa" };
 const noteFor = w => VARIANT_NOTES[w[0]] || [w[2], VARIANTS[w[0]]].filter(Boolean).join(". ");
 const ALL = UNITS.flatMap((u,ui) => u.words.map(w => ({p:w[0], s:w[1], note:noteFor(w), u:ui, ph:isPhrase(w)})));
+{ const have = new Set(ALL.map(w => w.p.toLowerCase())); for (const w of EXTRA_WORDS) if (!have.has(w[0].toLowerCase())){ have.add(w[0].toLowerCase()); ALL.push({p:w[0], s:w[1], note:noteFor(w), u:-1, ph:isPhrase(w)}); } }
 function toast(msg){ const t = document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(), 2200); }
 
 let actx = null;
@@ -1217,6 +1290,7 @@ function viewDict(){
   <div class="filters" role="group" aria-label="Filtrera på del">
     <button data-f="-1" aria-pressed="${dictFilter===-1}">Alla delar</button>
     ${UNITS.map((u,i)=>`<button data-f="${i}" aria-pressed="${dictFilter===i}">${esc(u.title)}</button>`).join("")}
+    <button data-f="-2" aria-pressed="${dictFilter===-2}">Fler ord</button>
   </div><div class="letters" id="letters"></div><div class="dict" id="dict"></div>`;
 }
 const sortKey = w => w.p.replace(/^[^A-Za-zÅÄÖåäöÉéÈèÙùÒòÀàÁá]+/, "").normalize("NFC");
@@ -1226,7 +1300,7 @@ function drow(w, extra=""){
 }
 function fillDict(){
   const q = norm(dictQ);
-  let rows = ALL.filter(w => (dictFilter<0 || w.u===dictFilter) && (!q || norm(w.p).includes(q) || norm(w.s).includes(q) || norm(w.note).includes(q)));
+  let rows = ALL.filter(w => (dictFilter===-1 || w.u===(dictFilter===-2 ? -1 : dictFilter)) && (!q || norm(w.p).includes(q) || norm(w.s).includes(q) || norm(w.note).includes(q)));
   const box = $("#dict"), lb = $("#letters");
   lb.innerHTML = "";
   if (!rows.length){ box.innerHTML = `<div class="empty">Inga träffar på "${esc(dictQ)}". Prova ett kortare ord.</div>`; return; }
